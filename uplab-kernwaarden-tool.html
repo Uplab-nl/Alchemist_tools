@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uplab – Alchemist – Onderzoek je waarden</title>
+<link href="https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-primary: #292727;
+    --accent1: #549E39;
+    --accent2: #3E6913;
+    --white: #FFFFFF;
+    --light-bg: #f5f5f5;
+    --card-bg: #fafafa;
+    --border-light: #e0e0e0;
+    --text-muted: #666;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--white);
+    color: var(--brand-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* STICKY HEADER */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--brand-primary);
+    padding: 12px 60px 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-svg {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+
+  .header-title {
+    font-family: 'Doppio One', sans-serif;
+    color: var(--white);
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .header-title span {
+    color: var(--accent1);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .counter-badge {
+    background: var(--accent1);
+    color: white;
+    font-family: 'Doppio One', sans-serif;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .counter-badge.warning {
+    background: #e67e22;
+  }
+
+  .btn-icon {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-icon:hover {
+    background: rgba(255,255,255,0.22);
+  }
+
+  /* DIAGONAL HEADER BANNER */
+  .header-banner {
+    background: var(--brand-primary);
+    position: relative;
+    overflow: hidden;
+    padding: 36px 30px 60px;
+  }
+
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: var(--white);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  /* Gray diagonal strip */
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #3a3838 0%, transparent 55%);
+    opacity: 0.5;
+  }
+
+  .header-banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .header-banner h1 {
+    font-family: 'Doppio One', sans-serif;
+    color: var(--white);
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .header-banner h1 span {
+    color: var(--accent1);
+  }
+
+  .header-banner p {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+
+  .phase-badge {
+    display: inline-block;
+    background: var(--accent1);
+    color: white;
+    font-size: 0.75rem;
+    font-family: 'Doppio One', sans-serif;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+  }
+
+  /* GRID */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 480px) {
+    .values-grid {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+    }
+  }
+
+  /* FLIP CARD */
+  .flip-card {
+    height: 90px;
+    perspective: 800px;
+    cursor: pointer;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  .flip-card:hover .flip-card-inner,
+  .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 2px solid var(--border-light);
+    background: var(--card-bg);
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+  }
+
+  .flip-front {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .flip-front .value-name {
+    font-family: 'Doppio One', sans-serif;
+    font-size: 0.82rem;
+    color: var(--brand-primary);
+    line-height: 1.2;
+  }
+
+  .flip-back {
+    transform: rotateY(180deg);
+    background: var(--brand-primary);
+    border-color: var(--brand-primary);
+    padding: 10px;
+  }
+
+  .flip-back .value-desc {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* SELECTED STATE */
+  .flip-card.selected .flip-front {
+    background: var(--accent1);
+    border-color: var(--accent2);
+  }
+
+  .flip-card.selected .flip-front .value-name {
+    color: white;
+  }
+
+  .flip-card.selected .flip-front::before {
+    content: '✓';
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 0.75rem;
+    color: white;
+    font-weight: bold;
+  }
+
+  /* CUSTOM CARD */
+  .custom-card {
+    height: 90px;
+    border-radius: 10px;
+    border: 2px dashed var(--accent1);
+    background: rgba(84,158,57,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    position: relative;
+  }
+
+  .custom-card.selected {
+    background: var(--accent1);
+    border-style: solid;
+  }
+
+  .custom-card .custom-check {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 0.75rem;
+    color: white;
+    font-weight: bold;
+  }
+
+  .custom-card.selected .custom-check {
+    display: block;
+  }
+
+  .custom-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: 'Doppio One', sans-serif;
+    font-size: 0.8rem;
+    color: var(--brand-primary);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .custom-card.selected .custom-input {
+    color: white;
+  }
+
+  .custom-input::placeholder {
+    color: var(--accent2);
+    font-size: 0.72rem;
+  }
+
+  /* SUBMIT BUTTON */
+  .btn-primary {
+    background: var(--accent1);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Doppio One', sans-serif;
+    font-size: 1rem;
+    padding: 14px 36px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: block;
+    margin: 30px auto 0;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent2);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* RESULTS SCREEN */
+  .results-screen {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .results-title {
+    font-family: 'Doppio One', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--brand-primary);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .results-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 36px;
+  }
+
+  .result-value {
+    background: var(--white);
+    border: 2px solid var(--border-light);
+    border-left: 5px solid var(--accent1);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 16px 0;
+    text-align: left;
+  }
+
+  .result-value h3 {
+    font-family: 'Doppio One', sans-serif;
+    font-size: 1.2rem;
+    color: var(--brand-primary);
+    margin-bottom: 8px;
+  }
+
+  .result-value .short {
+    font-size: 0.9rem;
+    color: var(--accent2);
+    font-weight: 500;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .result-value .long {
+    font-size: 0.88rem;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  .copy-instruction {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin: 20px 0 12px;
+    line-height: 1.6;
+  }
+
+  .btn-copy {
+    background: var(--brand-primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Doppio One', sans-serif;
+    font-size: 0.9rem;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-copy:hover { background: #3a3636; }
+  .btn-copy.copied { background: var(--accent1); }
+
+  /* PHASE INFO TEXT */
+  .phase-info-box {
+    background: var(--light-bg);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+    color: #444;
+    line-height: 1.6;
+    border-left: 4px solid var(--accent1);
+    cursor: pointer;
+    position: relative;
+  }
+
+  .phase-info-box::after {
+    content: 'ⓘ lees meer';
+    position: absolute;
+    bottom: 8px;
+    right: 14px;
+    font-size: 0.75rem;
+    color: var(--accent1);
+  }
+
+  /* POPUP */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+    backdrop-filter: blur(2px);
+  }
+
+  .popup-overlay.active {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 60px;
+  }
+
+  .popup-box {
+    background: white;
+    border-radius: 14px;
+    max-width: 580px;
+    width: 100%;
+    padding: 32px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    animation: slideIn 0.25s ease;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .popup-box h2 {
+    font-family: 'Doppio One', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    color: var(--brand-primary);
+    padding-right: 20px;
+  }
+
+  .popup-box p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 12px;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    line-height: 1;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+
+  .popup-close:hover { color: var(--brand-primary); }
+
+  .popup-btn {
+    background: var(--accent1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Doppio One', sans-serif;
+    padding: 12px 26px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .popup-btn:hover { background: var(--accent2); }
+
+  .popup-btn-secondary {
+    background: transparent;
+    color: var(--brand-primary);
+    border: 2px solid var(--border-light);
+    border-radius: 8px;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px 22px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    margin-top: 8px;
+    margin-left: 8px;
+    transition: all 0.2s;
+  }
+
+  .popup-btn-secondary:hover { border-color: var(--brand-primary); }
+
+  /* INFO LIST IN POPUP */
+  .info-word-list {
+    columns: 2;
+    column-gap: 16px;
+    font-size: 0.82rem;
+    color: #333;
+    line-height: 2;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 480px) {
+    .info-word-list { columns: 1; }
+    .popup-box { padding: 22px 18px; }
+  }
+
+  /* HIDE/SHOW */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* SECTION DIVIDER */
+  .section-label {
+    font-family: 'Doppio One', sans-serif;
+    font-size: 1rem;
+    color: var(--brand-primary);
+    margin: 28px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border-light);
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── STICKY HEADER ─── -->
+<div class="sticky-header">
+  <div class="header-left">
+
+    <div class="header-title">
+      Uplab · Alchemist<br>
+      <span>Onderzoek je waarden</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="counter-badge" id="stickyCounter">0 / 10</span>
+    <button class="btn-icon" id="btnInfo" title="Info">ⓘ Info</button>
+    <button class="btn-icon" id="btnRestart" title="Opnieuw beginnen">↺ Opnieuw</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN 1 ─── -->
+<div id="screen1" class="screen active">
+  <div class="header-banner">
+    <div class="header-banner-content">
+      <div class="phase-badge">Fase 1 van 3</div>
+      <h1>Wat zijn mijn waarden?<br><span>De eerste selectie 🔎</span></h1>
+      <p>Kies 10 waarden die het beste voor jou aanvoelen.</p>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="phase-info-box" id="phaseInfo1">
+      Net als in de vorige module over jouw waarden krijg je een flinke lijst — dit keer jouw mogelijke <strong>kernwaarden</strong>. Hover over een waarde om de uitleg te zien, en klik om te selecteren. Selecteer jouw eerste top 10.
+    </div>
+
+    <div class="section-label">Selecteer 10 waarden</div>
+    <div class="values-grid" id="grid1"></div>
+
+    <button class="btn-primary" id="submit1">Indienen →</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN 2 ─── -->
+<div id="screen2" class="screen">
+  <div class="header-banner">
+    <div class="header-banner-content">
+      <div class="phase-badge">Fase 2 van 3</div>
+      <h1>Wat zijn mijn waarden?<br><span>Selecteer de parels 🦪</span></h1>
+      <p>Kies de 6 beste uit jouw selectie van 10.</p>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="phase-info-box" id="phaseInfo2">
+      Waarden zijn de echte <strong>koersbepalers</strong> in jouw leven. Teveel waarden geven een gebrek aan focus. Kies nu jouw persoonlijke top 6 — welke waarden maken jou écht uniek?
+    </div>
+
+    <div class="section-label">Kies de 6 beste</div>
+    <div class="values-grid" id="grid2"></div>
+
+    <button class="btn-primary" id="submit2">Indienen →</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN 3 ─── -->
+<div id="screen3" class="screen">
+  <div class="header-banner">
+    <div class="header-banner-content">
+      <div class="phase-badge">Fase 3 van 3</div>
+      <h1>Wat zijn mijn waarden?<br><span>Vind de kern 🌋</span></h1>
+      <p>Kies jouw 4 absolute kernwaarden.</p>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="phase-info-box" id="phaseInfo3">
+      Lekker bezig! Je hebt nu je 6 belangrijkste waarden op een rij. Om echt goed focus te houden gaan we nog afscheid nemen van 2 waarden. Niet omdat die minder belangrijk zijn, maar om de <strong>echte kern</strong> eruit te halen.
+    </div>
+
+    <div class="section-label">Kies jouw absolute top 4</div>
+    <div class="values-grid" id="grid3"></div>
+
+    <button class="btn-primary" id="submit3">Indienen →</button>
+  </div>
+</div>
+
+<!-- ─── SCREEN RESULTS ─── -->
+<div id="screenResults" class="screen">
+  <div class="header-banner">
+    <div class="header-banner-content">
+      <div class="phase-badge">Resultaten 🎉</div>
+      <h1>Yes! <span>Dit zijn ze.</span></h1>
+      <p>Jouw allerwaardevolste kernwaarden.</p>
+    </div>
+  </div>
+
+  <div class="main results-screen">
+    <p style="font-size:1rem; color:#444; line-height:1.7; margin-bottom:28px;">
+      Wees er maar <strong>trots op</strong> — want deze combinatie van waarden is écht uniek! 🎉
+    </p>
+
+    <div id="resultsContainer"></div>
+
+    <p class="copy-instruction">
+      Kopieer met de knop hieronder jouw kernwaarden en plak ze in jouw persoonlijke <strong>Labboek</strong>. De uitleg kun je daar helemaal aanpassen, zodat het helemaal passend is bij jouw unieke waarde.<br><br>
+      De rest van de opdracht doe je samen met Daan in jullie volgende ontmoeting.
+    </p>
+
+    <button class="btn-copy" id="btnCopy">📋 Kopieer mijn kernwaarden</button>
+  </div>
+</div>
+
+<!-- ────────────────────── POPUPS ────────────────────── -->
+
+<!-- Welcome popup fase 1 -->
+<div class="popup-overlay active" id="popupWelcome">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupWelcome')">✕</button>
+    <h2>Wat zijn mijn waarden? De eerste selectie 🔎</h2>
+    <p>Net als in de vorige module over jouw talenten krijg je een flinke lijst met, dit keer, jouw mogelijke kernwaarden. Aan jou de taak om een eerste selectie van <strong>10 waarden</strong> te maken die het beste voor jou aanvoelen.</p>
+    <p>De vorige reflectieopdrachten hebben je waarschijnlijk al eerste inzicht in jouw waarden gegeven.</p>
+    <p>Misschien zie je meteen al een paar waarden die jouw naam schreeuwen. Bij andere twijfel je misschien… en dat is helemaal oké. Neem de tijd, lees de lijst rustig door en voel wat klopt.</p>
+    <p>Zit er nou een waarde in jouw gedachte dat écht bij jou hoort, maar niet in de lijst staat? Geen stress. Helemaal onderaan kun je er zelf nog één toevoegen.</p>
+    <p>Het is ok als de omschrijving van de waarde niet helemaal past bij hoe jij naar de waarde kijkt — dat is helemaal ok. Je kunt het straks, in je labboek, helemaal beschrijven zoals jij dat wilt.</p>
+    <button class="popup-btn" onclick="closePopup('popupWelcome')">Aan de slag! →</button>
+  </div>
+</div>
+
+<!-- Popup fase 2 -->
+<div class="popup-overlay" id="popupFase2">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupFase2')">✕</button>
+    <h2>Selecteer de parels 🦪</h2>
+    <p>Mooi, je hebt een eerste selectie gemaakt. Hopelijk zitten er superwaardevolle waarden tussen waar jij je helemaal goed bij voelt.</p>
+    <p>Waarden zijn de echte <strong>koersbepalers</strong> in jouw leven. Teveel waarden geven een gebrek aan focus en het houden van de koers die echt bij jou hoort. Waar gaan we dus weer een selectie maken.</p>
+    <p>Je ziet zometeen de 10 waarden die je net hebt uitgekozen — daar kies je de 6 uit die het beste bij jou passen.</p>
+    <p><strong>Kies nu jouw persoonlijke top 6. Welke waarden maken jou écht uniek?</strong></p>
+    <button class="popup-btn" onclick="closePopup('popupFase2')">Laat me kiezen →</button>
+  </div>
+</div>
+
+<!-- Popup fase 3 -->
+<div class="popup-overlay" id="popupFase3">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupFase3')">✕</button>
+    <h2>Vind de kern 🌋</h2>
+    <p>Lekker bezig, je hebt nu je belangrijkste 6 waarden op een rij staan. Dit geeft al een heel goed beeld van wat voor jou belangrijk is, en van waaruit jij kunt navigeren.</p>
+    <p>Om echt goed focus te houden en op de juiste koers te blijven gaan we nog afscheid nemen van <strong>2 waarden</strong>. Niet omdat die minder belangrijk zijn, maar om de echte kern eruit te halen en zodat jij je kunt focussen op de juiste dingen.</p>
+    <p><strong>Ben je klaar voor de laatste selectie?</strong></p>
+    <button class="popup-btn" onclick="closePopup('popupFase3')">Ja, ik ben er klaar voor →</button>
+  </div>
+</div>
+
+<!-- Popup opnieuw beginnen -->
+<div class="popup-overlay" id="popupRestart">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupRestart')">✕</button>
+    <h2>Opnieuw beginnen?</h2>
+    <p>Weet je zeker dat je opnieuw wilt beginnen? <strong>Alles wat je hebt geselecteerd wordt hiermee verwijderd.</strong></p>
+    <button class="popup-btn" onclick="doRestart()">Ja, begin opnieuw</button>
+    <button class="popup-btn-secondary" onclick="closePopup('popupRestart')">Nee, ga door</button>
+  </div>
+</div>
+
+<!-- Popup te veel -->
+<div class="popup-overlay" id="popupTooMany">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupTooMany')">✕</button>
+    <h2>Oeps! 😅</h2>
+    <p>Dit zijn er te veel. Verwijder een waarde uit je selectie om ruimte te maken voor deze waardevolle waarde.</p>
+    <button class="popup-btn" onclick="closePopup('popupTooMany')">Begrepen</button>
+  </div>
+</div>
+
+<!-- Popup te weinig (submit) -->
+<div class="popup-overlay" id="popupTooFew">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupTooFew')">✕</button>
+    <h2>Oeps! 🙈</h2>
+    <p id="tooFewText">Je hebt nog niet 10 waarden geselecteerd. Bekijk welke 10 er het beste bij je passen.</p>
+    <button class="popup-btn" onclick="closePopup('popupTooFew')">Oké, ik ga kijken</button>
+  </div>
+</div>
+
+<!-- Info popup – alle kernwaarden -->
+<div class="popup-overlay" id="popupInfoList">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupInfoList')">✕</button>
+    <h2>Meer mogelijke kernwaarden ⚗️</h2>
+    <p style="margin-bottom:12px; font-size:0.82rem;">Staat jouw waarde niet in de lijst? Hier nog veel meer mogelijkheden — of schrijf 'm zelf in.</p>
+    <div class="info-word-list" id="infoWordList"></div>
+    <button class="popup-btn" onclick="closePopup('popupInfoList')" style="margin-top:16px;">Sluiten</button>
+  </div>
+</div>
+
+<!-- Fase info popup (klikbaar vanuit info-box) -->
+<div class="popup-overlay" id="popupPhaseInfo">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupPhaseInfo')">✕</button>
+    <h2 id="popupPhaseInfoTitle">Fase info</h2>
+    <div id="popupPhaseInfoContent"></div>
+    <button class="popup-btn" onclick="closePopup('popupPhaseInfo')">Sluiten</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// DATA – KERNWAARDEN (uit het Alchemist document)
+// ═══════════════════════════════════════════════════════════
+const WAARDEN = [
+  {
+    naam: "Eerlijkheid",
+    kort: "Ik vind dat je zegt wat je denkt en doet wat je zegt. Altijd, ook als het ongemakkelijk is.",
+    lang: "Eerlijkheid is geen communicatiestijl. Het is een fundamentele overtuiging: dat de wereld beter werkt als mensen zeggen wat ze echt bedoelen.\n\nEerlijkheid is de basis van elke werkbare relatie — professioneel of persoonlijk. Zonder eerlijkheid weet je niet waar je aan toe bent. Met eerlijkheid kun je verder, ook als het even pijn doet.\n\nOneerlijkheid kost altijd meer dan het oplevert. Een omweg om een moeilijk gesprek te vermijden, een halve waarheid om iemand te sparen — het lost niks op, het schuift het alleen vooruit. En wat verschoven wordt, wordt groter.\n\nEerlijkheid vraagt moed. Maar die moed is niet optioneel — het is een voorwaarde voor werk dat echt ergens op slaat."
+  },
+  {
+    naam: "Betrouwbaarheid",
+    kort: "Ik vind dat je mensen niet in onzekerheid laat over wie je bent en wat je doet.",
+    lang: "Betrouwbaarheid is de waarde die vertrouwen concreet maakt. Vertrouwen is abstract; betrouwbaarheid is het bewijs ervan in gedrag. Je zegt wat je doet en je doet wat je zegt — niet soms, maar altijd.\n\nJe geeft mensen het recht om op je te rekenen zodra je een afspraak maakt. Betrouwbaarheid begint in kleine dingen. Op tijd zijn. Reageren op berichten. Doen wat je zei dat je zou doen. Juist die kleine dingen bouwen het beeld op dat mensen van je hebben.\n\nAls mensen weten wat ze aan je hebben, kunnen ze je ook echt gebruiken. Onzekerheid over jou als persoon kost anderen energie. Die energie wil je ze besparen."
+  },
+  {
+    naam: "Oprechtheid",
+    kort: "Ik vind dat mensen het verdienen om te weten wat je echt bedoelt.",
+    lang: "Oprechtheid gaat over de afwezigheid van een agenda achter je woorden. Zeg je dit omdat je het meent, of omdat het strategisch handig is? Dat onderscheid is cruciaal.\n\nMensen-pleasen is een vorm van onrespect. Je ontneemt iemand de kans om echt te weten hoe je over iets denkt — en daarmee de kans om iets met die informatie te doen.\n\nOprechtheid en vriendelijkheid sluiten elkaar niet uit. Je kunt iets zeggen wat de ander niet wil horen, en dat toch zo brengen dat het als een cadeau aanvoelt in plaats van een aanval. De combinatie van eerlijke inhoud en zorgvuldige toon — dat is oprechtheid op zijn best."
+  },
+  {
+    naam: "Moed",
+    kort: "Ik vind dat het juiste doen meer waard is dan het makkelijke doen.",
+    lang: "Moed is de waarde die alle andere waarden mogelijk maakt. Je kunt eerlijkheid belangrijk vinden, maar zonder moed houd je je mond. Je kunt integriteit waardevol vinden, maar zonder moed buig je toch mee.\n\nMoed is niet de afwezigheid van angst, maar de keuze om toch te handelen. Dat is een keuze die je steeds opnieuw kunt maken — en die groeit naarmate je hem vaker maakt.\n\nMoed heeft een sociale verantwoordelijkheid. In een groep bepalen de moedigste stemmen welke gesprekken er gevoerd worden. Als niemand het zegt, zegt niemand het. Dat is een verlies.\n\nMoed is geen grootsheid. Het zit in kleine momenten: de vraag stellen die niemand durft te stellen. De mening geven die niet populair is."
+  },
+  {
+    naam: "Verantwoordelijkheid",
+    kort: "Ik vind dat je staat voor je keuzes — de goede en de minder goede.",
+    lang: "Verantwoordelijkheid nemen is de meest volwassen houding die je kunt innemen. Niet afschuiven, niet relativeren — maar zeggen: dit is van mij, hier sta ik voor.\n\nEigenaarschap is de voorwaarde voor verbetering. Zolang je de verantwoordelijkheid buiten jezelf plaatst, heb je ook geen invloed op de uitkomst. Zodra je het van jezelf maakt, heb je ruimte om er iets aan te doen.\n\nVerantwoordelijkheid is de basis van vertrouwen tussen mensen. Als iedereen zijn eigen deel draagt, functioneert een samenwerking. Verantwoordelijkheid is geen last. Het is een uiting van respect voor jezelf en voor de mensen om je heen."
+  },
+  {
+    naam: "Authenticiteit",
+    kort: "Ik vind dat je het meest effectief bent als je gewoon jezelf bent.",
+    lang: "Authenticiteit is geen lifestyle-begrip. Het is een praktische overtuiging: mensen die zichzelf zijn, zijn geloofwaardiger, consistenter en uiteindelijk effectiever dan mensen die een rol spelen.\n\nEr zit een prijs aan het niet-authentiek zijn. Die prijs betaal je in energie — de energie die het kost om bij te houden wie je was tegenover wie. En je betaalt hem in verbinding — want echte verbinding vraagt dat de ander weet met wie hij te maken heeft.\n\nAuthenticiteit heeft ook een sociale functie. Als jij jezelf durft te zijn, geef je anderen daarmee toestemming om dat ook te doen. Dat maakt een omgeving menselijker en eerlijker."
+  },
+  {
+    naam: "Rechtvaardigheid",
+    kort: "Ik vind dat mensen eerlijk behandeld moeten worden — ongeacht wie ze zijn of welke positie ze hebben.",
+    lang: "Rechtvaardigheid is een van de meest fundamentele waarden. De overtuiging dat mensen recht hebben op een eerlijke behandeling — ongeacht status, achtergrond, luidheid van stem of populariteit.\n\nOnrechtvaardigheid veroorzaakt erosie. In teams, in organisaties, in samenlevingen. Als mensen het gevoel hebben dat de spelregels niet voor iedereen gelden, verliezen ze vertrouwen. En terecht.\n\nRechtvaardigheid vraagt een actieve houding. Niet alleen je eigen eerlijkheid bewaken, maar ook opmerken wanneer het bij anderen niet klopt — en bereid zijn om dat te benoemen. Rechtvaardigheid is geen abstract ideaal. Het is een dagelijkse oriëntatie op hoe je wilt dat mensen met elkaar omgaan."
+  },
+  {
+    naam: "Respect",
+    kort: "Ik vind dat elk mens een waardige behandeling verdient — punt.",
+    lang: "Respect is geen beloning voor prestaties of status. Het is een basisrecht. Ieder mens verdient een waardige behandeling, ongeacht wat hij heeft gedaan, welke functie hij heeft of hoe hij overkomt.\n\nRespect is de minimumvereiste voor elke zinvolle samenwerking. Zonder respect wordt communicatie een machtsstrijd, wordt feedback een aanval, en wordt samenwerking een transactie.\n\nRespect en het oneens zijn gaan prima samen. Je kunt iemands standpunt volledig verwerpen en hem toch als persoon serieus nemen. Die combinatie is zeldzamer dan hij zou moeten zijn.\n\nRespect is ook zelfrespect: de overtuiging dat je zelf ook een waardige behandeling verdient, en dat je die mag verlangen."
+  },
+  {
+    naam: "Bescheidenheid",
+    kort: "Ik vind dat je perspectief altijd één perspectief is — hoe goed je ook bent in wat je doet.",
+    lang: "Bescheidenheid is niet het verkleinen van jezelf. Het is de eerlijke erkenning dat jij niet het hele plaatje ziet. Dat anderen dingen weten die jij niet weet.\n\nBescheidenheid maakt je slimmer. Niet omdat je minder zeker bent van jezelf, maar omdat je openblijft voor informatie die je beeld kan verrijken of corrigeren. Wie denkt dat hij alles weet, leert niets meer.\n\nBescheidenheid en zelfvertrouwen zijn geen tegenpolen. Je kunt uitstekend zijn in iets en toch openstaan voor het idee dat het anders of beter kan."
+  },
+  {
+    naam: "Trots",
+    kort: "Ik vind dat je achter je werk mag staan — en dat dat ook iets zegt over karakter.",
+    lang: "Trots is de emotionele verbinding met wat je maakt en doet. Niet als ijdelheid — trots op je status of erkenning. Maar als eigenaarschap: dit is van mij, hier sta ik achter.\n\nTrots is een kwaliteitssignaal. Als iemand trots is op zijn werk, is de kans groot dat het goed is. Niet omdat trots garanties geeft, maar omdat trots betekent dat je het de moeite waard vond om er echt voor te gaan.\n\nTrots mag worden uitgesproken. Er is een cultuur van valse bescheidenheid waarbij je nooit mag zeggen dat je iets goed hebt gedaan. Die cultuur is oneerlijk — tegenover jezelf en tegenover de mensen die het werk beoordeelden."
+  },
+  {
+    naam: "Nieuwsgierigheid",
+    kort: "Ik vind dat de vraag 'waarom?' altijd gesteld mag worden — en bijna altijd gesteld moet worden.",
+    lang: "Nieuwsgierigheid is een fundamentele houding tegenover de wereld: alles heeft een laag dieper. Elk antwoord roept een nieuwe vraag op. En die vragen zijn de moeite waard om te stellen.\n\nNieuwsgierigheid is de motor achter de meeste interessante dingen die mensen maken en ontdekken. Niet de wens om slim over te komen, niet de noodzaak om problemen op te lossen — gewoon de onbedwingbare behoefte om te begrijpen hoe iets werkt.\n\nNieuwsgierigheid is ook democratisch: alles is interessant als je de juiste vragen stelt. Het gaat niet over het onderwerp — het gaat over de houding waarmee je ernaar kijkt."
+  },
+  {
+    naam: "Leergierigheid",
+    kort: "Ik vind dat je nooit klaar bent met leren — en dat dat een verrijking is, geen verplichting.",
+    lang: "Leergierigheid is de overtuiging dat er altijd iets te leren valt, en dat dat iets goeds is. Niet als carrièrestrategie, maar als basishouding tegenover het leven.\n\nMensen die stoppen met leren, stoppen met groeien. En groeien is niet hetzelfde als hoger klimmen — het is dieper worden, scherper worden, menselijker worden.\n\nLeergierigheid vraagt bereidheid om je ongelijk te zien. Leren betekent dat je iets anders gaat weten dan je wist. Dat is soms ongemakkelijk. Maar de alternatieven — niet leren, altijd gelijk houden — zijn veel saaier.\n\nLeergierigheid is geen eigenschap van een type mens. Het is een keuze die iedereen steeds opnieuw kan maken."
+  },
+  {
+    naam: "Aanpassingsvermogen",
+    kort: "Ik vind dat vasthouden aan hoe het was meer energie kost dan meebewegen met hoe het is.",
+    lang: "Aanpassingsvermogen is geen gebrek aan standvastigheid. Het is de overtuiging dat de wereld verandert, dat situaties veranderen, en dat starheid in die context geen kracht is maar een handicap.\n\nDe beste mensen en organisaties zijn niet degenen die het beste plan hadden, maar degenen die het snelst leerden van wat er werkelijk gebeurde. Aanpassen is intelligentie in actie.\n\nAanpassingsvermogen is iets anders dan opportunisme. Het gaat over het onderscheid kunnen maken tussen wat wezenlijk is — en dus behouden moet worden — en wat bijkomstig is en dus los kan. Aanpassingsvermogen is een bewijs van zelfvertrouwen: je hoeft niet aan alles vast te houden om te weten wie je bent."
+  },
+  {
+    naam: "Reflectievermogen",
+    kort: "Ik vind dat stilstaan bij wat er gebeurd is minstens zo waardevol is als doorgaan.",
+    lang: "Reflectie is de schakel die ervaring omzet in leren. Zonder reflectie herhaal je patronen. Met reflectie bouw je inzicht op — over wat werkte, wat niet, en waarom.\n\nDe meeste fouten worden niet gemaakt door gebrek aan kennis, maar door gebrek aan bewustzijn. Reflectie is het instrument waarmee je je eigen blinde vlekken leert zien. Dat is ongemakkelijk en onmisbaar.\n\nReflectie vraagt moed. Je moet bereid zijn om naar jezelf te kijken zonder de behoefte om jezelf meteen te verdedigen. Reflectievermogen is een teken van intellectuele volwassenheid: de bereidheid om je eigen denken te onderzoeken, niet alleen dat van anderen."
+  },
+  {
+    naam: "Zelfontwikkeling",
+    kort: "Ik vind dat investeren in wie je bent minstens zo belangrijk is als investeren in wat je kunt.",
+    lang: "Zelfontwikkeling is geen lijstje van cursussen of competenties. Het is de overtuiging dat het de moeite waard is om te werken aan wie je bent — niet omdat je tekortschiet, maar omdat je kunt groeien.\n\nEr is een wezenlijk verschil tussen zelfontwikkeling vanuit kracht en vanuit onzekerheid. Het eerste is een avontuur. Het tweede is een rat race.\n\nZelfontwikkeling gaat niet alleen over vakinhoud of vaardigheden. De meest relevante ontwikkeling is vaak de ontwikkeling van je vermogen om je te verhouden tot anderen, tot onzekerheid, tot tegenslagen. Zelfontwikkeling is een keuze voor de lange termijn."
+  },
+  {
+    naam: "Openheid",
+    kort: "Ik vind dat een gesprek of idee de kans verdient om je gedachten te veranderen.",
+    lang: "Openheid is de bereidheid om je perspectief te laten bijstellen door wat je tegenkomt. Niet omdat elk argument even goed is, maar omdat je van tevoren nooit zeker weet welk argument beter is dan het jouwe.\n\nGesloten denken betaalt de prijs in kwaliteit. Als je alleen zoekt naar bevestiging, vind je die — en je mist alles wat je echt verder zou kunnen helpen.\n\nOpenheid is een teken van zelfvertrouwen: je hoeft niet aan je standpunt vast te houden uit angst dat je ermee valt als je het loslaat. Openheid is geen zwakte. Het is een intellectuele deugd die samenwerking rijker, beslissingen beter en gesprekken waardevoller maakt."
+  },
+  {
+    naam: "Innovatiekracht",
+    kort: "Ik vind dat 'zo doen we het altijd' zelden een goed argument is.",
+    lang: "Innovatiekracht is de overtuiging dat de beste manier van doen zelden de huidige manier is. Niet omdat verandering op zichzelf goed is, maar omdat stilstand dat zeker niet is.\n\nDe vraag 'waarom eigenlijk?' — gesteld aan bestaande werkwijzen, aannames en structuren — is een van de meest productieve vragen die je kunt stellen. Het ongemak dat die vraag oproept, is het bewijs dat hij zinvol is.\n\nInnovatie begint niet met briljante ingevingen. Het begint met goed kijken naar wat niet werkt, en bereid zijn om iets anders te proberen. Dat vraagt meer moed dan creativiteit."
+  },
+  {
+    naam: "Experimenteerlust",
+    kort: "Ik vind dat proberen meer oplevert dan plannen — zolang je maar leert van de uitkomst.",
+    lang: "Experimenteerlust is de overtuiging dat de kortste weg naar kennis vaak door onzekerheid gaat. Je weet pas wat werkt als je het hebt geprobeerd. Plannen helpt, maar op een gegeven moment moet je beginnen.\n\nDe angst voor mislukking is de grootste rem op innovatie en groei. Niet het gebrek aan ideeën, niet de middelen — de angst dat het niet werkt.\n\nExperimenteren vraagt discipline. Niet zomaar dingen proberen en hopen op het beste, maar bewust testen, observeren en aanpassen. Experimenteerlust is het tegengif voor perfectionisme."
+  },
+  {
+    naam: "Groei",
+    kort: "Ik vind dat stilstaan geen optie is — niet voor mensen, niet voor organisaties.",
+    lang: "Groei is een fundamentele waarde, geen ambitie. Het verschil is wezenlijk: ambitie richt zich op een eindpunt. Groei is een richting — je beweegt altijd, je bent nooit klaar.\n\nGroei is niet altijd prettig. De meest waardevolle groei gaat gepaard met ongemak: het loslaten van een overtuiging die niet meer klopt, het toegeven van een fout, het betreden van terrein waar je nog niet goed in bent. Die onrust is een teken dat er iets beweegt.\n\nGroei omvat meer dan vakinhoud. De vraag 'wie word ik?' is even relevant als 'wat leer ik?'"
+  },
+  {
+    naam: "Avontuur",
+    kort: "Ik vind dat het onbekende meer te bieden heeft dan het vertrouwde — als je bereid bent de stap te zetten.",
+    lang: "Avontuur is de overtuiging dat de meest waardevolle ervaringen liggen buiten het gebied dat je al kent. Niet in roekeloosheid, maar in de bereidheid om het onbekende serieus te nemen als bron van groei en betekenis.\n\nComfort is een rustige maar hardnekkige vijand van ontwikkeling. Je kunt goed worden in dingen die je al doet — maar je kunt alleen ontdekken wie je kunt zijn door buiten dat kader te stappen.\n\nAvontuur is een mentale houding, niet alleen een fysieke keuze. Het zit in de manier waarop je naar onzekerheid kijkt: als bedreiging of als speelruimte."
+  },
+  {
+    naam: "Empathie",
+    kort: "Ik vind dat begrijpen hoe de ander erin zit een professionele basisvaardigheid is, geen soft skill.",
+    lang: "Empathie is de overtuiging dat effectief werken met mensen begint met begrijpen hoe zij de wereld zien. Niet alleen wat ze zeggen, maar wat ze bedoelen. Niet alleen wat ze doen, maar waarom.\n\nDe meeste miscommunicatie, conflicten en mislukte samenwerkingen worden niet veroorzaakt door slechte wil, maar door het ontbreken van empathie.\n\nEmpathie is een vorm van precisie. Als je niet snapt hoe iemand erin zit, werk je met onvolledige informatie. Empathie vult die blinde vlek in — en maakt je aanpak beter. Empathie is geen weekheid. Het is intelligentie: de intelligentie om mensen te begrijpen die anders zijn dan jij."
+  },
+  {
+    naam: "Verbinding",
+    kort: "Ik vind dat echte verbinding tussen mensen het fundament is van al het goede werk.",
+    lang: "Verbinding is de overtuiging dat de kwaliteit van een relatie bepaalt wat er in die relatie mogelijk is. Goede samenwerking, eerlijke gesprekken, echte feedback — het vraagt allemaal om een basis van werkelijke verbinding.\n\nVerbinding is iets anders dan contact. Je kunt veel contact hebben en weinig verbinding. Het verschil zit in echtheid: zijn er twee mensen echt aanwezig, of twee rollen?\n\nVerbinding is een investering die altijd terugverdiend wordt. In teams die echt verbonden zijn, gaan problemen sneller de tafel op. Vertrouwen is er eerder. En plezier ook."
+  },
+  {
+    naam: "Dienstbaarheid",
+    kort: "Ik vind dat je capaciteiten er zijn om mee bij te dragen aan iets groter dan jezelf.",
+    lang: "Dienstbaarheid is de overtuiging dat wat je kunt en weet een maatschappelijke functie heeft — en dat je die functie het best vervult als je hem inzet voor anderen, niet alleen voor jezelf.\n\nDe meest bevredigende vorm van werken is die waarbij je echt bijdraagt aan iets of iemand. Niet omdat het moet, maar omdat de bijdrage zelf de beloning is.\n\nDienstbaarheid en eigenwaarde versterken elkaar. Je geeft het meest als je geeft vanuit kracht — vanuit het besef dat jij iets hebt dat waardevol is, en dat je dat met de wereld mag delen."
+  },
+  {
+    naam: "Inclusiviteit",
+    kort: "Ik vind dat de beste beslissingen worden genomen als alle relevante stemmen gehoord zijn.",
+    lang: "Inclusiviteit is geen diversiteitsbeleid maar een kwaliteitsovertuiging: als je alleen de stemmen hoort van mensen die op jou lijken, mis je informatie. En gemiste informatie leidt tot slechtere beslissingen.\n\nHomogene groepen voelen zich comfortabeler maar presteren minder goed. De wrijving die ontstaat als verschillende perspectieven samenkomen, is geen probleem — het is de bron van betere uitkomsten.\n\nInclusiviteit vraagt actief werk. Niet passief een deur openzetten en hopen dat mensen binnenkomen. Maar actief zoeken naar de stemmen die er nog niet zijn."
+  },
+  {
+    naam: "Vertrouwen",
+    kort: "Ik vind dat vertrouwen de smeerolie is van elke goede samenwerking.",
+    lang: "Vertrouwen is de waarde die alles mogelijk maakt wat anders niet mogelijk is. Zonder vertrouwen is communicatie voorzichtig, samenwerking transactioneel en feedback gevaarlijk. Met vertrouwen gaat alles sneller, gemakkelijker en echter.\n\nVertrouwen vraagt een investering die je doet voordat je zeker weet dat hij terugkomt. Mensen vertrouwen die het nog niet volledig 'verdiend' hebben, is het enige wat groei en verantwoordelijkheid mogelijk maakt.\n\nVertrouwen is de moeite waard om te beschermen. Een keer gebroken is het moeilijk te herstellen."
+  },
+  {
+    naam: "Communicatie",
+    kort: "Ik vind dat de boodschap aankomen minstens zo belangrijk is als de boodschap zenden.",
+    lang: "Communicatie is geen vaardigheid maar een waarde: de overtuiging dat je verantwoordelijk bent voor het begrip aan de andere kant, niet alleen voor wat je zegt.\n\nDe meeste problemen in samenwerking zijn communicatieproblemen. Niet omdat mensen slecht zijn in praten, maar omdat ze zelden echt nadenken over hoe iets aankomt.\n\nGoede communicatie is respect. Respect voor de aandacht van de ander, voor zijn tijd, voor zijn vermogen om iets te begrijpen als je het goed uitlegt. Communicatie is tweerichtingsverkeer. Goed luisteren is minstens zo waardevol als goed spreken."
+  },
+  {
+    naam: "Teamgerichtheid",
+    kort: "Ik vind dat wat een team bereikt meer waard is dan wat een individu bereikt.",
+    lang: "Teamgerichtheid is de overtuiging dat de meeste werkelijk waardevolle dingen tot stand komen door samenwerking — niet door individuele heldendaden. Dat vraagt om de bereidheid om je eigen agenda soms ondergeschikt te maken aan het gezamenlijke doel.\n\nTeams zijn meer dan de som der delen — maar alleen als mensen werkelijk voor het geheel gaan. Als iedereen zijn eigen succes maximaliseert, heb je een groep individuen, geen team.\n\nTeamgerichtheid is niet hetzelfde als consensuscultuur. Je kunt gericht zijn op het teamsucces en toch scherpe meningen hebben."
+  },
+  {
+    naam: "Loyaliteit",
+    kort: "Ik vind dat je er ook bent als het moeilijk wordt — voor de mensen en de zaken die je echt iets waard zijn.",
+    lang: "Loyaliteit is geen blinde trouw maar een bewuste keuze: staan achter de mensen en de doelen waar je in gelooft — ook als het even niet goed gaat, ook als het je iets kost.\n\nLoyaliteit is een van de meest waardevolle eigenschappen die je mensen kunt geven. Weten dat iemand er is, ook in moeilijke momenten, is een fundament waarop vertrouwen en samenwerking kunnen rusten.\n\nLoyaliteit heeft grenzen — en die grenzen zijn gezond. Loyaliteit die ten koste gaat van je integriteit of jezelf, is geen loyaliteit meer. Het is capitulatie."
+  },
+  {
+    naam: "Humor",
+    kort: "Ik vind dat humor een van de meest serieuze professionele eigenschappen is.",
+    lang: "Humor is niet de vaardigheid om grappig te zijn. Het is de overtuiging dat luchtigheid, zelfspot en het vermogen om het absurde te zien essentieel zijn voor gezonde samenwerking — en voor gezond leven.\n\nOmgevingen zonder humor zijn omgevingen zonder eerlijkheid. Een cultuur waarin mensen altijd ernstig en formeel moeten zijn, is een cultuur waarin de echte problemen niet besproken worden. Humor opent deuren die ernst dicht houdt.\n\nZelfspot is een teken van kracht. Als je jezelf niet al te serieus neemt, ben je minder kwetsbaar voor kritiek en sneller in staat om te leren van fouten."
+  },
+  {
+    naam: "Resultaatgerichtheid",
+    kort: "Ik vind dat intenties mooi zijn maar resultaten tellen.",
+    lang: "Resultaatgerichtheid is de overtuiging dat werk er uiteindelijk op gericht moet zijn dat er iets verandert, iets tot stand komt, iets echt wordt. Goede bedoelingen, mooie plannen en interessante gesprekken zijn waardevol — maar ze zijn geen eindpunt.\n\nEr bestaat een cultuur van drukke maar niet effectieve arbeid: veel vergaderingen, veel documenten, weinig echte uitkomst. Die cultuur is verspilling.\n\nResultaatgerichtheid vraagt om keuzes. Niet alles kan, niet alles is even belangrijk. Prioriteren is geen onaardigheid — het is verantwoordelijkheid nemen voor de schaarse middelen die je hebt."
+  },
+  {
+    naam: "Doorzettingsvermogen",
+    kort: "Ik vind dat de meeste waardevolle dingen pas na tegenstand tot stand komen.",
+    lang: "Doorzettingsvermogen is de overtuiging dat weerstand geen reden is om te stoppen — maar informatie is over hoe je verder moet. De eerste versie klopt zelden. De eerste aanpak werkt zelden. Dat is normaal, niet problematisch.\n\nDe meeste successen zijn niet te danken aan talent of geluk, maar aan de bereidheid om door te gaan als het moeilijker wordt dan verwacht.\n\nDoorzettingsvermogen vraagt wijsheid: het onderscheid tussen volhouden omdat je gelooft in het doel, en volhouden uit koppigheid. Soms is stoppen de slimste keuze. Maar die keuze moet je bewust maken."
+  },
+  {
+    naam: "Leiderschap",
+    kort: "Ik vind dat leiden gaat over richting geven en mensen meenemen — niet over positie of macht.",
+    lang: "Leiderschap is de overtuiging dat richting geven een verantwoordelijkheid is die je kunt oppakken, ongeacht je functie of titel. Het gaat niet over hiërarchie — het gaat over de bereidheid om te zeggen: hier gaan we naartoe, en dit is waarom.\n\nDe beste leiders maken mensen niet afhankelijk van zich, maar sterker. Ze scheppen de omstandigheden waaronder anderen excelleren.\n\nLeiderschap bevat moeilijke beslissingen — beslissingen die niet iedereen blij maken, maar die kloppen. Leiderschap is een dienende rol: je staat er voor anderen, niet andersom."
+  },
+  {
+    naam: "Visie",
+    kort: "Ik vind dat weten waar je naartoe wilt onmisbaar is om goede keuzes te maken.",
+    lang: "Visie is de overtuiging dat richting minstens zo belangrijk is als snelheid. Je kunt hard lopen en toch nergens aankomen als je niet weet waar je naartoe gaat. Visie geeft keuzes een referentie — dit past erbij, dit niet.\n\nVisie moet concreet zijn om te werken. Een vaag gevoel dat het 'beter moet' is geen visie. Een helder beeld van hoe het eruit ziet als het goed is — dat is visie.\n\nVisie moet gedeeld worden. Een visie die alleen in je hoofd zit, is een droom. Een visie die anderen begrijpen en in geloven, is een kracht. Visie is ook een ankerpunt in onzekerheid."
+  },
+  {
+    naam: "Ondernemerschap",
+    kort: "Ik vind dat kansen zien en er iets mee doen een houding is, geen functie.",
+    lang: "Ondernemerschap is de overtuiging dat de wereld beter wordt van mensen die dingen in beweging zetten — die een gat zien en besluiten om het te vullen, die een probleem zien en beginnen met een oplossing.\n\nOndernemerschap heeft niets te maken met een eigen bedrijf hebben. Het is een mentale houding: verantwoordelijkheid nemen voor wat je ziet, initiatieven nemen zonder toestemming te vragen.\n\nOndernemerschap vraagt moed — de moed om te falen, om kritiek te ontvangen, om iets te proberen dat misschien niet werkt. Ondernemerschap is een bijdrage aan de wereld: iets neerzetten dat er nog niet was."
+  },
+  {
+    naam: "Lef",
+    kort: "Ik vind dat het juiste zeggen en doen meer waard is dan het veilige zeggen en doen.",
+    lang: "Lef is de waarde die het verschil maakt tussen denken en doen — tussen weten wat je zou moeten zeggen en het ook zeggen. Zonder lef blijven de beste ideeën onuitgesproken en de hardste waarheden onbenoemd.\n\nLef is besmettelijk. In een omgeving waar één persoon durft te zeggen wat er werkelijk speelt, krijgen anderen de ruimte om dat ook te doen.\n\nLef is niet hetzelfde als onbezonnenheid. Lef weet wat er op het spel staat — en kiest er toch voor. Dat is iets anders dan roekeloos handelen. Lef is ook het durven vragen. Om hulp, om feedback, om een kans."
+  },
+  {
+    naam: "Daadkracht",
+    kort: "Ik vind dat op een gegeven moment de analyse moet stoppen en de actie moet beginnen.",
+    lang: "Daadkracht is de overtuiging dat het perfecte moment nooit komt, en dat wachten erop ook een keuze is — een keuze voor stilstand. Op een gegeven moment weet je genoeg. Dan moet je beginnen.\n\nEr bestaat een groot gat tussen mensen die weten hoe het moet en mensen die het ook doen. Daadkracht overbrugt dat gat. Het is de eigenschap die van inzicht resultaat maakt.\n\nDaadkracht is ook een teken van respect voor de mensen om je heen: jij haalt de impasse eruit. Dat is een waardevolle bijdrage."
+  },
+  {
+    naam: "Initiatief",
+    kort: "Ik vind dat wachten tot iemand je vraagt zelden de beste strategie is.",
+    lang: "Initiatief is de overtuiging dat het beter is om te handelen dan te wachten — zeker als je ziet dat iets gedaan moet worden en niemand anders het oppakt. Wachten is een keuze. Handelen ook.\n\nInitiatief houdt een verantwoordelijkheid in: als je begint, draag je ook bij aan het einde. Je kunt niet zomaar iets starten en het daarna loslaten. Initiatief en follow-through horen bij elkaar.\n\nInitiatief is ook een houding van vertrouwen: vertrouwen in jezelf dat je iets kunt bijdragen, vertrouwen in de omgeving dat het op prijs gesteld wordt."
+  },
+  {
+    naam: "Passie",
+    kort: "Ik vind dat werk dat niet raakt ook niet telt — voor jezelf en voor de mensen voor wie je het doet.",
+    lang: "Passie is de overtuiging dat de verbinding die je hebt met je werk zichtbaar is — en dat het verschil maakt voor de kwaliteit ervan. Je kunt passie niet faken. En je kunt het niet verbergen.\n\nPassie is een keuze, maar ook een verantwoordelijkheid. Als je weet wat je raakt en wat je energie geeft, is het jouw taak om dat werk te zoeken.\n\nPassie maakt kwetsbaar. Als je echt voor iets gaat, kan het ook echt mislukken. Dat risico hoort erbij. Passie is ook aanstekelijk: mensen die echt ergens voor gaan, trekken anderen mee."
+  },
+  {
+    naam: "Autonomie",
+    kort: "Ik vind dat mensen het beste werk leveren als ze zelf kunnen bepalen hoe ze het doen.",
+    lang: "Autonomie is een fundamentele overtuiging over hoe mensen functioneren: eigenaarschap over je eigen werk geeft energie, motivatie en verantwoordelijkheidsgevoel. Het ontbreken ervan ondermijnt al drie.\n\nAutonomie is niet hetzelfde als ongestructureerdheid. Je kunt duidelijke doelen en kaders hebben, en binnen die kaders volledige vrijheid geven over hoe iemand zijn werk doet. Die combinatie is goud.\n\nAutonomie is een teken van respect: je vertrouwt iemand genoeg om hem zijn eigen weg te laten vinden. Dat is geen risico — dat is investering."
+  },
+  {
+    naam: "Precisie",
+    kort: "Ik vind dat het verschil tussen bijna goed en goed ertoe doet.",
+    lang: "Precisie is de overtuiging dat nauwkeurigheid van uitkomst een waarde op zichzelf is. Niet als obsessie, maar als oriëntatie: het maakt uit of iets klopt of bijna klopt. Dat verschil is zelden triviaal.\n\nVaagheid is de vijand van goede beslissingen. Als getallen kloppen, als formuleringen precies zijn, als analyses de kern raken — dan kun je vertrouwen op de informatie die je hebt.\n\nPrecisie is ook een vorm van respect voor de mensen die met jouw output werken. Als jij iets precies aanlevert, hoeven zij niet te compenseren voor jouw onnauwkeurigheid."
+  },
+  {
+    naam: "Zorgvuldigheid",
+    kort: "Ik vind dat de moeite nemen om het goed te doen altijd loont.",
+    lang: "Zorgvuldigheid is een basishouding tegenover werk: de moeite nemen, nadenken voor je handelt, controleren voor je verstuurt, tijd nemen die nodig is. Niet uit perfectionisme — uit respect voor het werk en de mensen die er iets mee doen.\n\nZorgvuldigheid is op de lange termijn altijd goedkoper dan haast. De tijd die je investeert in het goed doen van iets, is minder dan de tijd die je kwijt bent aan herstellen, uitleggen en opnieuw doen.\n\nZorgvuldigheid heeft een sociale component. Als jij zorgvuldig werkt, maak je het werk van de mensen na jou makkelijker."
+  },
+  {
+    naam: "Vaktrots",
+    kort: "Ik vind dat hoe je werkt net zo veel zegt over je als wat je oplevert.",
+    lang: "Vaktrots is de emotionele verbinding met het ambacht. De overtuiging dat de manier waarop je iets doet ertoe doet — niet alleen het eindresultaat, maar ook de aanpak, de zorgvuldigheid, de professionaliteit onderweg.\n\nVaktrots is een kwaliteitsgarantie die geen systeem kan vervangen. Als iemand trots is op zijn werk, houd je een andere standaard aan dan als je alleen aan de buitenkant wordt beoordeeld.\n\nVaktrots vraagt bereidheid tot kritiek. Als je trots bent op je vak, wil je ook weten wanneer je het beter kunt doen."
+  },
+  {
+    naam: "Aandacht voor detail",
+    kort: "Ik vind dat de kleine dingen het grote bepalen.",
+    lang: "Aandacht voor detail is de overtuiging dat kwaliteit zich manifesteert in het kleine. De typefout die vertrouwen kost. De nuance die het verschil maakt. De inconsistentie die aangeeft dat iets niet goed doordacht is.\n\nDetails staan niet los van het geheel — ze vormen het. Een product, een communicatie, een plan: het is zo goed als zijn zwakste detail.\n\nAandacht voor detail vraagt dosering. Niet alles verdient evenveel aandacht. Het vermogen om te kiezen welke details ertoe doen, is minstens zo waardevol als de aandacht zelf."
+  },
+  {
+    naam: "Duurzaamheid",
+    kort: "Ik vind dat bouwen voor de lange termijn waardevoller is dan winnen op de korte.",
+    lang: "Duurzaamheid is de overtuiging dat de gevolgen van keuzes verder reiken dan het moment zelf — en dat het de moeite waard is om daarmee rekening te houden.\n\nKortetermijndenken is aantrekkelijk omdat de kosten worden uitgesteld. Maar die kosten verdwijnen niet — ze worden groter. Duurzaamheid is de bereidheid om nu iets meer te investeren zodat het later minder kost.\n\nDuurzaamheid gaat verder dan ecologie. Duurzame relaties, duurzame aanpakken, duurzame organisaties — het gaat altijd over de vraag: staat dit er ook nog als ik er niet meer bij betrokken ben?"
+  },
+  {
+    naam: "Discipline",
+    kort: "Ik vind dat de afstand tussen intentie en actie overbrugd wordt door discipline, niet door motivatie.",
+    lang: "Discipline is de overtuiging dat motivatie een onbetrouwbare leidraad is. Soms heb je het, soms niet. Discipline is wat je doet als je het niet hebt — en dat is precies wanneer het het meeste telt.\n\nDiscipline geeft een fundament aan ambities. Zonder discipline zijn doelen wensdenken. Met discipline worden ze plannen die ook daadwerkelijk worden uitgevoerd.\n\nDiscipline geeft vrijheid. Niet de vrijheid om niets te doen, maar de vrijheid die ontstaat als je de dingen gedaan hebt die gedaan moesten worden. Discipline is ook zelfrespect: je bent iemand die zijn woord houdt — ook tegenover zichzelf."
+  },
+  {
+    naam: "Consistentie",
+    kort: "Ik vind dat mensen het verdienen om te weten waar ze aan toe zijn — elke dag opnieuw.",
+    lang: "Consistentie is de waarde die vertrouwen opbouwt over tijd. Niet eenmalig goed presteren, maar steeds. Niet eerlijk zijn als het uitkomt, maar altijd. Niet vriendelijk zijn als je zin hebt, maar ongeacht de dag.\n\nInconsistentie veroorzaakt erosie. Als mensen niet kunnen voorspellen hoe je reageert, moeten ze constant inschatten — en dat kost energie die beter besteed kan worden.\n\nConsistentie is niet hetzelfde als starheid. Je kunt consistent zijn in je waarden terwijl je flexibel bent in je aanpak. Het gaat om de betrouwbaarheid van het fundament, niet om de herhaling van het gedrag."
+  },
+  {
+    naam: "Excellentie",
+    kort: "Ik vind dat het beste wat je kunt geven ook het beste is wat je geeft.",
+    lang: "Excellentie is geen perfectie — dat bestaat niet. Het is een richting: de keuze om het beste te geven wat je op dit moment kunt geven, en die grens steeds verder te verleggen.\n\nExcellentie is een instelling, geen talent. Talent bepaalt je startpositie; excellentie bepaalt hoe ver je komt. En excellentie is een keuze die iedereen steeds opnieuw kan maken.\n\nExcellentie is aanstekelijk. Als jij de lat hoog legt, trek je anderen mee. Niet door hen onder druk te zetten, maar door te laten zien wat er mogelijk is als je er echt voor gaat."
+  },
+  {
+    naam: "Zingeving",
+    kort: "Ik vind dat werk pas echt telt als het ergens over gaat.",
+    lang: "Zingeving is de overtuiging dat de vraag 'waarom doe ik dit?' niet optioneel is. Werk dat puur instrumenteel is — gedaan voor geld, status of gemak, zonder verbinding met iets groters — is werk dat op de lange termijn leegloopt.\n\nMensen die verbonden zijn met het waarom van hun werk presteren beter, houden meer vol en zijn gelukkiger. Dat is de kracht van betekenis.\n\nZingeving hoeft niet altijd groot en maatschappelijk te zijn. Het kan zitten in een gesprek dat echt iets veranderde voor iemand, in een project dat een probleem oploste dat er toe deed. Zingeving is een kompas."
+  },
+  {
+    naam: "Maatschappelijke bijdrage",
+    kort: "Ik vind dat wat je kunt en weet een verantwoordelijkheid inhoudt tegenover de wereld om je heen.",
+    lang: "Maatschappelijke bijdrage is de overtuiging dat capaciteiten een sociale functie hebben. Dat wat je kunt en weet niet alleen voor jezelf is — maar er ook is om mee bij te dragen aan een betere wereld, een eerlijker systeem, een sterkere gemeenschap.\n\nWerk met maatschappelijke betekenis voelt anders aan dan werk zonder. Niet per se zwaarder of moeilijker — maar rijker. Er is een reden om 's ochtends op te staan die verder gaat dan de volgende mijlpaal.\n\nMaatschappelijke bijdrage is niet voorbehouden aan ngo's of sociale ondernemers. Je kunt in elk beroep en elke organisatie de keuze maken om je werk te verbinden met iets groters dan het directe resultaat."
+  },
+  {
+    naam: "Compassie",
+    kort: "Ik vind dat meevoelen met anderen niet soft is — het is menselijk en professioneel noodzakelijk.",
+    lang: "Compassie is meer dan empathie. Empathie is voelen wat een ander voelt. Compassie is de beweging daarna: de bereidheid om iets met dat gevoel te doen. Niet om het op te lossen, maar om er te zijn.\n\nCompassie is een van de meest onderschatte krachten in professionele contexten. In een cultuur die output en efficiency benadrukt, is de erkenning van menselijkheid een daad van betekenis.\n\nCompassie heeft grenzen — en die grenzen zijn noodzakelijk. Je kunt niet alles dragen, en dat hoeft ook niet. Compassie vanuit kracht is anders dan compassie vanuit verplichting."
+  },
+  {
+    naam: "Moed tot kwetsbaarheid",
+    kort: "Ik vind dat het toegeven van onzekerheid en het vragen om hulp tekenen van sterkte zijn, niet van zwakte.",
+    lang: "Moed tot kwetsbaarheid is een van de moeilijkste en meest waardevolle waarden. De overtuiging dat het zeggen van 'ik weet het niet', 'ik vind het moeilijk' of 'ik heb hulp nodig' niet een blijk van incompetentie is, maar van eerlijkheid en moed.\n\nEen cultuur waarin kwetsbaarheid gewaardeerd wordt, is een cultuur waarin problemen eerder boven water komen, fouten sneller worden hersteld, en mensen zich veiliger voelen om hun beste werk te doen.\n\nKwetsbaarheid creëert vertrouwen. Als jij jezelf toont — echt, zonder masker — geef je anderen toestemming om dat ook te doen."
+  },
+  {
+    naam: "Bewustzijn",
+    kort: "Ik vind dat weten wie je bent en wat je doet de basis is van alles wat er daarna komt.",
+    lang: "Bewustzijn is de meta-waarde: de waarde die alle andere waarden mogelijk maakt. Je kunt eerlijk willen zijn, maar zonder bewustzijn over je eigen patronen en blinde vlekken, zit je jezelf in de weg.\n\nBewustzijn werkt op meerdere niveaus: zelfbewustzijn, sociaal bewustzijn, situationeel bewustzijn. Alle drie zijn nodig — en alle drie zijn te ontwikkelen.\n\nBewustzijn is niet hetzelfde als zelfredzaamheid of controle. Het is simpelweg: weten wat er speelt. Binnenin, buiten je, en in de wisselwerking tussen die twee. Bewustzijn is een oefening die nooit af is — maar die elke dag een beetje scherper kan worden."
+  }
+];
+
+// Extra info list (Patrick Schiel bron)
+const INFO_WORDS = ["Acceptatie","Aandacht","Aanzet","Aanpassingsvermogen","Aansprakelijkheid","Aantrekkingskracht","Aardigheid","Affectie","Afstemming","Ambitie","Autonomie","Balans","Begrip","Beheersing","Behulpzaamheid","Bekwaamheid","Belangeloosheid","Betrouwbaarheid","Betrokkenheid","Bevlogenheid","Bezieling","Bescheidenheid","Besluitvaardigheid","Bewustzijn","Blijdschap","Broederschap","Burgerschap","Compassie","Concentratie","Consequentie","Consistentie","Creativiteit","Daadkracht","Dankbaarheid","Deelbaarheid","Deskundigheid","Dienstbaarheid","Discipline","Doelgerichtheid","Doorzettingsvermogen","Draagkracht","Duidelijkheid","Duurzaamheid","Echtheid","Eerlijkheid","Eigenheid","Energie","Engagement","Enthousiasme","Eenvoud","Evenwicht","Eer","Eerbied","Erkenning","Eenheid","Familie","Fantasie","Feitelijkheid","Flexibiliteit","Focus","Forgiveness (vergeving)","Fortuin","Frisheid","Fun","Gelijkwaardigheid","Geduld","Gehoorzaamheid","Geïnspireerdheid","Geloof","Gemak","Gemeenschap","Genegenheid","Generositeit","Gerechtigheid","Gerichtheid","Gezondheid","Gezelligheid","Glimlach","Goedheid","Goede wil","Groeibereidheid","Gulheid","Harmonie","Hartelijkheid","Helderheid","Herkenning","Herstel","Hoop","Humor","IJver","Inleving","Innerlijke rust","Innerlijke kracht","Innovatie","Inspiratie","Integriteit","Intelligentie","Interesse","Intimiteit","Inzet","Invloed","Inzicht","Jeugdigheid","Juiste maat","Juistheid","Kalmte","Kansen","Kennis","Kennisdeling","Kennisdrang","Kracht","Kritisch denken","Kwaliteit","Kwetsbaarheid","Lef","Leiderschap","Leerbereidheid","Leergierigheid","Leren","Liefdadigheid","Liefde","Liefdevolheid","Liefde voor waarheid","Loyaliteit","Luisteren","Luchtigheid","Macht","Menselijkheid","Mentorschap","Mildheid","Moed","Motivatie","Nauwkeurigheid","Naastenliefde","Nederigheid","Nieuwsgierigheid","Nuchterheid","Onafhankelijkheid","Onbaatzuchtigheid","Onderzoekendheid","Ondersteuning","Ondernemerschap","Ontdekkingsdrang","Onthechting","Ontvankelijkheid","Ontwikkeling","Oprechtheid","Openheid","Optimisme","Orde","Overgave","Overtuiging","Passie","Plezier","Positiviteit","Potentie","Presentie","Prestatie","Principes","Proactief","Professionaliteit","Punctualiteit","Rechtvaardigheid","Reflectie","Respect","Resultaatgerichtheid","Richting","Ruimte","Rust","Samenwerking","Samenhorigheid","Schoonheid","Simpliciteit","Sinceriteit","Solidariteit","Spel","Spirit","Spiritualiteit","Stabiliteit","Standvastigheid","Steun","Stilte","Stiptheid","Streven","Structuur","Succes","Sympathie","Teamspeler","Tevredenheid","Trouw","Toegankelijkheid","Toewijding","Tolerantie","Transparantie","Trots","Trouw aan jezelf","Toekomstgerichtheid","Tact","Tederheid","Teamwerk","Transformatie","Troost","Uithoudingsvermogen","Uitmuntendheid","Uitstraling","Uniciteit","Vakmanschap","Vaardigheid","Veerkracht","Veiligheid","Vernieuwing","Verantwoordelijkheid","Verbinding","Vertrouwen","Verwondering","Verscheidenheid","Vindingrijkheid","Vitaalheid","Voldoening","Volharding","Vrede","Vreugde","Vriendschap","Vrijgevigheid","Vrijheid","Waarachtigheid","Waakzaamheid","Waardering","Warmte","Welwillendheid","Wijsheid","Wilskracht","Zachtheid","Zelfacceptatie","Zelfbeheersing","Zelfbewustzijn","Zelfvertrouwen","Zelfkennis","Zelfliefde","Zelfstandigheid","Zelfzorg","Zekerheid","Zingeving","Zorg","Zorgvuldigheid","Zorgzaamheid","Zuiverheid"];
+
+// ═══════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════
+const LIMITS = { 1: 10, 2: 6, 3: 4 };
+
+let state = {
+  phase: 1,
+  selected: { 1: [], 2: [], 3: [] },
+  customValue: '',
+  customSelected: false,
+  done: false
+};
+
+function saveState() {
+  try { localStorage.setItem('uplab_waarden_v3', JSON.stringify(state)); } catch(e){}
+}
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('uplab_waarden_v3');
+    if (s) {
+      state = JSON.parse(s);
+      return true;
+    }
+  } catch(e){}
+  return false;
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  buildInfoList();
+  const hadState = loadState();
+  buildGrid(1);
+  buildGrid(2);
+  buildGrid(3);
+
+  if (hadState && !state.done) {
+    showScreen(state.phase);
+    if (state.phase > 1) closePopup('popupWelcome');
+    updateCounter();
+  } else if (hadState && state.done) {
+    showScreen('results');
+    renderResults();
+    closePopup('popupWelcome');
+  } else {
+    showScreen(1);
+  }
+
+  // Event listeners
+  document.getElementById('submit1').addEventListener('click', submitPhase1);
+  document.getElementById('submit2').addEventListener('click', submitPhase2);
+  document.getElementById('submit3').addEventListener('click', submitPhase3);
+  document.getElementById('btnCopy').addEventListener('click', copyResults);
+  document.getElementById('btnRestart').addEventListener('click', () => openPopup('popupRestart'));
+  document.getElementById('btnInfo').addEventListener('click', () => openPopup('popupInfoList'));
+
+  document.getElementById('phaseInfo1').addEventListener('click', () => showPhasePopup(1));
+  document.getElementById('phaseInfo2').addEventListener('click', () => showPhasePopup(2));
+  document.getElementById('phaseInfo3').addEventListener('click', () => showPhasePopup(3));
+});
+
+// ═══════════════════════════════════════════════════════════
+// GRID BUILDER
+// ═══════════════════════════════════════════════════════════
+function buildGrid(phase) {
+  const container = document.getElementById(`grid${phase}`);
+  container.innerHTML = '';
+
+  let items = [];
+  if (phase === 1) {
+    items = WAARDEN;
+  } else if (phase === 2) {
+    items = getPhaseItems(1);
+  } else if (phase === 3) {
+    items = getPhaseItems(2);
+  }
+
+  const limit = LIMITS[phase];
+  const selectedList = state.selected[phase];
+
+  items.forEach((w, i) => {
+    const isCustom = w._isCustom === true;
+    const key = isCustom ? '__custom__' : (w.naam || w);
+    const displayName = w.naam || w;
+    const isSelected = selectedList.includes(key);
+
+    if (isCustom) {
+      const customCard = document.createElement('div');
+      customCard.className = 'custom-card' + (isSelected ? ' selected' : '');
+      const label = document.createElement('div');
+      label.style.fontFamily = "'Doppio One', sans-serif";
+      label.style.fontSize = '0.82rem';
+      label.style.textAlign = 'center';
+      label.style.color = isSelected ? 'white' : 'var(--brand-primary)';
+      label.style.pointerEvents = 'none';
+      label.textContent = displayName;
+      const check = document.createElement('span');
+      check.className = 'custom-check';
+      check.textContent = '✓';
+      customCard.appendChild(label);
+      customCard.appendChild(check);
+      container.appendChild(customCard);
+      customCard.addEventListener('click', () => {
+        customCard.classList.toggle('selected');
+        toggleValue(customCard, phase, '__custom__', limit);
+        label.style.color = customCard.classList.contains('selected') ? 'white' : 'var(--brand-primary)';
+      });
+      return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'flip-card' + (isSelected ? ' selected' : '');
+    card.dataset.name = key;
+    card.dataset.phase = phase;
+
+    const inner = document.createElement('div');
+    inner.className = 'flip-card-inner';
+
+    const front = document.createElement('div');
+    front.className = 'flip-front';
+    front.innerHTML = `<div class="value-name">${displayName}</div>`;
+
+    const back = document.createElement('div');
+    back.className = 'flip-back';
+    back.innerHTML = `<div class="value-desc">${w.kort || ''}</div>`;
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    card.appendChild(inner);
+    container.appendChild(card);
+
+    card.addEventListener('click', () => toggleValue(card, phase, key, limit));
+  });
+
+  // Add custom card only in phase 1
+  if (phase === 1) {
+    const customCard = document.createElement('div');
+    customCard.className = 'custom-card' + (state.customSelected ? ' selected' : '');
+    customCard.id = 'customCard1';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'custom-input';
+    input.placeholder = 'Hier jouw eigen waarde';
+    input.maxLength = 30;
+    input.value = state.customValue || '';
+    input.id = 'customInput1';
+
+    const check1 = document.createElement('span');
+    check1.className = 'custom-check';
+    check1.textContent = '✓';
+    customCard.appendChild(input);
+    customCard.appendChild(check1);
+    container.appendChild(customCard);
+
+    input.addEventListener('focus', () => {
+      if (!state.customSelected) {
+        // Just focus to type, don't auto-select
+      }
+    });
+
+    customCard.addEventListener('click', (e) => {
+      if (e.target === input) return; // typing
+      if (input.value.trim()) {
+        toggleCustomValue(phase, limit);
+      }
+    });
+
+    input.addEventListener('change', () => {
+      state.customValue = input.value.trim();
+      saveState();
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        input.blur();
+        if (input.value.trim() && !state.customSelected) {
+          toggleCustomValue(phase, limit);
+        }
+      }
+    });
+  }
+}
+
+function getPhaseItems(phase) {
+  const sel = state.selected[phase];
+  const items = [];
+  sel.forEach(name => {
+    if (name === '__custom__') {
+      items.push({ naam: state.customValue, kort: 'Jouw eigen waarde', _isCustom: true });
+    } else {
+      const w = WAARDEN.find(w => w.naam === name);
+      if (w) items.push(w);
+    }
+  });
+  return items;
+}
+
+function toggleValue(card, phase, name, limit) {
+  const sel = state.selected[phase];
+  const idx = sel.indexOf(name);
+  if (idx > -1) {
+    sel.splice(idx, 1);
+    if (name !== '__custom__') card.classList.remove('selected');
+  } else {
+    if (sel.length >= limit) {
+      openPopup('popupTooMany');
+      // For custom card in phase 2/3 we already toggled, undo it
+      if (name === '__custom__') card.classList.remove('selected');
+      return;
+    }
+    sel.push(name);
+    if (name !== '__custom__') card.classList.add('selected');
+  }
+  saveState();
+  updateCounter();
+}
+
+function toggleCustomValue(phase, limit) {
+  const input = document.getElementById('customInput1');
+  const card = document.getElementById('customCard1');
+  const name = '__custom__';
+  const sel = state.selected[phase];
+  const idx = sel.indexOf(name);
+
+  if (idx > -1) {
+    sel.splice(idx, 1);
+    state.customSelected = false;
+    card.classList.remove('selected');
+  } else {
+    if (!input.value.trim()) return;
+    if (sel.length >= limit) {
+      openPopup('popupTooMany');
+      return;
+    }
+    state.customValue = input.value.trim();
+    sel.push(name);
+    state.customSelected = true;
+    card.classList.add('selected');
+  }
+  saveState();
+  updateCounter();
+}
+
+// ═══════════════════════════════════════════════════════════
+// SUBMIT HANDLERS
+// ═══════════════════════════════════════════════════════════
+function submitPhase1() {
+  const count = state.selected[1].length;
+  if (count < 10) {
+    document.getElementById('tooFewText').textContent = `Je hebt nog maar ${count} waarden geselecteerd. Je hebt er 10 nodig. Bekijk welke 10 er het beste bij je passen.`;
+    openPopup('popupTooFew');
+    return;
+  }
+  state.phase = 2;
+  saveState();
+  buildGrid(2);
+  showScreen(2);
+  openPopup('popupFase2');
+  updateCounter();
+}
+
+function submitPhase2() {
+  const count = state.selected[2].length;
+  if (count < 6) {
+    document.getElementById('tooFewText').textContent = `Je hebt nog maar ${count} waarden geselecteerd. Je hebt er 6 nodig. Kies jouw top 6!`;
+    openPopup('popupTooFew');
+    return;
+  }
+  state.phase = 3;
+  saveState();
+  buildGrid(3);
+  showScreen(3);
+  openPopup('popupFase3');
+  updateCounter();
+}
+
+function submitPhase3() {
+  const count = state.selected[3].length;
+  if (count < 4) {
+    document.getElementById('tooFewText').textContent = `Je hebt nog maar ${count} waarden geselecteerd. Je hebt er 4 nodig. Kies jouw absolute top 4!`;
+    openPopup('popupTooFew');
+    return;
+  }
+  state.done = true;
+  saveState();
+  renderResults();
+  showScreen('results');
+  updateCounter();
+}
+
+// ═══════════════════════════════════════════════════════════
+// RESULTS
+// ═══════════════════════════════════════════════════════════
+function renderResults() {
+  const container = document.getElementById('resultsContainer');
+  container.innerHTML = '';
+  const sel = state.selected[3];
+  sel.forEach(name => {
+    let w;
+    if (name === '__custom__') {
+      w = { naam: state.customValue, kort: 'Jouw eigen waarde — uniek en van jou.', lang: 'Dit is jouw eigen gekozen waarde. Schrijf in je Labboek op wat deze waarde voor jou betekent — in jouw eigen woorden, helemaal passend bij wie jij bent.' };
+    } else {
+      w = WAARDEN.find(x => x.naam === name);
+    }
+    if (!w) return;
+
+    const div = document.createElement('div');
+    div.className = 'result-value';
+    div.innerHTML = `
+      <h3>${w.naam}</h3>
+      <div class="short">${w.kort}</div>
+      <div class="long">${w.lang.replace(/\n\n/g, '<br><br>')}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function copyResults() {
+  const sel = state.selected[3];
+  let text = 'MIJN KERNWAARDEN\n\n';
+  sel.forEach((name, i) => {
+    let w;
+    if (name === '__custom__') {
+      w = { naam: state.customValue, kort: 'Jouw eigen waarde.', lang: 'Schrijf hier jouw eigen uitleg.' };
+    } else {
+      w = WAARDEN.find(x => x.naam === name);
+    }
+    if (!w) return;
+    text += `${i+1}. ${w.naam}\n`;
+    text += `Korte uitleg: ${w.kort}\n\n`;
+    text += `${w.lang}\n\n`;
+    text += '─────────────────────\n\n';
+  });
+
+  const btn = document.getElementById('btnCopy');
+
+  function onSuccess() {
+    btn.textContent = '✓ Gekopieerd!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '📋 Kopieer mijn kernwaarden';
+      btn.classList.remove('copied');
+    }, 3000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(onSuccess).catch(() => fallbackCopy());
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '0';
+    ta.style.opacity = '0';
+    ta.style.pointerEvents = 'none';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) { onSuccess(); } else { showManual(); }
+    } catch(e) {
+      document.body.removeChild(ta);
+      showManual();
+    }
+  }
+
+  function showManual() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;';
+    const box = document.createElement('div');
+    box.style.cssText = 'background:white;border-radius:14px;padding:24px;max-width:560px;width:100%;max-height:80vh;display:flex;flex-direction:column;gap:12px;';
+    box.innerHTML = '<h3 style="font-family:\'Doppio One\',sans-serif;font-size:1rem;">Kopieer je kernwaarden</h3><p style="font-size:0.85rem;color:#666;">Selecteer alles in het veld hieronder (Ctrl+A / Cmd+A) en kopieer het.</p>';
+    const ta2 = document.createElement('textarea');
+    ta2.value = text;
+    ta2.style.cssText = 'width:100%;height:260px;font-size:0.8rem;line-height:1.6;border:2px solid #e0e0e0;border-radius:8px;padding:10px;resize:none;font-family:Roboto,sans-serif;';
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Sluiten';
+    closeBtn.style.cssText = 'background:#549E39;color:white;border:none;border-radius:8px;padding:10px 24px;font-family:"Doppio One",sans-serif;cursor:pointer;align-self:flex-end;';
+    closeBtn.onclick = () => document.body.removeChild(overlay);
+    box.appendChild(ta2);
+    box.appendChild(closeBtn);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    ta2.focus();
+    ta2.select();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// COUNTER
+// ═══════════════════════════════════════════════════════════
+function updateCounter() {
+  const phase = state.phase;
+  const count = state.done ? 4 : (state.selected[phase] || []).length;
+  const limit = state.done ? 4 : LIMITS[phase];
+  const badge = document.getElementById('stickyCounter');
+  badge.textContent = `${count} / ${limit}`;
+  badge.className = 'counter-badge' + (count > limit ? ' warning' : '');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCREEN MANAGEMENT
+// ═══════════════════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  if (id === 'results') {
+    document.getElementById('screenResults').classList.add('active');
+  } else {
+    document.getElementById(`screen${id}`).classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════════════════
+// POPUP MANAGEMENT
+// ═══════════════════════════════════════════════════════════
+function openPopup(id) {
+  document.getElementById(id).classList.add('active');
+}
+
+function closePopup(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+// Click outside popup to close (except welcome)
+document.addEventListener('click', (e) => {
+  const overlays = document.querySelectorAll('.popup-overlay.active');
+  overlays.forEach(overlay => {
+    if (overlay.id === 'popupWelcome') return;
+    if (e.target === overlay) {
+      overlay.classList.remove('active');
+    }
+  });
+});
+
+function showPhasePopup(phase) {
+  const titles = {
+    1: 'Fase 1 — De eerste selectie 🔎',
+    2: 'Fase 2 — Selecteer de parels 🦪',
+    3: 'Fase 3 — Vind de kern 🌋'
+  };
+  const contents = {
+    1: '<p>Net als in de vorige module over jouw waarden krijg je een flinke lijst met jouw mogelijke kernwaarden. Aan jou de taak om een eerste selectie van <strong>10 waarden</strong> te maken die het beste voor jou aanvoelen.</p><p>De vorige reflectieopdrachten hebben je waarschijnlijk al eerste inzicht gegeven. Misschien zie je meteen al een paar waarden die jouw naam schreeuwen. Bij andere twijfel je misschien… en dat is helemaal oké.</p><p>Hover over een kaart om de korte uitleg te zien. Klik om te selecteren.</p>',
+    2: '<p>Mooi, je hebt een eerste selectie gemaakt. Waarden zijn de echte <strong>koersbepalers</strong> in jouw leven. Teveel waarden geven een gebrek aan focus.</p><p>Je ziet de 10 waarden die je net hebt uitgekozen — kies er 6 uit die het beste bij jou passen. Welke waarden maken jou écht uniek?</p>',
+    3: '<p>Lekker bezig! Je hebt nu je 6 belangrijkste waarden op een rij. Om echt goed focus te houden gaan we nog afscheid nemen van 2 waarden — niet omdat die minder belangrijk zijn, maar om de <strong>echte kern</strong> eruit te halen.</p><p>Kies jouw absolute top 4.</p>'
+  };
+  document.getElementById('popupPhaseInfoTitle').textContent = titles[phase];
+  document.getElementById('popupPhaseInfoContent').innerHTML = contents[phase];
+  openPopup('popupPhaseInfo');
+}
+
+// ═══════════════════════════════════════════════════════════
+// RESTART
+// ═══════════════════════════════════════════════════════════
+function doRestart() {
+  state = { phase: 1, selected: { 1: [], 2: [], 3: [] }, customValue: '', customSelected: false, done: false };
+  saveState();
+  closePopup('popupRestart');
+  buildGrid(1);
+  buildGrid(2);
+  buildGrid(3);
+  showScreen(1);
+  openPopup('popupWelcome');
+  updateCounter();
+}
+
+// ═══════════════════════════════════════════════════════════
+// INFO WORD LIST
+// ═══════════════════════════════════════════════════════════
+function buildInfoList() {
+  const container = document.getElementById('infoWordList');
+  container.innerHTML = INFO_WORDS.map(w => `<div>${w}</div>`).join('');
+}
+</script>
+</body>
+</html>
