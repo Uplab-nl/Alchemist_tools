@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dain · Uplab · Alchemist</title>
+<link href="https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-primary: #292727;
+    --accent1: #549E39;
+    --accent2: #3E6913;
+    --white: #FFFFFF;
+    --light-bg: #f5f5f5;
+    --chat-bg: #f0f1ec;
+    --card-bg: #fafafa;
+    --border-light: #e0e0e0;
+    --avatar-img: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAERAREDASIAAhEBAxEB/8QAHQABAAIDAQEBAQAAAAAAAAAAAAUHBAYIAwIBCf/EAEUQAAEDAwIDBQUFBwAHCQAAAAEAAgMEBREGIQcSMRMiQVFxCBQyYYEVQlKRoRYjJTOxwfAkJjRigtHxNkNTVGNydJKz/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAIDBAEFBv/EACYRAQACAgEDBAIDAQAAAAAAAAABAgMRBBIhMRMiQVEUMgUzcWH/2gAMAwEAAhEDEQA/AOy0REBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBETKAi8aupp6WIy1MzImDq57sBVnq7jNYLVK+mt8brhO3YcuzPnuo2tFfKVaTadQtJRl4v9ntEJluNxpqdo/E8Z/Jcy6p4r6tu7XxQ1ZoYHfdi2d+arq7XCsmLpquqmqHuOSXvySqL8iK+GqnDtPl0Lrb2grBa43x2eB9ZKDgPf3WlUuPaQ1Z+1Lq14YaQMcGwD4cnYeqqPUFZK5x3WnzzujqCWkgrJPJvM9muvFpHl/SDgFq+s1rw+hvVe5rqkzPjfy9NsLbtSX226etUtyulSyCCMZJccE/Iea5m4B8TbFoDgjTxVcvvdxnqJJYqWPc4ONz5D5qsOJ2vdRa4uJmuFQ+KJpPJTsOGtC1Tnilf+sf49rXn6dUcHOKJ4hahvUVLSiG3UeBC53xPPif1Vprm/wBiGlYNPX6rYe8aoRA48A1q6QCux2m0bUZqxW8xAiIrFYiIgIiICIiAiIgIiICIiAiIgIiICIiAiKE1pqi06Sskt2vFQ2GCMEgE7uIHQIJtfMj2xsL3nAHUrUeHGt6TVmhotVFnulJI6XBeRs1j3Nz+QVCcfuNdVVRzWjT0j4KTdrp2nBk88EeCryZYpG5WY8U5J1Dqd80TYjI6RoZ5k7LRtX8UdNWSnkbDVR1tW3YQxODsH5+S4wquJ+tb9aqayyXmoFNEwMa2N2C7HmfFTVqphT04Ac57ju9xO7j5rL+V1/q1RxNeW5aw1lfdUVJfWVTo4ejYWHZo8lrwYR1OfmkZwOi94AHyNYPiJAAUJtM+WqsVrGoYlQzlZlapqSvEbXAOAwPNbbqZ7acFg7pa3BVT6qrnyTOjYQXO7o9SqrRtOLIy5VbpZHNbu49AsmzaTqq+YT1o5WfhBwtv0bpWKKJlTUtDpXgO72/Kt2koYaUNDABkZ6Llad3Zu1OhtEVHEI4YgAOi+79SR220vqZiGPeMMGFs8UcTS6eUdxgyFX2uLtJeKpzi89m3Ia0dAFKY0rm213+wXfXvqb/YpZPiIqI2+XTK60C4G9k67/Y3F+3hz+SOrDoHfMlp5R+eF3w3ot2C26vO5Ee/b9REV6gREQEREBERAREQEREBERAREQEREBEWNc66lttBNX1krYaeBhfI93RoCCM1tqi16Sskl0ukoaxoPIzOHSHyHzXB3Hvihd9ZXYsmkMUT+7DTMOzG522WwcbeJE+uNQzVfavZa6bmZSx5wMfiI89gqusUAqqt90q28z+b90D4DwK8/Nn6p1D0+Ng6fdZZdl1ndWcKLToyHNPTU3O6cg7yOc9zt/zWgahqXTDLh0zhTcswMDiFA3KJzqfmVFpm3lpitaeGFo6QuumPwjKsuOraxoa1yqaw1Pul1JJwHbLcYbgQ0b5XKzpGW3srRgd5S2m5op7qwO+6CVX4uR8VMaTujG3ZvMT8JVkW3OkLT2ZOsap0s1Q5p+8VWtKwVOqqSKXvN7XJHmtw1BV9pNO3JHeK0qmk7DUUEpdgc3VcmdSVXJbnwieKMdMr3vcoZVOadtsBavabjzXCHvffCz9Q3Hmu7m56qVC701ZUGk0+GNdyvm2Vc1G7Vumv6mOWjpGxnYLRy/ddvPfSEMvStabTqKhuMbi11NURzDHXuuB/sv6P6buEV1sVHXwkGOeFrwR6L+adMM1Z3Xcnst38XbhrBRSyEzULjFg9eXqP6q3Bbvpm5Ne21tIg6ItrIIiICIiAiIgIiICIiAiIgIiICIiAVzn7Z2u2W7TkGkaCb/S653NPyndrB4fXddD1c8dNTSVEzuWONhe4+QAySv5zcZ9US6r4i3O5ySF7BKWRZ8GjYf0WblZOjHLRxscWt3a3K/mibCR3T1+azKeQhoaBthRsTsuB8lnwHovJxvXmdJZpLqfHmsh9H29mkcB3mH815QDMI9FNWAsfS1EDupB2PzWqldqL21G1ZXWAw1HaN23ysiiuJMYa44IUrd6QOr3UzGOkc53K1oG5K3TSPA28XqNlTWSmiifuwY3I/NV3mKzqXa1m3hXjri1v3s/VetqvTae4Rycx2zt5roC0+zxZYWB1VV9pJ45/6rbLZwV0lAMSUxf6gKv1E4wzPlyxW3Zz6uV25BOQoqpJe9ssbXOLTnYdF2xS8L9IQY/hED8eYWTJw+0pyFos9M3Pk0J6ifpOK6C9tZWROccYcPFSFwvsU9Y483L9crqC68FdHVry4UbYs+QWr3TgDYC8uikdt1/zK7GbTk4JnwoO73X3uFrBKSQc7BYPajx8VeMnAOg+7VOH+eqx6ngVSthd/EpvzK769Z8ufj2U9b3Az8y6e9jK4ubdLrbnPJa+NsjR+a5/17o68aNxJyiooT0lac8vqtx9l3Uclu4n2t7nlsFW80zx55wN/wA1o4946uzJyKTqYl3ciNIIBHii9N5oiIgIiICIiAiIgIiICIiAiIgIeiIgrT2ltS/szwku1UyTkmqI/d49+vP3XfoSv56uc58jnuOXOOSV1v7et2MGnbHbGuIMk7pHDPxAAgf3XIcYz4ryuZbqvr6enw66ptJU3wBZ9MO8FH0vTCkoAs9IaJnaZp/9mPovuiqzST856OHKV50Jyzl8MLzlhdNcqSlZ/wB7IG/qr4t090LV6uy3uDWiIK6o/aS5MDzzfu2OGPqrygjY3AY0AdMBQul6GO3WSlpY2hoYzcKcg3wsd5m1ty20rFa6hkxt26L2Y3YL4i6L3Z0C7rTsycp8l5vb8lkryeu6ceBCxp+qy3LDqtjhclJi1A7hUXUjGQpN+6j6sd4qmXYazqW201yt81HUMa6KVha4EZ6rntlI7RmoacsLo201aJIyBju52IXSdaMscqZ4123vQVsbcYIa4haOPfpuo5NOqjuCgkE1FBK05D42n9F7qG0PO6p0ja53dX0zD+imV70eHz8xqRERdcEREBERAREQEREBERAREQEREHHPt/T/AOs2n6TG/uZkb/8AdwK5rYV0h7fv/bXTv/wD/wDo9c3MXj8v+yXr8b+qElS9VJQdVGU3gpKJV4+8Jyk6CTlkwehU5o6kdcNfWmFrctbLzu9Bha3CeX1Vl8ArZJVahqLvM09jTtDGEjqT1/spZJ1V3HG7OgKc91oGwAWfE47KOp3YwFnRFZYbJjSRi6BZEfRYkB7iy4+is0i9F5SL0K8JF2R5vO6wqw9Vkvd8lhVp7hKrkh4Ru51h1vxFZFA7ma75LEuH8wqEpxCLq/gKr7ibSe9WKpbjLmt5m+qsKq+ErVNSxtlppWvGQW7hSx9rxKN43WXRXDnP7C2fP/lWf0WwDooTQsLqfSFrgd1ZTtB/JTY6L6Kk7rEvmrftIiIpOCIiAiIgIiICIiAiIgIiICIiDkH2/acsumnK0tw0wujJ8yCSuYGO3XZHt8W0z6CtNxDf9mqy1xx+IYH6lcZl3LFzryuXTd3rcWd40rSnOFJx9FCWyoZJsDuFMxuBbkKmsahZaGVEJJZ4oI2lz5XBjQPMnZdM8PbJHYdPU1JyDtA3mefMlVDwa06643v7UqIs01KTyZ6Ofjp+qvmJwAAA2Vea3wvw113SVM/L1JQOy7Ch6U9/qpanIxlUxK+zH1Jqa16bofeLhKQSMsYBu5Vbd+M9ydK6O30sbIR05lu+v9Dx6omhnfLJHJEMNaHbEZz9FW+pNC0Ngo31NfV08TW9RJKAVfTwotMwz6DjReYwBPSxSNHgNv7KcpeNFtkIFXQzR+bgev0VM0lHQ3m8fZtpkdLUkEsax3xLDv1qrbPWMo7qJ6KV/wAPbNLcqXTMoepEeZdJW/iJpiuwBXNjcR0dsVMmup6ul7anlbIw9C05XKjbJciwYeCPAgdVa/DeWS02l1HLKZC5/NknpsqrRpdVaVnOe1WHdKiGMufJI1jR4kqIF+joaWV8js56b4VVcVNQy3WljipqkwtbJl/ewMYUNJWtpv8AeNYafoeYS18bnN+6zcrQ73xHtnbclPC57SccxVXU9M6rn7J1wiL3eRytlo+HlVWUxngq2ytHkcqcVV9e+zuXh3WtuGiLPWMdzNmpWOB8xhbAOi0fgUySDhbZKWQkup4BFk/Jbwvep+sPn7x7pERFNEREQEREBERAREQEREBERAREQVX7U9gm1FwYu9HSxmSojMc0bQMk8rg4gfkuatGez99q2eKa8XSSjnlaCI2MB5fXK6/4mVEkWn+xiOHTvDfpkKmLj9uUkglpj08PJeXzbau9bg13jlo974H2y2addBAxxqYmZbUHOXEeY8FREbJaeV0UzS0hxac+YXZ+ltQx3GkNFcWBkg2wfNcn6/pGUmtLrBECGMqn4H/EVii8z5bJrpenDaGig0pR+5R8kbmknJ3JzuStsi6hVtwWubJ7M6ic/L43nlB8lZEBwVXeZ2nHhn0gPOpWkB3UdRt74U1RsGOi4nKu+M3ES4aRoWwUVO73mUHEh+FuBn+i5a428SqHWNFaqa3U9ZFNTB7queZ+8rzsAB4Abruy82C0XymNPdaKKpZjA5huPNVdqL2buHl1kdJBTz0Dyc5hP/NbuNkpT9nn8jDkv+suWeDdzrheIponu7ajc18Tyem/Rd66z0laNb6KdTXGlZ21XTBzX+LH4yCPQqq9LcA9OaYe59HVTPc4gkv3JwchXAbhK2FkLGhrWDAAKv8AyMe5lRPHyaiFG8H7LWC2Vtluh7aW21T4GyuG7mgnlP5YW/N0kBu1ob9Fs9lt1LSTVEkMfK+aTtHnzcVLve0DosOSeqdvUpGo0prVlkqImnlccDwVD8XtWafotI1ulG0MztQCpa/3kHDWMwV1jqqJkkb8jKq66cHNG6rqpqy4xyxVcpy6aM4JXePelL+5TyaWvXpq5g4Y3KpkuvK5/NJBiWM+JLd8H5f812BrXR3ZaQp9Y6TJpa5lO2appAf3c+2+B4HZa3pngFpnT9TNPT19TK6VvKeYdArRulylp7GLZFFG2FkXZdOoWq+bDuWSmDNTTb+AdW6u4bUVQ9jmOc92Q7r4LfloPAyRp0hJADl0VS8Fb8vQxW6qRLz8savMCIisViIiAiIgIiICIiAiIgIiICIh6INT4ks/htLKT3Y525+pAWrVtLH2GcKwtT0Xv9jqadoBfyF0Y/3huP1AWh0Ujau3h2cubs4Y6LyufXVol638ffdJho9dSCnr/eGDDgfBc+cV6fk1tWOLMc+Hn1O5XT15pupx0XPfGelMepRKR8bAf0WPFG502ZJ7ILh5enWa9xyF37suwR67LoWknZNCyaM5a8BwK5Wa8xv5h1BVm8N9cCmLKGvlPYk4aT91MlHMd17ULg4tIWwUTQGg4WoWmqZI1r43hzHDLSFs9BNzNVcL5lLs7wz0X2fFeVMcjZertwpoMOcbrFA3WdOAN1jjl5vJdnuPSmaRn0XzUylq94gANlH3SeOF+ZDjyXNToR9yhfU5A8Vr4EtBUkPB5M7LbqWpoiznkmYB55UDqi72r3d7GuBI8VXKcSzqecSRBw8QsC5sDmOJ3BCj7DcGTUzTnunOFI1E0b4y07pp3ek/wSqmwXC525xIMobNGPTId/UK1FRWkKw2/WVFK04a8mN3of8Aor1C9vh26sbweZj6Mn+iIi1sgiIgIiICIiAiIgIiICIiAiIg+XBVvqWjOnb66pA/h9a4ekb8dPrhWUsW6UNNcKJ9LVxtfE8YIPgqc2GMtdSuw5ZxW3Ct6iFlQznbgtI2KofjtQNjuNO/GdsLoaTRVdTVXJQ3aIQO6CXJKofjXaL3bLlJTXZ4kbnnp5WjuuaV5lePfHO5epPIpkjUKPrYi15wFiNldE/LdiFM1sLskkKHqWcj/kpZKIYrt20Tr2utEjWSPdNBndjnK8tJa2s90Y3lqhFJ+F65RJwvejuVVSvDopHNx03Wea6a4u7joq1j2AteHA+IK9ay5QU9OXSytjHmSFxzQ65vsDeVlbMB/wC5elTqy61rT7xWTSA9QXZUXZsvbiLr4WtkYoZGve8kF7TnlxjwVfO4oXZ0nMa8Nz/urTtKXVz9VUUdY7mpZn9nKHbgA+JVz3HhFZ7nBmSJkbz95i7En+IS38WbqwASGCdvljCy7rxKF2gLJ6QROxjnY7dadqDg7fLe5zrfUSOjJ2I3Wp11i1dbJC0sdJ6FS7Sat8twq9SXAyHs6qUM8BlQ1feqzlPNJLIPLK1t1feqUO94o3uaPFyxqi81srORlIS4+CdNXZm3w2yp11c4aFsLZWwNaMbeKiqbXV5ZN2sNRMRGQXOzkY+axNO6TuV7ro31zuSIHJYN8LdtZ6eobLp6mpIWNY+Q5LQOoUdwat8tr09rm2yOtNXNUxioEjO1jBwcldcRua9ge05aRkFfzh0FaptQcULNaoG83a1LXO+QBzlf0chYI4mRjo1oC9PgxqsvJ587tD0REW1hEREBERAREQEREBERAREQEXxNNHCwuleGtAzklV5qW/VV2rX0luqXR0bO650fV58d/JVZc1cUblbiw2yzqG9VNzoKd/JPVRMcfAuC1PUmqTUye42aUOZj95O3xz4BaTdbQ5tMXl8jj8zuVnaVp+yp25GCT1XnZedMxqr0MfArE7tO3xW0FXymb3qo5/PmWs6piueobcy3XOQzRxHLHY7w+qsxzQ5paRnKwprdA55cWDPoskZLz8t3pU+lPWrhTQzu55XyFoO4URrrhNRQUj56J7mPbnqdiugKanjjj5WtCjdR0TaigczkB2K76lo8uTjrHhxJd7bUW6qdBOwtLT5KOkYVc/ECzxziWMNzK34dt1UksLgeUjBB3U4nqVX9ssRpI8FmQv7q8THgdF9RjCjMadrbbMhc4SNew4c05BXT/B3WlLfbPDQ1MzY66Foa4Pdjnx4hcwU2ylbdPNSzsnge+ORpyHNdghciFkTp2dI1rmkOaCPIqCulloqpxMsQOfkqw0jxZqIKeOnu8LqkMAb2rfi+q3i362o7tI1lJTyjPUuKnTHa06h2+SKxuUPfdE0D2E8rQPDZalWaRoqV3da0/TCte+Uz5qJsgc4YznC0q/0pbb3PjHeb4rRHFtLL+bX6Rdoo6eiJkk5WMY3mJ+QVccR9Stula4sfiKNvIzPgAvXWupbg6mFI4CMEYJafiwq7uk7zTuJcSSsk0mJ1LTGaLV3C8PYp0627a6uepZozyW6AQxOP45DnI9ORdkYVOeyFp5tk4P0NU+IMnubjVOPm0/CPpurkHRezx6dFHhZ7ze8zIiIr1QiIgIiICIiAiIgIiICh9W3b7ItT6hoaZT3Yw7oXeCmCq/4uzkfZUGfikc5w9OVVZrTWkzC3DWLXiJaxqKa41NM+SatmcXdW82yytMQCOljaAvG8vY2jbznGeiztO/yGrwLWm07mX0FaxWNRDNuLGupXc3TCjrNI3tRG05Xpq0zC2v7B/KWtLj81H6Uc50cb3nLj1KRV1tYwoa6XdlNMIyepwpjwK0PWJ5K+ncf/ABV1yJbtQy9rAJPML5r25pnei8LOc0LPRZNX/KK7oUNxIjbDdTy7Zz/ZVHeqMsrHlrcBxzlXZxSp5ZaljImOc4yHYBVleKKWGdvajHMNlPD3tpXn/TbS5YcHovDk+SnbjTcri7lwo17BnotGTHpkpd5wDZSdMMuCwGDBWXSP74ChEaXxdO2qB0s7WjI+iuXQ1FHTxxtc3Ofkqr0y0du31CtGz1YbGwtONt1qwV77Zs9uqNN3vb3e6ANOB4rUrzK00Lg3dTs1WH2nnld06LSLjWksf3sDK1TbTB4VvrylidFI7l3achVyylnuVzprZTt5paiQRtHzJCs/Uz2up34OcLC9nGxPvvGu2Zi54KJ4qJfkAVltj6rtdMnTTbuXS1ujs+nqC1wt5WUsDYwPQKTPVfgGAv1b4jTz7Tt+oiLoIiICIiAiIgIiICIiAqz4tnN6tjfJrnf0VmFVlxdaReLbL4OY4D/Pqs/KnWKWjjf2Qhb1HHNYXSPbl0eC1SGn34p2+iwK7exSjyblemnpmmnZg52C8OKveSOo97XUH/0nf0UTpV4EbFL3gdpbp2ebCP0Wu6Uly1uxBBwV0boHZC0LX+WzQPHhKFvDXrSOIJxEHeUgKIttsLs0LPQLNq/5JURp2Q+4xn5KTqZP3HRHYaPUQxT6sZHI0OBa/r9FX/EazPEjnU8DnvByA3r/AJ1VgPfzaxg/4v7LD1MOXUND86qNv0LgCpYZ98OZu+OYUXVQtkhdzDdvUFRk+mtQRWX7bktFWLcTtP2fd+a6Y1/wW991BHU2Q9nR1MwNTF+AEjmLfkd1b8GnbYzTcdilpYpKRsQjLCMjp1XtelE+XgxlmH88m7r0id2cgJVzcb+CdXpl0180+JKq2ucTJEBl8Xp5hVbpfStbqu9R2iglbHVEOcxrjjnLQTj12Wa2KdtlM1ZhL2CZu30W5UFyDS0EkYVd0bKq218tDWxPhnheY5GPGCCFJfabYqhrCdyM5yp0jSF7bWxWV5ms47N3TqtOq6w9m5pduvRtxxZObm3cFrVRVYjcXOO6sUTCPvdVmGV3xcoV4+xlo00VuuGrKqMiasd2UXMPuDfI+Rz+iprTum63Vt6obLRRuJqZWmVw+4zPeJPou39J2am09p2is9K0CKmiDBgYyfE/mpUr325a+q6SqIEV6gREQEREBERAREQEREBERAWlcWrXUVtkiq6NhfNRvLgxoySDjOPyW6ooXpF6zWUqXmlotDnGfU9HDSPhqS9j8FpaRjCldH10clHGen1Vy1Gn7LNMZZrXSSPI3LowSq01jpS42m8SVdnozNQynm7OIfyz4gDyXmZOHNI3E7erh5tbTq3ZmVT+ankz+ErUtN1DY6uWF2zmSEYys2L9pKmLsaWyVIc4EHtRygLzk4faqtjH3Zrop5pHl8kDD8I+RVEYMk/DTPIxx8toZUNLA4FaVxHrGMonucMYKx6q73tkxt7rdO2oABDX7ZBXtRadnq521epZoGQMIcIebOT81ReJidStrq0bh76N1BTvtkLHS8j+X4Sdwpa5akpIKYuNQx3oVE3+DSFQ/tCGxSN+9E7BKiI6fSLXh0krpcdA47KMSky9KuluuoZbm0EU0DHAOJ6k+P6LIpIX3viLbKKLEkccxllPgGgeP1wvO56rtNFZ3UtvDQCOVrG+J8Fv3BPTU9Bbpb7cYi2tr+8A7q1nl9dlq4uKb3ifpl5eXoxzH2sgJ1Rfq9uXg+XxPHHLE6OVjXscMEEZBCrdvCSz0fEOg1ZaZDROgkc+WnY0criWOGR+astE07tQntGcL5rm86psMINVG0mqiaN5R5j5haNpHhHLq/h1V3aKN9Pd4pnNp+fYSANGx+ufzXWhAIwRkLypoIaePs4I2xsHRrRgBQmnfaUXmHCgdV0VPPbbjA+Cqp38r2OGMf5hT/C3Q9VxAus9M1zoaWmjL5JfDmx3R+avjjFwki1bVMulrkipbgSBMS3aRvmceI/utw4ZaMoNE6aitdIA6UgOqJcfG/xKRVLradwH4c1WkRXVl3ZGauR3Zxcv4AdirZamF+hTiNITOxERdcEREBERAREQEREBERAREQEREBERAREQV5xJ0ZdLxcWXWyVMcNV2Yje1+3NjocrU4OFGpbif4vfRE09WsGVd6/MKi3GpadzC+vIvWNRKpKXgfZBGG1lzrJvPleQvqfgXppzOWKtrmeeX5Vs4X7hJ42P6J5OSflWum+D2mbRXMrJXTVr2fCJXZGfRWQwNa0Na0AAYAC+igVlMdaRqsK75LXndp2IiKaAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiD//Z');
+    --text-muted: #666;
+  }
+
+  .dain-widget, .dain-widget * { box-sizing: border-box; margin: 0; padding: 0; }
+  .dain-widget button { position: static !important; inset: auto !important; float: none !important; }
+
+  .dain-widget {
+    font-family: 'Roboto', sans-serif;
+    background: var(--white);
+    color: var(--brand-primary);
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 700px;
+    max-height: 100vh;
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--white);
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+
+  /* ─── STICKY HEADER ─── */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--brand-primary);
+    padding: 12px 52px 12px 16px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 12px; }
+
+  .avatar-d {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-image: var(--avatar-img);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .header-title {
+    font-family: 'Doppio One', sans-serif;
+    color: var(--white);
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .header-title span { color: var(--accent1); }
+  .header-sub { font-family: 'Roboto', sans-serif; font-size: 11.2px; color: #c9c9c9; font-weight: 400; }
+
+  .header-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px;
+    flex-shrink: 0 !important;
+    align-items: center;
+    width: auto !important;
+  }
+
+  .btn-icon {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12.8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-icon:hover { background: rgba(255,255,255,0.22); }
+
+  /* ─── DIAGONAL BANNER ─── */
+  .header-banner {
+    background: var(--brand-primary);
+    position: relative;
+    overflow: hidden;
+    padding: 22px 20px 38px;
+    flex-shrink: 0;
+  }
+
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: var(--chat-bg);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 100%;
+    background: linear-gradient(135deg, #3a3838 0%, transparent 55%);
+    opacity: 0.5;
+  }
+
+  .header-banner-content { position: relative; z-index: 2; }
+
+  .header-banner h1 {
+    font-family: 'Doppio One', sans-serif;
+    color: var(--white);
+    font-size: clamp(18.4px, 4vw, 24px);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .header-banner h1 span { color: var(--accent1); }
+  .header-banner p { color: #d9d9d9; font-size: 13.6px; max-width: 480px; }
+
+  /* ─── CHAT AREA ─── */
+  .privacy-note {
+    background: var(--chat-bg);
+    color: var(--text-muted);
+    font-size: 11.52px;
+    text-align: center;
+    padding: 6px 16px 0;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .chat-wrap {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--chat-bg);
+  }
+
+  .messages-inner {
+    padding: 18px 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .msg-row { display: flex; gap: 8px; max-width: 100%; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .msg-row.user { justify-content: flex-end; }
+
+  .msg-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background-image: var(--avatar-img);
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  .msg-bubble-col { display: flex; flex-direction: column; max-width: 78%; }
+  .msg-row.user .msg-bubble-col { align-items: flex-end; }
+
+  .msg-bubble {
+    padding: 9px 13px;
+    border-radius: 14px;
+    font-size: 14.72px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.06);
+  }
+
+  .msg-row.dain .msg-bubble {
+    background: var(--white);
+    color: var(--brand-primary);
+    border-radius: 4px 14px 14px 14px;
+    border: 1px solid var(--border-light);
+  }
+
+  .msg-row.user .msg-bubble {
+    background: var(--accent1);
+    color: white;
+    border-radius: 14px 4px 14px 14px;
+  }
+
+  .msg-bubble strong { font-weight: 700; }
+
+  .msg-time {
+    font-size: 10.88px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    padding: 0 4px;
+  }
+
+  .feedback-buttons {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+    padding: 0 4px;
+  }
+  .fb-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15.2px;
+    padding: 2px 5px;
+    border-radius: 6px;
+    opacity: 0.45;
+    transition: opacity 0.15s, background 0.15s, transform 0.1s;
+    line-height: 1;
+  }
+  .fb-btn:hover { opacity: 0.85; background: var(--light-bg); }
+  .fb-btn.active { opacity: 1; background: var(--light-bg); transform: scale(1.1); }
+  .fb-btn.fb-up.active { background: rgba(84,158,57,0.18); }
+  .fb-btn.fb-down.active { background: rgba(192,57,43,0.15); }
+
+  .file-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 13.6px;
+  }
+  .msg-row.dain .file-chip { background: var(--light-bg); }
+  .file-chip .file-icon { font-size: 19.2px; }
+
+  /* Typing indicator */
+  .typing-dots { display: flex; gap: 4px; padding: 4px 2px; }
+  .typing-dots span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--text-muted);
+    animation: blink 1.2s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+
+  /* ─── INPUT BAR ─── */
+  .input-bar {
+    flex-shrink: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border-light);
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .input-bar textarea {
+    flex: 1;
+    resize: none;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 10px 16px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14.72px;
+    line-height: 1.4;
+    max-height: 110px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-bar textarea:focus { border-color: var(--accent1); }
+
+  .round-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18.4px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .round-btn.send { background: var(--accent1); color: white; }
+  .round-btn.send:hover { background: var(--accent2); }
+  .round-btn.send:disabled { background: #b8d8ac; cursor: not-allowed; }
+  .round-btn.attach { background: var(--light-bg); color: var(--brand-primary); border: 1px solid var(--border-light); }
+  .round-btn.attach:hover { background: var(--border-light); }
+
+  .labboek-status {
+    font-size: 11.52px;
+    color: var(--accent2);
+    text-align: center;
+    padding: 4px 12px 0;
+    background: var(--white);
+  }
+
+  /* ─── POPUPS ─── */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+    backdrop-filter: blur(2px);
+  }
+  .popup-overlay.active {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 60px;
+  }
+  .popup-box {
+    background: white;
+    border-radius: 14px;
+    max-width: 480px;
+    width: 100%;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .popup-box h2 {
+    font-family: 'Doppio One', sans-serif;
+    font-size: 18.4px;
+    margin-bottom: 14px;
+    color: var(--brand-primary);
+    padding-right: 20px;
+  }
+  .popup-box p { font-size: 14.4px; line-height: 1.7; color: #444; margin-bottom: 12px; }
+  .popup-close {
+    position: absolute; top: 14px; right: 14px;
+    background: none; border: none; font-size: 20.8px;
+    cursor: pointer; color: var(--text-muted); line-height: 1; padding: 4px;
+  }
+  .popup-close:hover { color: var(--brand-primary); }
+  .popup-btn {
+    background: var(--accent1); color: white; border: none; border-radius: 8px;
+    font-family: 'Doppio One', sans-serif; padding: 11px 24px; cursor: pointer;
+    font-size: 14.08px; margin-top: 6px; margin-right: 8px; transition: background 0.2s;
+  }
+  .popup-btn:hover { background: var(--accent2); }
+  .popup-btn-secondary {
+    background: transparent; color: var(--brand-primary); border: 2px solid var(--border-light);
+    border-radius: 8px; font-family: 'Roboto', sans-serif; padding: 9px 22px; cursor: pointer;
+    font-size: 13.76px; margin-top: 6px; transition: all 0.2s;
+  }
+  .popup-btn-secondary:hover { border-color: var(--brand-primary); }
+  .popup-box textarea {
+    width: 100%; min-height: 160px; border: 1px solid var(--border-light);
+    border-radius: 8px; padding: 10px; font-family: 'Roboto', sans-serif;
+    font-size: 14.08px; resize: vertical; margin-bottom: 10px;
+  }
+
+  @media (max-width: 480px) {
+    .popup-box { padding: 20px; }
+    .header-banner h1 { font-size: 16.8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dain-widget">
+<div class="app">
+
+  <!-- ─── STICKY HEADER ─── -->
+  <div class="sticky-header">
+    <div class="header-left">
+      <div class="avatar-d"></div>
+      <div class="header-title">
+        Dain <span>· Uplab</span><br>
+        <span class="header-sub">Alchemist · jouw AI-loopbaanmaatje</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" id="btnSummary" title="Samenvatting & eindconclusie">📋 Samenvatting</button>
+      <button class="btn-icon" id="btnRestart" title="Opnieuw beginnen">↺ Opnieuw</button>
+    </div>
+  </div>
+
+  <!-- ─── CHAT (scrollt, incl. banner) ─── -->
+  <div class="chat-wrap" id="chatWrap">
+    <!-- ─── DIAGONAL BANNER (scrollt mee) ─── -->
+    <div class="header-banner">
+      <div class="header-banner-content">
+        <h1>Hey, ik ben Dain <span>👋</span></h1>
+        <p>Stuur je Labboek (als PDF of als tekst) en ik denk met je mee over richtingen die echt bij je passen.</p>
+      </div>
+    </div>
+
+    <div class="privacy-note">🔒 Dit gesprek wordt geanonimiseerd bewaard, zodat Daan Dain steeds beter kan maken.</div>
+
+    <div class="messages-inner" id="messagesInner"></div>
+  </div>
+
+  <div class="labboek-status" id="labboekStatus" style="display:none;"></div>
+
+  <!-- ─── INPUT BAR ─── -->
+  <div class="input-bar">
+    <button class="round-btn attach" id="btnAttach" title="Labboek toevoegen (PDF of tekst)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+    </button>
+    <input type="file" id="fileInput" accept="application/pdf,.txt,.md" style="display:none;">
+    <textarea id="msgInput" placeholder="Typ je bericht..." rows="1"></textarea>
+    <button class="round-btn send" id="btnSend" title="Versturen">➤</button>
+  </div>
+</div>
+
+<!-- ─── POPUP: Opnieuw beginnen ─── -->
+<div class="popup-overlay" id="popupRestart">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupRestart')">✕</button>
+    <h2>Opnieuw beginnen?</h2>
+    <p>Weet je zeker dat je opnieuw wilt beginnen? Alles wat je hebt besproken met Dain wordt hiermee verwijderd.</p>
+    <button class="popup-btn" id="confirmRestart">Ja, opnieuw beginnen</button>
+    <button class="popup-btn-secondary" onclick="closePopup('popupRestart')">Annuleren</button>
+  </div>
+</div>
+
+<!-- ─── POPUP: Labboek als tekst plakken ─── -->
+<div class="popup-overlay" id="popupPaste">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupPaste')">✕</button>
+    <h2>Labboek als tekst plakken</h2>
+    <p>Geen PDF bij de hand? Plak hieronder de inhoud van je Labboek (missie, kernwaarden, talenten, drijfveren en je con's).</p>
+    <textarea id="pasteTextarea" placeholder="Plak hier de tekst van je Labboek..."></textarea>
+    <button class="popup-btn" id="confirmPaste">Versturen naar Dain</button>
+    <button class="popup-btn-secondary" onclick="closePopup('popupPaste')">Annuleren</button>
+  </div>
+</div>
+
+<!-- ─── POPUP: Samenvatting & eindconclusie ─── -->
+<div class="popup-overlay" id="popupSummary">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupSummary')">✕</button>
+    <h2>Samenvatting &amp; eindconclusie</h2>
+    <div id="summaryContent">
+      <div class="typing-dots" style="padding: 10px 0;"><span></span><span></span><span></span></div>
+    </div>
+    <textarea id="summaryTextarea" style="position:absolute; left:-9999px;" aria-hidden="true"></textarea>
+    <div style="margin-top: 14px;">
+      <button class="popup-btn" id="copySummaryBtn">📋 Kopieer samenvatting</button>
+      <button class="popup-btn-secondary" onclick="closePopup('popupSummary')">Sluiten</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="popup-overlay" id="popupChoice">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupChoice')">✕</button>
+    <h2>Labboek toevoegen</h2>
+    <p>Hoe wil je je Labboek delen met Dain?</p>
+    <button class="popup-btn" id="choosePdf">📄 PDF uploaden</button>
+    <button class="popup-btn-secondary" id="choosePasteText">✏️ Tekst plakken</button>
+  </div>
+</div>
+
+</div><!-- /.dain-widget -->
+
+<script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
+// Optioneel: vul deze in om gesprekken te loggen in Supabase.
+// Zie onderaan dit bestand (in commentaar) voor het SQL-schema
+// dat je eerst in je Supabase project moet aanmaken.
+const SUPABASE_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+
+// Edge Function die als veilige tussenlaag naar de Anthropic API praat
+// (de echte API-key staat alleen server-side als Supabase secret)
+const DAIN_CHAT_ENDPOINT = SUPABASE_URL + '/functions/v1/dain-chat';
+
+const STORAGE_KEY_MESSAGES = 'dain_uplab_messages';
+const STORAGE_KEY_LABBOEK  = 'dain_uplab_labboek';
+const STORAGE_KEY_SESSION  = 'dain_uplab_session_id';
+
+/* =========================================================
+   SYSTEM PROMPT
+   ========================================================= */
+const SYSTEM_PROMPT = `Je bent Dain, het AI-alter-ego van loopbaancoach Daan Petraeus (Uplab Career).
+Je begeleidt gebruikers die het Alchemist Programma hebben doorlopen bij het ontdekken van
+passende loopbaanrichtingen, op basis van hun Labboek.
+
+## Rol & toon
+- Je bent vriendelijk, complimenteus, motiverend en optimistisch.
+- Je spreekt de gebruiker altijd aan met "je/jij".
+- Je bent persoonlijk en bemoedigend: de gebruiker moet voelen dat ze waardevolle
+  kwaliteiten hebben en dat er altijd mogelijkheden zijn.
+- Een vleugje humor en empathie mag altijd.
+- Je hoofddoel: het onderzoeken, ontdekken en ontketenen van potentieel.
+
+## Werkwijze
+
+### 1. Labboek lezen
+Zodra de gebruiker een Labboek deelt (als PDF of als tekst), met daarin missie, kernwaarden,
+talenten, drijfveren en omgevingsvoorkeuren (incl. con's: wat ze NIET terug willen zien in
+een nieuwe baan):
+- Laat merken dat je het volledige Labboek hebt gelezen en onder de indruk bent.
+- Vat kort samen wat je hebt gezien (missie, kernwaarden, talenten).
+- Geef een compliment over de helderheid of moed om dit te delen.
+
+### 2. Eerste advies
+- Geef minimaal 5 banen/functies die passen bij de combinatie van missie, kernwaarden,
+  talenten en drijfveren.
+- Geef daarnaast ook 2 verrassende banen/functies: richtingen waar de gebruiker waarschijnlijk
+  nog niet aan heeft gedacht of nog nooit van heeft gehoord, maar die op de een of andere
+  manier toch goed zouden kunnen passen. Geef ook hiervoor aan waarom dit past (link naar
+  missie/kernwaarden/talenten/drijfveren), en benoem expliciet dat dit een verrassende of
+  onverwachte optie is -- bijvoorbeeld met iets als "deze komt misschien als verrassing,
+  maar...".
+- Zoek bewust naar variatie: pik niet één talent eruit om alles aan te hangen. Eén voorkeur
+  (bv. "werken met kinderen") kan op meerdere manieren vertaald worden (bv. geduld,
+  ontwikkelen, groeien, betekenis geven voor anderen -> ook passend bij een rol als trainer).
+- Per baan:
+  - Leg uit waarom dit past (link naar minstens 1 kernwaarde + 1 of meer talenten/drijfveren
+    + de missie).
+  - Houd rekening met de con's -- dit zijn harde grenzen, geen suggesties.
+  - Benoem ook mogelijke aandachtspunten/con's van de baan zelf, zodat de gebruiker
+    realistisch kan kiezen.
+- Sluit af met een vraag: "Wil je dat ik nog meer opties aandraag?" of "Zullen we een van
+  deze banen verder uitdiepen?"
+
+### 3. Verdieping
+- Kiest de gebruiker een baan? Benoem de belangrijkste vaardigheden die daarbij horen.
+- Check of ze willen onderzoeken hoe ze deze vaardigheden concreter kunnen maken en
+  ontwikkelen -- ook in hun huidige functie.
+
+### 4. Extra verdieping
+- Geef concrete tips: opleidingen/cursussen, werksettings/omgevingen waar dit beroep tot
+  zijn recht komt, en hoe ze dit al kunnen ontwikkelen in hun huidige rol.
+- Suggesties om klein te beginnen: vrijwilligerswerk, projecten, interne overstap.
+
+### 5. Afsluiting
+- Sluit ieder antwoord af met een positieve, energieke noot, bijvoorbeeld:
+  "Dit klinkt als een spannende richting waarin je veel impact kunt maken 🚀" of
+  "Wat mooi dat je dit onderzoekt -- je zet een belangrijke stap voor je toekomst!"
+
+## Grenzen
+- Noem nooit dat je toegang hebt tot trainingsdata of externe bronnen.
+- Blijf bij loopbaanadvies. Wijkt de gebruiker af naar een ander onderwerp (gezondheid,
+  financiën, etc.), stuur vriendelijk en met humor terug naar het loopbaangesprek.
+- Beantwoord geen vragen buiten het loopbaancoach-domein.
+- Gebruik Markdown spaarzaam: vetgedrukte functietitels mogen, maar houd het overzichtelijk
+  en niet te lang per bericht.`;
+
+const WELCOME_MESSAGE = `Hey! Ik ben Dain — het digitale brein van Daan, speciaal getraind om met je mee te denken over jouw volgende stap. 🧪
+
+Heb je je Labboek al af? Klik op de paperclip hieronder en deel 'm met me — als PDF of als tekst, jij mag het zeggen — dan duik ik er helemaal in en kom ik met een aantal richtingen die écht bij je passen.
+
+Geen Labboek bij de hand? Geen probleem, dan beginnen we gewoon met een goed gesprek. Vertel: waar loop je nu tegenaan in je werk, of waar droom je van?`;
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let messages = [];      // {role: 'user'|'assistant', content: [...] of string, ts}
+let labboek = null;     // {type: 'pdf'|'text', name, data}
+let isSending = false;
+
+const chatWrap   = document.getElementById('chatWrap');
+const messagesInner = document.getElementById('messagesInner');
+const msgInput   = document.getElementById('msgInput');
+const btnSend    = document.getElementById('btnSend');
+const btnAttach  = document.getElementById('btnAttach');
+const fileInput  = document.getElementById('fileInput');
+const labboekStatus = document.getElementById('labboekStatus');
+
+/* =========================================================
+   INIT / PERSISTENCE
+   ========================================================= */
+function getSessionId() {
+  let id = localStorage.getItem(STORAGE_KEY_SESSION);
+  if (!id) {
+    id = 'sess_' + Math.random().toString(36).slice(2) + Date.now();
+    localStorage.setItem(STORAGE_KEY_SESSION, id);
+  }
+  return id;
+}
+
+function loadState() {
+  try {
+    const savedMsgs = localStorage.getItem(STORAGE_KEY_MESSAGES);
+    const savedLab  = localStorage.getItem(STORAGE_KEY_LABBOEK);
+    if (savedLab) labboek = JSON.parse(savedLab);
+    if (savedMsgs) {
+      messages = JSON.parse(savedMsgs);
+    }
+    if (messages.length > 0) {
+      messages.forEach(m => renderMessage(m, false));
+    } else {
+      addAssistantMessage(WELCOME_MESSAGE, true);
+    }
+    updateLabboekStatus();
+  } catch (e) {
+    console.error('Kon opgeslagen gesprek niet laden:', e);
+    addAssistantMessage(WELCOME_MESSAGE, true);
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem(STORAGE_KEY_MESSAGES, JSON.stringify(messages));
+    if (labboek) localStorage.setItem(STORAGE_KEY_LABBOEK, JSON.stringify(labboek));
+  } catch (e) {
+    console.error('Opslaan mislukt (mogelijk te groot voor localStorage):', e);
+  }
+}
+
+function updateLabboekStatus() {
+  if (labboek) {
+    labboekStatus.style.display = 'block';
+    labboekStatus.textContent = '📄 Labboek "' + (labboek.name || 'tekst') + '" is bekend bij Dain';
+  } else {
+    labboekStatus.style.display = 'none';
+  }
+}
+
+/* =========================================================
+   RENDERING
+   ========================================================= */
+function nowTime() {
+  const d = new Date();
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// Lichte markdown: **vet** en regeleinden
+function formatText(text) {
+  let safe = escapeHtml(text);
+  safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  return safe;
+}
+
+function renderMessage(m, scroll = true) {
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + (m.role === 'user' ? 'user' : 'dain');
+
+  if (m.role !== 'user') {
+    const avatar = document.createElement('div');
+    avatar.className = 'msg-avatar';
+    // avatar krijgt afbeelding via CSS, geen tekst nodig
+    row.appendChild(avatar);
+  }
+
+  const col = document.createElement('div');
+  col.className = 'msg-bubble-col';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+
+  if (m.fileLabel) {
+    bubble.innerHTML = '<div class="file-chip"><span class="file-icon">📄</span><span>' + escapeHtml(m.fileLabel) + '</span></div>' +
+      (m.text ? '<div style="margin-top:6px;">' + formatText(m.text) + '</div>' : '');
+  } else {
+    bubble.innerHTML = formatText(m.text || '');
+  }
+
+  col.appendChild(bubble);
+
+  const time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = m.ts || '';
+  col.appendChild(time);
+
+  if (m.role !== 'user' && m.dbId) {
+    const fb = document.createElement('div');
+    fb.className = 'feedback-buttons';
+    fb.innerHTML =
+      '<button class="fb-btn fb-up' + (m.feedback === 'up' ? ' active' : '') + '" title="Goed advies">👍</button>' +
+      '<button class="fb-btn fb-down' + (m.feedback === 'down' ? ' active' : '') + '" title="Minder goed">👎</button>';
+
+    const upBtn = fb.querySelector('.fb-up');
+    const downBtn = fb.querySelector('.fb-down');
+
+    upBtn.addEventListener('click', () => handleFeedbackClick(m.dbId, 'up', upBtn, downBtn));
+    downBtn.addEventListener('click', () => handleFeedbackClick(m.dbId, 'down', upBtn, downBtn));
+
+    col.appendChild(fb);
+  }
+
+  row.appendChild(col);
+  messagesInner.appendChild(row);
+  if (scroll) chatWrap.scrollTop = chatWrap.scrollHeight;
+}
+
+function handleFeedbackClick(clientMsgId, value, upBtn, downBtn) {
+  // Toggle: opnieuw klikken op dezelfde knop = feedback intrekken
+  const target = messages.find(mm => mm.dbId === clientMsgId);
+  const current = target ? target.feedback : null;
+  const newValue = current === value ? null : value;
+
+  upBtn.classList.toggle('active', newValue === 'up');
+  downBtn.classList.toggle('active', newValue === 'down');
+
+  if (target) target.feedback = newValue;
+  saveState();
+  sendFeedback(clientMsgId, newValue);
+}
+
+const THINKING_MESSAGES = {
+  default: [
+    'Even denken...',
+    'Ik denk heel even na over een goed antwoord, geef me een paar tellen...',
+    'Momentje, ik zoek de juiste woorden...',
+    'Bijna! Ik werk het nog even af...'
+  ],
+  labboek: [
+    'Ik neem even je Labboek door...',
+    'Mooi materiaal, ik lees het rustig helemaal door...',
+    'Ik leg je missie, kernwaarden en talenten naast elkaar...',
+    'Ik denk na over een paar richtingen die echt bij je passen, geef me een paar tellen...'
+  ]
+};
+
+let typingInterval = null;
+
+function showTyping(context = 'default') {
+  const row = document.createElement('div');
+  row.className = 'msg-row dain';
+  row.id = 'typingRow';
+  row.innerHTML = '<div class="msg-avatar"></div><div class="msg-bubble-col"><div class="msg-bubble"><div id="typingStatus" style="font-size:13.6px; color:var(--text-muted); margin-bottom:4px;"></div><div class="typing-dots"><span></span><span></span><span></span></div></div></div>';
+  messagesInner.appendChild(row);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
+
+  const messagesList = THINKING_MESSAGES[context] || THINKING_MESSAGES.default;
+  const statusEl = document.getElementById('typingStatus');
+  let i = 0;
+  statusEl.textContent = messagesList[i];
+
+  typingInterval = setInterval(() => {
+    i = (i + 1) % messagesList.length;
+    const el = document.getElementById('typingStatus');
+    if (el) {
+      el.textContent = messagesList[i];
+      chatWrap.scrollTop = chatWrap.scrollHeight;
+    }
+  }, 4000);
+}
+
+function hideTyping() {
+  if (typingInterval) {
+    clearInterval(typingInterval);
+    typingInterval = null;
+  }
+  const row = document.getElementById('typingRow');
+  if (row) row.remove();
+}
+
+/* =========================================================
+   MESSAGE HELPERS (lokaal renderen + opslaan)
+   ========================================================= */
+function addAssistantMessage(text, persistOnly = false) {
+  const clientMsgId = generateMsgId();
+  const m = { role: 'assistant', text, ts: nowTime(), dbId: clientMsgId, feedback: null };
+  messages.push({ role: 'assistant', content: text, text: text, ts: m.ts, dbId: clientMsgId, feedback: null });
+  renderMessage(m);
+  saveState();
+  if (!persistOnly) logToSupabase('assistant', text, clientMsgId);
+}
+
+function addUserTextMessage(text) {
+  const m = { role: 'user', text, ts: nowTime() };
+  messages.push({ role: 'user', content: text, text: text, ts: m.ts });
+  renderMessage(m);
+  saveState();
+  logToSupabase('user', text);
+}
+
+/* =========================================================
+   API CALL
+   ========================================================= */
+async function callDain(context = 'default') {
+  isSending = true;
+  btnSend.disabled = true;
+  showTyping(context);
+
+  // Bouw messages-array voor de API op basis van opgeslagen geschiedenis
+  const apiMessages = messages.map(m => ({ role: m.role, content: m.content }));
+
+  try {
+    const response = await fetch(DAIN_CHAT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: apiMessages
+      })
+    });
+
+    const data = await response.json();
+    hideTyping();
+
+    if (data.content) {
+      const textBlocks = data.content.filter(b => b.type === 'text').map(b => b.text);
+      const reply = textBlocks.join('\n\n') || 'Sorry, daar kreeg ik even geen antwoord op. Kun je het anders formuleren?';
+      addAssistantMessage(reply);
+    } else {
+      addAssistantMessage('Hmm, er ging iets mis bij het ophalen van mijn antwoord. Probeer het zo nog eens! 🙏');
+    }
+  } catch (err) {
+    console.error(err);
+    hideTyping();
+    addAssistantMessage('Oeps, ik kon je bericht nu niet verwerken. Check je internetverbinding en probeer het opnieuw. 🙏');
+  } finally {
+    isSending = false;
+    btnSend.disabled = false;
+    msgInput.focus();
+  }
+}
+
+/* =========================================================
+   VERZENDEN TEKSTBERICHT
+   ========================================================= */
+async function sendTextMessage() {
+  const text = msgInput.value.trim();
+  if (!text || isSending) return;
+  msgInput.value = '';
+  autoResize();
+  addUserTextMessage(text);
+  await callDain();
+}
+
+function autoResize() {
+  msgInput.style.height = 'auto';
+  msgInput.style.height = Math.min(msgInput.scrollHeight, 110) + 'px';
+}
+
+/* =========================================================
+   LABBOEK: PDF UPLOAD
+   ========================================================= */
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = () => reject(new Error('Bestand lezen mislukt'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handlePdfUpload(file) {
+  if (!file) return;
+  if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    // .txt / .md als tekst behandelen
+    const text = await file.text();
+    handleLabboekText(text, file.name);
+    return;
+  }
+
+  let base64;
+  try {
+    base64 = await fileToBase64(file);
+  } catch (e) {
+    addAssistantMessage('Ik kon je bestand niet inlezen. Probeer het nog eens, of plak de tekst van je Labboek hieronder. 🙏', true);
+    return;
+  }
+
+  labboek = { type: 'pdf', name: file.name, data: base64 };
+  updateLabboekStatus();
+
+  const userMsg = {
+    role: 'user',
+    text: 'Hier is mijn Labboek. Kijk er rustig doorheen en deel je eerste indrukken!',
+    fileLabel: file.name,
+    ts: nowTime()
+  };
+
+  // Render in chat
+  renderMessage(userMsg);
+
+  // Opslaan met document-block voor de API
+  messages.push({
+    role: 'user',
+    content: [
+      { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: base64 } },
+      { type: 'text', text: userMsg.text }
+    ],
+    text: userMsg.text,
+    ts: userMsg.ts,
+    fileLabel: file.name
+  });
+
+  saveState();
+  logToSupabase('user', '[Labboek PDF geüpload: ' + file.name + ']');
+
+  await callDain('labboek');
+}
+
+async function handleLabboekText(text, label) {
+  if (!text || !text.trim()) return;
+  labboek = { type: 'text', name: label || 'Labboek (tekst)', data: text };
+  updateLabboekStatus();
+
+  const intro = 'Hier is mijn Labboek als tekst. Kijk er rustig doorheen en deel je eerste indrukken!\n\n--- LABBOEK ---\n' + text;
+  const userMsg = {
+    role: 'user',
+    text: 'Hier is mijn Labboek als tekst. Kijk er rustig doorheen en deel je eerste indrukken!',
+    fileLabel: label || 'Labboek (tekst)',
+    ts: nowTime()
+  };
+  renderMessage(userMsg);
+
+  messages.push({ role: 'user', content: intro, text: userMsg.text, ts: userMsg.ts, fileLabel: label || 'Labboek (tekst)' });
+  saveState();
+  logToSupabase('user', '[Labboek tekst geplakt: ' + (label || 'onbekend') + ']');
+
+  await callDain('labboek');
+}
+
+/* =========================================================
+   SUPABASE LOGGING (optioneel)
+   ========================================================= */
+async function logToSupabase(role, content, clientMsgId) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/dain_chatlog', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        session_id: getSessionId(),
+        role: role,
+        message: typeof content === 'string' ? content : JSON.stringify(content),
+        client_msg_id: clientMsgId || null
+      })
+    });
+  } catch (e) {
+    console.error('Supabase logging mislukt:', e);
+  }
+}
+
+const FEEDBACK_ENDPOINT = SUPABASE_URL + '/functions/v1/dain-feedback';
+
+function generateMsgId() {
+  if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+  return 'msg_' + Math.random().toString(36).slice(2) + Date.now();
+}
+
+async function sendFeedback(clientMsgId, feedback) {
+  if (!clientMsgId) return;
+  try {
+    await fetch(FEEDBACK_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: clientMsgId, feedback })
+    });
+  } catch (e) {
+    console.error('Feedback versturen mislukt:', e);
+  }
+}
+
+/* =========================================================
+   POPUPS
+   ========================================================= */
+function openPopup(id) { document.getElementById(id).classList.add('active'); }
+function closePopup(id) { document.getElementById(id).classList.remove('active'); }
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+btnSend.addEventListener('click', sendTextMessage);
+
+msgInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendTextMessage();
+  }
+});
+msgInput.addEventListener('input', autoResize);
+
+btnAttach.addEventListener('click', () => openPopup('popupChoice'));
+
+document.getElementById('choosePdf').addEventListener('click', () => {
+  closePopup('popupChoice');
+  fileInput.click();
+});
+
+document.getElementById('choosePasteText').addEventListener('click', () => {
+  closePopup('popupChoice');
+  openPopup('popupPaste');
+});
+
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  fileInput.value = '';
+  if (file) handlePdfUpload(file);
+});
+
+document.getElementById('confirmPaste').addEventListener('click', () => {
+  const text = document.getElementById('pasteTextarea').value;
+  if (!text.trim()) return;
+  closePopup('popupPaste');
+  document.getElementById('pasteTextarea').value = '';
+  handleLabboekText(text, 'Labboek (geplakte tekst)');
+});
+
+document.getElementById('btnRestart').addEventListener('click', () => openPopup('popupRestart'));
+
+/* ─── SAMENVATTING & EINDCONCLUSIE ─── */
+const SUMMARY_PROMPT = `Maak op basis van het hele gesprek tot nu toe een korte samenvatting en
+eindconclusie voor de gebruiker, in het Nederlands, in de jij-vorm. Gebruik dit format:
+
+**Samenvatting van het gesprek**
+(2-4 zinnen: wat hebben we besproken, welke missie/kernwaarden/talenten kwamen naar voren)
+
+**Eindconclusie**
+(de belangrijkste richting(en)/functie(s) die het beste aansluiten, kort en concreet)
+
+**Volgende stap**
+(1-2 concrete, kleine vervolgstappen)
+
+Houd het kort, positief en motiverend. Geen lange lappen tekst, gebruik geen inleidende
+zinnen zoals "Hier is je samenvatting" -- start direct met **Samenvatting van het gesprek**.`;
+
+document.getElementById('btnSummary').addEventListener('click', async () => {
+  if (messages.length === 0) {
+    alert('Er is nog geen gesprek om samen te vatten. Begin eerst een gesprek met Dain!');
+    return;
+  }
+
+  openPopup('popupSummary');
+  const summaryContent = document.getElementById('summaryContent');
+  summaryContent.innerHTML = '<div style="font-size:13.6px; color:var(--text-muted); margin-bottom:6px;">Ik zet alles nog even voor je op een rij...</div><div class="typing-dots" style="padding: 10px 0;"><span></span><span></span><span></span></div>';
+
+  // Bouw messages-array op basis van geschiedenis + vraag om samenvatting
+  const apiMessages = messages.map(m => ({ role: m.role, content: m.content }));
+  apiMessages.push({ role: 'user', content: SUMMARY_PROMPT });
+
+  try {
+    const response = await fetch(DAIN_CHAT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: apiMessages
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.content) {
+      const textBlocks = data.content.filter(b => b.type === 'text').map(b => b.text);
+      const summaryText = textBlocks.join('\n\n') || 'Kon geen samenvatting maken, probeer het zo nog eens.';
+      summaryContent.innerHTML = '<div style="font-size:14.4px; line-height:1.7;">' + formatText(summaryText) + '</div>';
+      document.getElementById('summaryTextarea').value = summaryText;
+    } else {
+      summaryContent.innerHTML = '<p>Sorry, er ging iets mis bij het maken van de samenvatting. Probeer het zo nog eens.</p>';
+    }
+  } catch (err) {
+    console.error(err);
+    summaryContent.innerHTML = '<p>Oeps, ik kon geen samenvatting ophalen. Check je internetverbinding en probeer het opnieuw. 🙏</p>';
+  }
+});
+
+document.getElementById('copySummaryBtn').addEventListener('click', () => {
+  const textarea = document.getElementById('summaryTextarea');
+  const btn = document.getElementById('copySummaryBtn');
+  if (!textarea.value) return;
+
+  const restoreLabel = () => { btn.textContent = '📋 Kopieer samenvatting'; };
+
+  // navigator.clipboard werkt vaak niet binnen iframes -> textarea fallback
+  const fallbackCopy = () => {
+    textarea.style.position = 'fixed';
+    textarea.style.left = '0';
+    textarea.style.top = '0';
+    textarea.style.opacity = '0';
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      btn.textContent = '✅ Gekopieerd!';
+    } catch (e) {
+      btn.textContent = '⚠️ Kopiëren mislukt';
+    }
+    textarea.style.position = 'absolute';
+    textarea.style.left = '-9999px';
+    setTimeout(restoreLabel, 2000);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(textarea.value).then(() => {
+      btn.textContent = '✅ Gekopieerd!';
+      setTimeout(restoreLabel, 2000);
+    }).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+});
+
+
+document.getElementById('confirmRestart').addEventListener('click', () => {
+  localStorage.removeItem(STORAGE_KEY_MESSAGES);
+  localStorage.removeItem(STORAGE_KEY_LABBOEK);
+  messages = [];
+  labboek = null;
+  messagesInner.innerHTML = '';
+  updateLabboekStatus();
+  closePopup('popupRestart');
+  addAssistantMessage(WELCOME_MESSAGE, true);
+});
+
+// Klik op overlay sluit popup
+document.querySelectorAll('.popup-overlay').forEach(ov => {
+  ov.addEventListener('click', (e) => {
+    if (e.target === ov) ov.classList.remove('active');
+  });
+});
+
+/* =========================================================
+   START
+   ========================================================= */
+loadState();
+
+/* =========================================================
+   SUPABASE SQL SCHEMA (handmatig aanmaken in je Supabase project)
+   ========================================================= */
+/*
+Dit schema staat al live in het Supabase-project "uplab-dain":
+
+create table dain_chatlog (
+  id bigint generated always as identity primary key,
+  session_id text not null,
+  role text not null check (role in ('user','assistant')),
+  message text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table dain_chatlog enable row level security;
+
+create policy "Anonieme insert toegestaan"
+on dain_chatlog for insert
+to anon
+with check (true);
+*/
+</script>
+</body>
+</html>
