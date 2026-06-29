@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labboek aanvragen — Unleash Potential Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #292727;
+    --g1: #549E39;
+    --g2: #3E6913;
+    --bg: #f5f5f5;
+    --border: #e0e0e0;
+    --muted: #666;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Roboto', sans-serif; background: var(--brand); color: var(--brand); min-height: 100vh; }
+
+  .page { min-height: 100vh; background: var(--brand); }
+
+  .banner {
+    background: var(--brand); padding: 48px 30px 72px; position: relative; overflow: hidden;
+  }
+  .banner::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, #3a3838 0%, transparent 55%); opacity: .5;
+  }
+  .banner::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+    height: 50px; background: var(--bg); clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+  .banner-inner { position: relative; z-index: 1; max-width: 460px; margin: 0 auto; }
+  .banner svg { width: 56px; height: 56px; display: block; margin-bottom: 16px; }
+  .banner h1 { font-family: 'Doppio One', sans-serif; color: white; font-size: clamp(1.4rem, 4vw, 2rem); line-height: 1.25; margin-bottom: 8px; }
+  .banner h1 span { color: var(--g1); }
+  .banner p { color: rgba(255,255,255,.7); font-size: .9rem; font-weight: 300; }
+
+  .body { background: var(--bg); padding: 32px 20px 60px; }
+  .card {
+    max-width: 460px; margin: 0 auto; background: white;
+    border: 1px solid var(--border); border-radius: 16px; padding: 36px 30px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.06);
+  }
+  .card h2 { font-family: 'Doppio One', sans-serif; font-size: 1.25rem; margin-bottom: 6px; color: var(--brand); }
+  .card > p { color: var(--muted); font-size: .88rem; margin-bottom: 28px; line-height: 1.6; }
+
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: .83rem; font-weight: 500; margin-bottom: 5px; color: var(--brand); }
+  .field input {
+    width: 100%; border: 2px solid var(--border); border-radius: 10px;
+    padding: 12px 15px; font-family: 'Roboto', sans-serif; font-size: .95rem;
+    color: var(--brand); transition: border-color .2s; outline: none;
+  }
+  .field input:focus { border-color: var(--g1); }
+
+  .avg-check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 22px; }
+  .avg-check input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--g1); cursor: pointer; }
+  .avg-check label { font-size: .83rem; color: var(--muted); line-height: 1.55; cursor: pointer; }
+  .avg-check label a { color: var(--g1); text-decoration: underline; }
+
+  .btn {
+    background: var(--g1); color: white; font-family: 'Doppio One', sans-serif;
+    font-size: 1rem; border: none; border-radius: 12px; padding: 14px 28px;
+    cursor: pointer; width: 100%; transition: background .2s;
+  }
+  .btn:hover { background: var(--g2); }
+  .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+  .error {
+    background: #fef2f2; border: 1px solid #fca5a5; border-radius: 9px;
+    padding: 11px 15px; color: #dc2626; font-size: .86rem; margin-bottom: 16px; display: none;
+  }
+  .error.on { display: block; }
+
+  .succes {
+    display: none; text-align: center; padding: 12px 0 4px;
+  }
+  .succes.on { display: block; }
+  .succes-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .succes h3 { font-family: 'Doppio One', sans-serif; font-size: 1.15rem; color: var(--brand); margin-bottom: 8px; }
+  .succes p { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+  @media(max-width: 480px) { .card { padding: 24px 18px; } }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="banner">
+    <div class="banner-inner">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" viewBox="0 0 375 374.999991"  preserveAspectRatio="xMidYMid meet" version="1.0"><defs><clipPath id="76e90fea28"><path d="M 248 25.835938 L 272 25.835938 L 272 49 L 248 49 Z M 248 25.835938 " clip-rule="nonzero"/></clipPath><clipPath id="85959fbe7e"><path d="M 55.0625 167 L 313 167 L 313 317 L 55.0625 317 Z M 55.0625 167 " clip-rule="nonzero"/></clipPath></defs><path fill="#549e39" d="M 250.753906 65.71875 C 250.753906 69.992188 247.292969 73.453125 243.019531 73.453125 C 238.746094 73.453125 235.28125 69.992188 235.28125 65.71875 C 235.28125 61.441406 238.746094 57.980469 243.019531 57.980469 C 247.292969 57.980469 250.753906 61.441406 250.753906 65.71875 " fill-opacity="1" fill-rule="nonzero"/><path fill="#549e39" d="M 224.257812 45.035156 C 224.257812 49.308594 220.792969 52.773438 216.519531 52.773438 C 212.246094 52.773438 208.78125 49.308594 208.78125 45.035156 C 208.78125 40.761719 212.246094 37.300781 216.519531 37.300781 C 220.792969 37.300781 224.257812 40.761719 224.257812 45.035156 " fill-opacity="1" fill-rule="nonzero"/><path fill="#549e39" d="M 228.839844 168.753906 C 228.839844 173.027344 225.375 176.488281 221.101562 176.488281 C 216.828125 176.488281 213.367188 173.027344 213.367188 168.753906 C 213.367188 164.480469 216.828125 161.015625 221.101562 161.015625 C 225.375 161.015625 228.839844 164.480469 228.839844 168.753906 " fill-opacity="1" fill-rule="nonzero"/><path fill="#549e39" d="M 213.558594 134.929688 C 213.558594 138.652344 210.539062 141.671875 206.816406 141.671875 C 203.09375 141.671875 200.074219 138.652344 200.074219 134.929688 C 200.074219 131.207031 203.09375 128.1875 206.816406 128.1875 C 210.539062 128.1875 213.558594 131.207031 213.558594 134.929688 " fill-opacity="1" fill-rule="nonzero"/><path fill="#549e39" d="M 186.828125 178.78125 C 186.828125 182.503906 183.808594 185.523438 180.085938 185.523438 C 176.359375 185.523438 173.34375 182.503906 173.34375 178.78125 C 173.34375 175.058594 176.359375 172.039062 180.085938 172.039062 C 183.808594 172.039062 186.828125 175.058594 186.828125 178.78125 " fill-opacity="1" fill-rule="nonzero"/><g clip-path="url(#76e90fea28)"><path fill="#549e39" d="M 271.65625 37.296875 C 271.65625 43.632812 266.519531 48.769531 260.183594 48.769531 C 253.847656 48.769531 248.714844 43.632812 248.714844 37.296875 C 248.714844 30.960938 253.847656 25.824219 260.183594 25.824219 C 266.519531 25.824219 271.65625 30.960938 271.65625 37.296875 " fill-opacity="1" fill-rule="nonzero"/></g><path fill="#549e39" d="M 213.558594 205.320312 C 213.558594 211.65625 208.421875 216.792969 202.085938 216.792969 C 195.75 216.792969 190.613281 211.65625 190.613281 205.320312 C 190.613281 198.984375 195.75 193.847656 202.085938 193.847656 C 208.421875 193.847656 213.558594 198.984375 213.558594 205.320312 " fill-opacity="1" fill-rule="nonzero"/><path fill="#ffffff" d="M 116.746094 162.039062 C 134.261719 138.488281 162.679688 124.796875 192.433594 126.25 L 200.992188 96.546875 L 199.175781 96.019531 C 194.988281 94.816406 192.574219 90.445312 193.777344 86.257812 C 194.984375 82.074219 199.355469 79.65625 203.539062 80.863281 L 246.585938 93.265625 C 250.773438 94.46875 253.1875 98.84375 251.980469 103.027344 C 250.777344 107.214844 246.40625 109.628906 242.21875 108.421875 L 240.402344 107.898438 L 231.84375 137.601562 C 251.03125 148.390625 265.199219 165.789062 272.21875 185.945312 C 276.886719 186.28125 281.464844 187.074219 285.785156 188.121094 C 284.664062 184.082031 283.285156 180.097656 281.65625 176.195312 C 274.25 158.441406 261.847656 143.089844 246.222656 132.132812 L 249.621094 120.34375 C 256.226562 118.566406 261.777344 113.472656 263.804688 106.433594 C 266.886719 95.734375 260.691406 84.523438 249.992188 81.441406 L 206.945312 69.039062 C 196.246094 65.957031 185.039062 72.15625 181.957031 82.851562 C 179.925781 89.894531 181.917969 97.15625 186.566406 102.179688 L 183.167969 113.96875 C 164.109375 114.933594 145.4375 121.332031 129.722656 132.421875 C 120.515625 138.921875 112.523438 146.832031 105.964844 155.9375 C 104.453125 158.035156 103.03125 160.1875 101.695312 162.382812 C 104.921875 162.058594 108.199219 161.871094 111.5 161.871094 C 113.28125 161.871094 115.027344 161.933594 116.746094 162.039062 " fill-opacity="1" fill-rule="nonzero"/><g clip-path="url(#85959fbe7e)"><path fill="#549e39" d="M 273.035156 241.839844 C 268.457031 256.410156 260.449219 269 250.160156 278.972656 C 233.90625 294.726562 206.59375 282.910156 206.964844 260.277344 C 206.972656 259.945312 206.984375 259.695312 207.003906 259.53125 C 209.136719 241.464844 218.105469 230.746094 227.863281 225.570312 C 254.027344 211.703125 281.226562 212.554688 281.226562 212.554688 C 281.226562 212.554688 246.425781 222.460938 226.226562 234.785156 C 245.652344 235.679688 256.523438 254.558594 284.339844 225.53125 C 294.324219 215.109375 312.613281 204.585938 312.613281 204.585938 C 312.613281 204.585938 253.894531 169.347656 229.808594 212.90625 C 226.851562 218.253906 222.515625 222.6875 217.382812 226.007812 C 209.722656 230.960938 204.332031 238.085938 200.460938 246.816406 C 195.953125 234.300781 189.179688 223.949219 178.960938 216.574219 C 172.433594 211.863281 167.03125 205.742188 163.5 198.507812 C 134.753906 139.601562 55.160156 182 55.160156 182 C 55.160156 182 78.503906 197.070312 90.9375 211.445312 C 125.5625 251.492188 141.132812 227.394531 166.746094 227.523438 C 141.007812 209.953125 95.90625 194.589844 95.90625 194.589844 C 95.90625 194.589844 131.730469 195.300781 165.207031 215.296875 C 177.695312 222.757812 188.769531 237.460938 190.355469 261.363281 C 190.367188 261.511719 190.378906 261.660156 190.386719 261.808594 C 192.03125 287.347656 164.101562 303.996094 142.308594 290.574219 C 126.363281 280.753906 114.847656 267.203125 108.902344 255.542969 C 104.550781 247.007812 101.5625 237.769531 100.136719 228.171875 C 95.832031 224.621094 91.441406 220.230469 86.867188 214.9375 C 86.859375 219.015625 87.09375 223.101562 87.585938 227.1875 C 89.148438 240.191406 93.167969 252.617188 99.527344 264.125 C 105.886719 275.632812 114.269531 285.644531 124.449219 293.886719 C 134.992188 302.421875 146.996094 308.671875 160.128906 312.453125 C 173.261719 316.234375 186.75 317.335938 200.21875 315.714844 C 213.222656 314.152344 225.648438 310.136719 237.15625 303.777344 C 248.664062 297.414062 258.675781 289.03125 266.917969 278.851562 C 275.453125 268.308594 281.699219 256.304688 285.484375 243.171875 C 286.835938 238.476562 287.839844 233.726562 288.503906 228.941406 L 288.5 228.941406 C 283.113281 234.605469 278.003906 238.875 273.035156 241.839844 " fill-opacity="1" fill-rule="nonzero"/></g></svg>
+      <h1>Alchemist<br><span>Labboek aanvragen</span></h1>
+      <p>Vul je naam en e-mailadres in — we sturen je direct een toegangscode.</p>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="card">
+      <h2>Jouw labboek starten</h2>
+      <p>Je ontvangt binnen een minuut een e-mail met jouw persoonlijke toegangscode. Bewaar die goed — je hebt hem elke keer nodig om in te loggen.</p>
+
+      <div class="error" id="errMsg"></div>
+
+      <div id="formWrap">
+        <div class="field">
+          <label for="naam">Jouw naam</label>
+          <input type="text" id="naam" placeholder="bijv. Lisa de Vries" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="email">E-mailadres</label>
+          <input type="email" id="email" placeholder="bijv. lisa@email.nl" autocomplete="email">
+        </div>
+        <div class="avg-check">
+          <input type="checkbox" id="akkoord">
+          <label for="akkoord">Ik ga akkoord met de verwerking van mijn gegevens door Unleash Potential Lab. Mijn gegevens worden veilig opgeslagen en gebruikt voor het genereren van persoonlijke inzichten via AI. Meer informatie vind je in onze <a href="https://uplab.me/privacy" target="_blank">privacyverklaring</a>.</label>
+        </div>
+        <button class="btn" id="btnAanvragen" onclick="aanvragen()">Mijn labboek aanvragen →</button>
+      </div>
+
+      <div class="succes" id="succesWrap">
+        <div class="succes-icon">📬</div>
+        <h3>Check je inbox!</h3>
+        <p id="succesNaam"></p>
+        <p style="margin-top:8px">Geen mail ontvangen? Check je spam of <a href="mailto:info@uplab.me" style="color:var(--g1)">neem contact op</a>.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+
+async function aanvragen() {
+  const naam = document.getElementById('naam').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const akkoord = document.getElementById('akkoord').checked;
+  const err = document.getElementById('errMsg');
+  const btn = document.getElementById('btnAanvragen');
+
+  err.classList.remove('on');
+
+  if (!naam) { err.textContent = 'Vul je naam in.'; err.classList.add('on'); return; }
+  if (!email || !email.includes('@')) { err.textContent = 'Vul een geldig e-mailadres in.'; err.classList.add('on'); return; }
+  if (!akkoord) { err.textContent = 'Je moet akkoord gaan met de privacyverklaring om verder te gaan.'; err.classList.add('on'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Even geduld...';
+
+  try {
+    const res = await fetch(`${SB_URL}/functions/v1/aanvraag-labboek`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ naam, email })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      err.textContent = data.error || 'Er ging iets mis. Probeer het opnieuw.';
+      err.classList.add('on');
+      btn.disabled = false;
+      btn.textContent = 'Mijn labboek aanvragen →';
+      return;
+    }
+
+    // Succes
+    document.getElementById('formWrap').style.display = 'none';
+    const succesWrap = document.getElementById('succesWrap');
+    document.getElementById('succesNaam').textContent = `We hebben een e-mail gestuurd naar ${email} met jouw toegangscode.`;
+    succesWrap.classList.add('on');
+
+  } catch(e) {
+    err.textContent = 'Verbindingsfout. Controleer je internet en probeer opnieuw.';
+    err.classList.add('on');
+    btn.disabled = false;
+    btn.textContent = 'Mijn labboek aanvragen →';
+  }
+}
+
+// Enter-toets ondersteuning
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') aanvragen();
+});
+</script>
+</body>
+</html>
