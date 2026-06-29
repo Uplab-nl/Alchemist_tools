@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uplab – Alchemist – Doen en laten</title>
+<link href="https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --brand: #292727;
+  --green: #549E39;
+  --green-dark: #3E6913;
+  --white: #fff;
+  --bg: #f5f5f5;
+  --card-bg: #fafafa;
+  --border: #e0e0e0;
+  --muted: #666;
+  /* block colors */
+  --col-a: #3E6913;   /* Op je plek — donkergroen */
+  --col-b: #D98E33;   /* Ontplooien — oranje */
+  --col-c: #5B5FC7;   /* Beraden  — blauw  */
+  --col-d: #A6437A;   /* Vondst   — magenta*/
+  --col-e: #C0504D;   /* Laten    — rood   */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);min-height:100vh}
+
+/* ── HEADER ── */
+.sticky-header{
+  position:sticky;top:0;z-index:200;
+  background:var(--brand);padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 12px rgba(0,0,0,.35);flex-wrap:wrap;gap:8px;
+}
+.header-title{font-family:'Doppio One',sans-serif;color:#fff;font-size:.95rem;line-height:1.2}
+.header-title span{color:var(--green)}
+.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-right:40px}
+.phase-chip{background:rgba(255,255,255,.15);color:#fff;font-family:'Doppio One',sans-serif;font-size:.75rem;padding:4px 12px;border-radius:14px;white-space:nowrap}
+.btn-icon{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;transition:background .2s;white-space:nowrap}
+.btn-icon:hover{background:rgba(255,255,255,.22)}
+
+/* ── BANNER ── */
+.banner{background:var(--brand);position:relative;overflow:hidden;padding:30px 30px 52px}
+.banner::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:44px;background:#fff;clip-path:polygon(0 100%,100% 0,100% 100%)}
+.banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#3a3838 0%,transparent 55%);opacity:.5}
+.banner-content{position:relative;z-index:2;max-width:780px}
+.banner h1{font-family:'Doppio One',sans-serif;color:#fff;font-size:clamp(1.3rem,3.5vw,1.9rem);line-height:1.2;margin-bottom:6px}
+.banner h1 span{color:var(--green)}
+.banner p{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:300}
+.phase-badge{display:inline-block;background:var(--green);color:#fff;font-size:.72rem;font-family:'Doppio One',sans-serif;padding:3px 11px;border-radius:11px;margin-bottom:10px;letter-spacing:.4px}
+
+/* ── MAIN ── */
+.main{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
+
+.btn-submit{
+  background:var(--green);color:#fff;border:none;border-radius:10px;
+  font-family:'Doppio One',sans-serif;font-size:1rem;padding:13px 36px;
+  cursor:pointer;transition:background .2s;
+}
+.btn-submit:hover{background:var(--green-dark)}
+
+/* progress */
+.progress-wrap{margin:0 0 14px}
+.progress-track{width:100%;height:7px;background:var(--border);border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);border-radius:6px;transition:width .3s}
+.progress-label{font-family:'Doppio One',sans-serif;font-size:.75rem;color:var(--green-dark);margin-top:5px;text-align:center}
+
+/* info box */
+.info-box{background:var(--bg);border-left:4px solid var(--green);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:.86rem;color:#444;line-height:1.6;cursor:pointer;position:relative}
+.info-box::after{content:'ⓘ meer info';position:absolute;bottom:7px;right:12px;font-size:.72rem;color:var(--green)}
+
+/* ════════════════════════════
+   MAIN LAYOUT: sticky stack + grid side by side
+   ════════════════════════════ */
+.work-area{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+}
+.work-area.no-stack .grid-col {
+  width:100%;
+  flex:1;
+}
+
+/* ── STICKY STACK COLUMN ── */
+.stack-col{
+  /* sticky within the work area */
+  position:sticky;
+  top:56px; /* height of sticky header */
+  z-index:100;
+  flex-shrink:0;
+  width:160px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+
+.card-stack{position:relative;width:150px;height:100px;cursor:grab;flex-shrink:0}
+.card-stack:active{cursor:grabbing}
+.stack-card{
+  position:absolute;inset:0;border-radius:10px;
+  background:var(--brand);border:2px solid #1a1818;
+  box-shadow:0 4px 10px rgba(0,0,0,.25);
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;
+  transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .2s;
+}
+.stack-card .vname{font-family:'Doppio One',sans-serif;font-size:.83rem;color:#fff;line-height:1.25}
+.stack-card.top{z-index:5}
+.stack-card.dragging{opacity:.3}
+.stack-empty{
+  font-family:'Doppio One',sans-serif;font-size:.82rem;color:var(--green-dark);
+  background:var(--bg);border:2px dashed var(--border);border-radius:10px;
+  padding:18px 10px;text-align:center;width:150px;height:100px;
+  display:flex;align-items:center;justify-content:center;line-height:1.4
+}
+.stack-counter{font-family:'Doppio One',sans-serif;font-size:.72rem;color:var(--green-dark);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px 10px;text-align:center}
+
+/* ── GRID COLUMN ── */
+.grid-col{flex:1;min-width:0;overflow-x:auto;padding:4px 0}
+
+/* ════════════════════════════
+   THE GRID — altijd 4 kolommen in de DOM
+   Fase 1: kolomheaders + cols 2+3 verborgen; col 1 neemt volle breedte
+   Fase 2: alle 4 kolommen zichtbaar; hoek linksboven leeg
+*/
+.doen-grid{
+  display:grid;
+  grid-template-columns: 140px 1fr 1fr 1fr;
+  gap:6px;
+  min-width:0;
+}
+
+/* ── FASE 1 ── */
+/* Verberg kolomheaderrij volledig */
+.doen-grid.p1 .col-header-row { display:none }
+
+/* Verberg cellen kolom 2 en 3 */
+.doen-grid.p1 .grid-cell[data-col="redelijk_goed_in"],
+.doen-grid.p1 .grid-cell[data-col="niet_zo_goed_in"] { visibility:hidden; width:0; padding:0; margin:0; min-height:0; border:none; }
+
+/* Kolom 1 neemt in fase 1 alle beschikbare breedte */
+.doen-grid.p1 { grid-template-columns: 140px 1fr 0px 0px; }
+
+/* ── FASE 2 ── */
+.doen-grid.p2 {
+  grid-template-columns: 140px repeat(3, minmax(110px,1fr));
+  min-width: 500px;
+}
+
+/* Kolomheaderrij: standaard verborgen, in fase 2 zichtbaar */
+.col-header-row { display:none }
+.doen-grid.p2 .col-header-row { display:flex; align-items:center; justify-content:center; }
+
+/* Lege hoekcel linksboven: verborgen in p1, zichtbaar in p2 */
+.grid-corner { display:none; }
+.doen-grid.p2 .grid-corner { display:block; }
+.grid-col-header{
+  background:var(--green);color:#fff;font-family:'Doppio One',sans-serif;
+  font-size:.78rem;line-height:1.25;border-radius:8px;padding:9px 7px;
+  text-align:center;display:flex;align-items:center;justify-content:center;
+  animation:fadeIn .35s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* row headers */
+.grid-row-header{
+  background:var(--green);color:#fff;font-family:'Doppio One',sans-serif;
+  font-size:.78rem;line-height:1.3;border-radius:8px;padding:10px 8px;
+  text-align:center;display:flex;align-items:center;justify-content:center;
+  min-height:90px;
+}
+
+/* data cells */
+.grid-cell{
+  background: rgba(41,39,39,.09);
+  border: 2px solid rgba(41,39,39,.35);
+  border-radius:10px;
+  min-height:90px;padding:7px;
+  display:flex;flex-direction:row;flex-wrap:wrap;gap:5px;align-content:flex-start;
+  transition:border-color .2s,background .2s;
+  position:relative;
+}
+.grid-cell.dragover{border-color:var(--green)!important;outline:2px solid var(--green);outline-offset:2px}
+
+/* block tints — zelfde bruin-zwart basis, iets lichter border voor blokken in fase 3 */
+.grid-cell.blk-a{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
+.grid-cell.blk-b{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
+.grid-cell.blk-c{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
+.grid-cell.blk-d{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
+.grid-cell.blk-e{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
+
+/* mini cards */
+.mini-card{
+  background:var(--brand);color:#fff;border-radius:6px;
+  font-family:'Doppio One',sans-serif;font-size:.66rem;line-height:1.2;
+  padding:5px 7px;cursor:grab;word-break:break-word;
+  transform:rotate(calc(var(--r,0)*1deg));user-select:none;
+}
+.mini-card:nth-child(odd){--r:-1.5}
+.mini-card:nth-child(even){--r:1.5}
+.mini-card:nth-child(3n){--r:-.5}
+.mini-card:active{cursor:grabbing}
+.mini-card.dragging{opacity:.3}
+
+/* ════════════════════════════
+   BLOCK OVERLAYS (phase 3 only)
+   ════════════════════════════ */
+#blockOverlays{position:absolute;top:0;left:0;pointer-events:none;z-index:10}
+/* Overlay — pill boven elk blok (optie A) */
+.blk-overlay{
+  position:absolute;pointer-events:none;
+  display:none;overflow:visible;
+}
+.blk-overlay.show{display:block}
+.blk-overlay .ov-title{
+  position:absolute;
+  top:-14px;
+  left:12px;
+  font-family:'Doppio One',sans-serif;
+  font-size:.82rem;
+  white-space:nowrap;
+  pointer-events:none;
+  color:#fff;
+  padding:4px 14px;
+  border-radius:20px;
+  line-height:1.4;
+}
+.blk-overlay.blk-a .ov-title{background:var(--col-a)}
+.blk-overlay.blk-b .ov-title{background:var(--col-b)}
+.blk-overlay.blk-c .ov-title{background:var(--col-c)}
+.blk-overlay.blk-d .ov-title{background:var(--col-d)}
+.blk-overlay.blk-e .ov-title{background:var(--col-e)}
+
+/* Cel-kleur per blok in fase 3 — exact per cel, geen overlap */
+.phase3 .grid-cell.blk-a{background:rgba(84,158,57,.35);border-color:rgba(84,158,57,.6)}
+.phase3 .grid-cell.blk-b{background:rgba(217,142,51,.35);border-color:rgba(217,142,51,.6)}
+.phase3 .grid-cell.blk-c{background:rgba(91,95,199,.35);border-color:rgba(91,95,199,.6)}
+.phase3 .grid-cell.blk-d{background:rgba(166,67,122,.35);border-color:rgba(166,67,122,.6)}
+.phase3 .grid-cell.blk-e{background:rgba(192,80,77,.35);border-color:rgba(192,80,77,.6)}
+
+/* Vergroot de kolomheaders in fase 3 zodat de pills er niet overheen vallen */
+.phase3 .grid-col-header {
+  padding-bottom: 22px;
+}
+
+/* block tooltip */
+#blockTip{
+  position:fixed;z-index:300;background:var(--brand);color:rgba(255,255,255,.95);
+  font-size:.8rem;line-height:1.55;border-radius:10px;padding:13px 15px;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:290px;min-width:190px;
+  pointer-events:none;display:none;
+}
+#blockTip.show{display:block}
+
+/* drag tooltip */
+#dragTip{
+  position:fixed;z-index:500;max-width:250px;background:var(--brand);
+  color:rgba(255,255,255,.92);font-size:.77rem;line-height:1.5;
+  border-radius:10px;padding:11px 13px;box-shadow:0 8px 20px rgba(0,0,0,.3);
+  pointer-events:none;display:none;
+}
+#dragTip.show{display:block}
+
+/* ── DONE BANNER ── */
+.done-banner{
+  background:var(--bg);border-left:4px solid var(--green);border-radius:10px;
+  padding:16px 20px;margin-top:18px;font-size:.88rem;color:#444;line-height:1.6;
+}
+.btn-copy{
+  background:var(--brand);color:#fff;border:none;border-radius:10px;
+  font-family:'Doppio One',sans-serif;font-size:.88rem;padding:11px 26px;
+  cursor:pointer;transition:background .2s;display:block;margin:14px auto 0;
+}
+.btn-copy:hover{background:#3a3636}
+.btn-copy.copied{background:var(--green)}
+
+/* ── POPUPS ── */
+.popup-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
+  z-index:999;padding:20px;overflow-y:auto;backdrop-filter:blur(2px);
+}
+.popup-overlay.on{display:flex;align-items:flex-start;justify-content:center;padding-top:55px}
+.popup-box{
+  background:#fff;border-radius:14px;max-width:560px;width:100%;
+  padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative;
+  animation:slideIn .25s ease;
+}
+@keyframes slideIn{from{transform:translateY(-18px);opacity:0}to{transform:none;opacity:1}}
+.popup-box h2{font-family:'Doppio One',sans-serif;font-size:1.15rem;margin-bottom:14px;color:var(--brand);padding-right:18px}
+.popup-box p{font-size:.88rem;line-height:1.7;color:#444;margin-bottom:10px}
+.popup-close{position:absolute;top:14px;right:14px;background:none;border:none;font-size:1.25rem;cursor:pointer;color:var(--muted);padding:4px;transition:color .2s}
+.popup-close:hover{color:var(--brand)}
+.popup-btn{background:var(--green);color:#fff;border:none;border-radius:8px;font-family:'Doppio One',sans-serif;padding:11px 24px;cursor:pointer;font-size:.88rem;margin-top:8px;transition:background .2s}
+.popup-btn:hover{background:var(--green-dark)}
+.popup-btn-sec{background:transparent;color:var(--brand);border:2px solid var(--border);border-radius:8px;font-family:'Roboto',sans-serif;padding:9px 20px;cursor:pointer;font-size:.86rem;margin-top:8px;margin-left:8px;transition:all .2s}
+.popup-btn-sec:hover{border-color:var(--brand)}
+@media(max-width:480px){.popup-box{padding:20px 16px}}
+
+/* responsive */
+@media(max-width:600px){
+  .work-area{gap:10px}
+  .stack-col{width:130px;top:52px}
+  .card-stack{width:120px}
+  .stack-empty{width:120px}
+  .doen-grid{min-width:260px}
+  .grid-row-header{font-size:.68rem;padding:7px 5px}
+  .grid-col-header{font-size:.68rem;padding:7px 4px}
+  .mini-card{font-size:.6rem;padding:4px 5px}
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header">
+  <div class="header-title">Uplab · Alchemist<br><span>Doen en laten</span></div>
+  <div class="header-right">
+    <span class="phase-chip" id="phaseChip">Fase 1 van 3</span>
+    <button class="btn-icon" id="btnInfo">ⓘ Info</button>
+    <button class="btn-icon" id="btnRestart">↺ Opnieuw</button>
+  </div>
+</div>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="banner-content">
+    <div class="phase-badge" id="bannerBadge">Fase 1 — Wat doe ik graag?</div>
+    <h1>Doen en laten<br><span id="bannerSub">Jouw drijfverenkaart 🗺️</span></h1>
+    <p id="bannerDesc">Sleep elke activiteit naar het vak dat het beste past bij hoe graag je het doet.</p>
+  </div>
+</div>
+
+<div class="main">
+  <div class="info-box" id="infoBox">
+    Je gaat beginnen aan een drijfverenonderzoek. Pak het bovenste kaartje van de stapel — als je het oppakt zie je de uitleg — en sleep het naar de rij die het beste weergeeft hoe graag je deze activiteit doet.
+  </div>
+
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0"></div></div>
+    <div class="progress-label" id="progLabel">0 / 64</div>
+  </div>
+
+  <div class="work-area">
+    <!-- STICKY STACK -->
+    <div class="stack-col" id="stackCol">
+      <div class="card-stack" id="cardStack"></div>
+      <div class="stack-empty" id="stackEmpty" style="display:none">Stapel leeg ✅</div>
+      <div class="stack-counter" id="stackCounter">64 over</div>
+    </div>
+
+    <!-- GRID -->
+    <div class="grid-col">
+      <div style="position:relative;padding:4px 4px;overflow:visible" id="gridWrap">
+        <div class="doen-grid p1" id="doenGrid"></div>
+        <div id="blockOverlays"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="submitWrap" style="display:none;margin-top:20px;text-align:center">
+    <button class="btn-submit" id="btnSubmit" onclick="openP('popIndienen')">Indienen →</button>
+  </div>
+
+  <div class="done-banner" id="doneBanner" style="display:none">
+    Mooi werk 🎉 Bekijk de gekleurde vlakken — hover op een gevuld vlak voor de betekenis.
+    Kopieer je overzicht hieronder en plak het in je <strong>Labboek</strong>.
+    <button class="btn-copy" id="btnCopy">📋 Kopieer mijn overzicht</button>
+  </div>
+</div>
+
+<div id="dragTip"></div>
+<div id="blockTip"></div>
+
+<!-- POPUPS -->
+<div class="popup-overlay on" id="popWelcome">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closeP('popWelcome')">✕</button>
+    <h2>Doen en laten — fase 1 🔎</h2>
+    <p>Je gaat een drijfverenonderzoek doen. We noemen dat het <strong>doen en laten</strong>.</p>
+    <p>Je krijgt 64 activiteiten te zien, één voor één, vanaf de stapel links. Sleep het bovenste kaartje naar de rij die het beste past — tijdens het slepen zie je de uitleg van de activiteit. Van <strong>"doe ik heel erg graag"</strong> tot <strong>"heb ik een hekel aan"</strong>.</p>
+    <p>Geen goed of fout. Volg je eerste gevoel.</p>
+    <button class="popup-btn" onclick="closeP('popWelcome')">Aan de slag! →</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popFase2">
+  <div class="popup-box">
+    <button class="popup-close" onclick="startFase2()">✕</button>
+    <h2>Goed gedaan — nu fase 2 🎯</h2>
+    <p>Je hebt alle activiteiten gesorteerd op hoe graag je ze doet.</p>
+    <p>Nu voegen we een tweede laag toe. De drie kolommen die zo verschijnen geven aan hoe goed je bent in een activiteit: <strong>"ben ik heel goed in"</strong>, <strong>"redelijk goed in"</strong> of <strong>"niet zo goed in"</strong>.</p>
+    <p>Sleep elke activiteit naar de kolom die het beste past. Sommige activiteiten staan misschien al goed — die hoef je niet te verplaatsen. De rij (hoe graag) verandert niet.</p>
+    <p>Als je klaar bent, klik je op de knop <strong>Indienen</strong>.</p>
+    <button class="popup-btn" onclick="startFase2()">Laat de kolommen zien →</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popIndienen">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closeP('popIndienen')">✕</button>
+    <h2>Even checken ✅</h2>
+    <p>Staan alle activiteiten op de plek die voor jou het beste past?</p>
+    <button class="popup-btn" onclick="confirmFase3()">Ja, indienen →</button>
+    <button class="popup-btn-sec" onclick="closeP('popIndienen')">Nee, terug</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popRestart">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closeP('popRestart')">✕</button>
+    <h2>Opnieuw beginnen?</h2>
+    <p>Weet je zeker dat je opnieuw wilt beginnen? Alles wat je tot nu toe gedaan hebt wordt hiermee verwijderd.</p>
+    <button class="popup-btn" onclick="doRestart()">Ja, begin opnieuw</button>
+    <button class="popup-btn-sec" onclick="closeP('popRestart')">Nee, ga door</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popInfo">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closeP('popInfo')">✕</button>
+    <h2 id="infoTitle">Info</h2>
+    <div id="infoBody" style="font-size:.88rem;line-height:1.7;color:#444"></div>
+    <button class="popup-btn" onclick="closeP('popInfo')" style="margin-top:16px">Sluiten</button>
+  </div>
+</div>
+
+<script>
+const ACTIVITEITEN = [
+  { naam: 'Koken & bakken', kort: 'Jij vindt het heerlijk om bezig te zijn met eten. Nieuwe recepten uitproberen, ingrediënten combineren en iets lekkers op tafel zetten geeft jou energie.' },
+  { naam: 'Reizen & ontdekken', kort: 'Nieuwe plekken, culturen en ervaringen geven jou energie. Onderweg zijn voelt voor jou als vrijheid en inspiratie tegelijk.' },
+  { naam: 'Vertalen & tolken', kort: 'Jij beweegt je moeiteloos tussen talen en culturen. De juiste woorden vinden, nuance bewaren en zorgen dat een boodschap aankomt zoals bedoeld — daar ben jij goed in.' },
+  { naam: 'Coachen & begeleiden', kort: 'Jij helpt graag anderen groeien. Mensen ondersteunen in hun ontwikkeling en ze verder helpen geeft jou energie.' },
+  { naam: 'Beoordelen & testen', kort: 'Jij vindt het interessant om kwaliteit, werking of prestaties te onderzoeken en kritisch te bekijken wat goed werkt en wat niet.' },
+  { naam: 'Interviewen & informatie ophalen', kort: 'Jij bent nieuwsgierig naar verhalen, meningen en ervaringen van anderen. Doorvragen en de kern boven tafel krijgen vind jij interessant.' },
+  { naam: 'Plannen & organiseren', kort: 'Jij krijgt rust van overzicht. Structuur aanbrengen, plannen maken en alles op elkaar afstemmen voelt voor jou als orde scheppen in de chaos.' },
+  { naam: 'Uitvinden & vernieuwen', kort: 'Jij houdt ervan om nieuwe oplossingen, technieken of ideeën te bedenken. Dingen slimmer, handiger of origineler maken past helemaal bij jou.' },
+  { naam: 'Telen & kweken', kort: 'Jij geniet ervan om planten, bloemen, groenten of andere gewassen te verzorgen en te zien groeien 🌱' },
+  { naam: 'Onderzoeken & analyseren', kort: 'Jij houdt ervan om ergens echt in te duiken. Patronen ontdekken, verbanden leggen en logica ontrafelen — totdat alles klopt. Een soort nieuwsgierige detective, maar dan zonder dramatische achtergrondmuziek.' },
+  { naam: 'Precisiewerk uitvoeren', kort: 'Jij vindt het fijn om nauwkeurig en geconcentreerd te werken. Kleine details uitzoeken of precies afwerken geeft jou juist voldoening.' },
+  { naam: 'Tempo maken & stroomlijnen', kort: 'Jij houdt ervan om vaart in dingen te brengen. Processen sneller, slimmer en soepeler laten verlopen geeft jou een kick.' },
+  { naam: 'Ondernemen & kansen creëren', kort: 'Jij vindt het leuk om ideeën om te zetten in actie. Dingen opstarten, kansen zien, risico\'s nemen en iets laten groeien geeft jou een enorme boost.' },
+  { naam: 'Verzorgen & behandelen', kort: 'Jij haalt voldoening uit het helpen, verzorgen of ondersteunen van anderen. Iets kunnen betekenen voor iemand geeft jou een goed gevoel.' },
+  { naam: 'Organisaties adviseren', kort: 'Jij denkt graag mee over hoe organisaties slimmer, sterker of effectiever kunnen werken en vindt het leuk om oplossingen aan te dragen.' },
+  { naam: 'Optreden & presenteren', kort: 'Voor een groep staan geeft jou energie. Of het nu presenteren, spreken, acteren, zingen of demonstreren is: jij vindt het leuk om mensen mee te nemen in jouw verhaal.' },
+  { naam: 'Machines bedienen & besturen', kort: 'Jij werkt graag met apparaten, voertuigen of technische systemen. Knoppen, hendels en techniek geven jou eerder nieuwsgierigheid dan stress.' },
+  { naam: 'Ontwikkelen & laten groeien', kort: 'Jij krijgt energie van processen waarin iets stap voor stap sterker, beter of groter wordt. Mensen, ideeën of projecten helpen groeien geeft jou voldoening.' },
+  { naam: 'Leidinggeven & begeleiden', kort: 'Jij vindt het leuk om overzicht te houden, mensen aan te sturen en samen naar een doel toe te werken.' },
+  { naam: 'Ideeën bedenken & ontwikkelen', kort: 'Nieuwe concepten, oplossingen of creatieve invalshoeken bedenken geeft jou energie. Jouw hoofd is soms net een popcornmachine vol ideeën 🍿' },
+  { naam: 'Repareren & herstellen', kort: 'Jij vindt het leuk om dingen weer werkend te krijgen. Problemen oplossen en kapotte spullen herstellen voelt als een mooie uitdaging.' },
+  { naam: 'Onderhandelen & afspraken maken', kort: 'Jij vindt het interessant om gesprekken te voeren waarin verschillende belangen samenkomen en je gezamenlijk tot een goede deal komt.' },
+  { naam: 'Programmeren, coderen & AI', kort: 'Jij vindt het leuk om talen te spreken die computers begrijpen. Logica omzetten in werkende code, problemen oplossen met slimme oplossingen en iets bouwen dat echt werkt — dat geeft jou een kick.' },
+  { naam: 'Voorlichten & beïnvloeden', kort: 'Jij vindt het leuk om mensen iets uit te leggen, enthousiast te maken of mee te nemen in een idee of visie.' },
+  { naam: 'Improviseren & spontaan schakelen', kort: 'Jij vindt het leuk om ter plekke oplossingen te bedenken en flexibel mee te bewegen met wat er gebeurt. Geen strak script? Juist lekker.' },
+  { naam: 'Bezinnen & mediteren', kort: 'Jij vindt het fijn om rust te nemen, stil te staan bij gedachten en bewust aandacht te geven aan jezelf en het moment.' },
+  { naam: 'Budgetteren & plannen', kort: 'Jij houdt ervan om overzicht te creëren in geld, middelen of planning. Slim verdelen en organiseren voelt voor jou bijna als strategisch puzzelen.' },
+  { naam: 'Bemiddelen & mediation', kort: 'Jij vindt het interessant om mensen dichter bij elkaar te brengen. Luisteren, begrip creëren en samen naar oplossingen zoeken geeft jou energie.' },
+  { naam: 'Bouwen & verbouwen', kort: 'Jij werkt graag met je handen aan iets tastbaars. Creëren, maken of verbeteren van ruimtes of constructies geeft veel voldoening.' },
+  { naam: 'Fantaseren & visualiseren', kort: 'Jij kunt helemaal opgaan in ideeën, scenario\'s en mogelijkheden. In je hoofd ontstaan vaak beelden en plannen nog voordat ze werkelijkheid zijn.' },
+  { naam: 'Spelen & lol maken', kort: 'Jij houdt ervan om speels bezig te zijn, plezier te maken en het kind in jezelf ruimte te geven. Serieus zijn mag, maar niet de hele dag 😄' },
+  { naam: 'Verzamelen & combineren', kort: 'Jij krijgt energie van het samenbrengen van informatie, ideeën, spullen of mensen. Losse onderdelen verbinden tot één geheel voelt voor jou als een leuke puzzel.' },
+  { naam: 'Verbeteren & optimaliseren', kort: 'Jij ziet snel waar iets slimmer, sneller of beter kan. Efficiënter werken of kwaliteit verhogen voelt voor jou bijna als een sport.' },
+  { naam: 'Transporteren & onderweg zijn', kort: 'Jij bent graag in beweging. Mensen, producten of materialen vervoeren en onderweg zijn geeft jou vrijheid en afwisseling.' },
+  { naam: 'Grenzen verleggen & pionieren', kort: 'Jij wordt enthousiast van nieuwe uitdagingen en onbekend terrein. Dingen doen die nog niet eerder zijn gedaan of buiten de gebaande paden gaan past bij jou.' },
+  { naam: 'Opvoeden & begeleiden', kort: 'Jij haalt voldoening uit het helpen groeien van kinderen, jongeren of anderen. Ondersteunen, uitleggen en richting geven past goed bij jou.' },
+  { naam: 'Intuïtief aanvoelen', kort: 'Jij merkt vaak snel sfeer, emoties of signalen op die anderen missen. Je vertrouwt graag op je gevoel en hebt vaak verrassend scherp door wat er speelt.' },
+  { naam: 'Verkopen & adviseren', kort: 'Jij vindt het leuk om mensen enthousiast te maken, mee te denken en producten of ideeën onder de aandacht te brengen.' },
+  { naam: 'Ontwerpen & vormgeven', kort: 'Jij houdt ervan om ideeën visueel te maken. Kleuren, vormen, stijlen en details combineren tot iets moois of opvallends past helemaal bij jou.' },
+  { naam: 'Gastvrij ontvangen', kort: 'Jij zorgt graag dat mensen zich welkom voelen. Een fijne sfeer creëren en goed voor anderen zorgen geeft jou energie.' },
+  { naam: 'Regelen & coördineren', kort: 'Jij houdt ervan om dingen voor elkaar te krijgen. Afspraken maken, schakelen en zorgen dat alles loopt zoals het moet geeft jou energie.' },
+  { naam: 'Ordenen & structureren', kort: 'Jij vindt het prettig om dingen overzichtelijk in te delen. Categoriseren, sorteren en structuur aanbrengen geeft rust in je hoofd.' },
+  { naam: 'Mensen verbinden', kort: 'Jij brengt graag mensen, ideeën of contacten samen. Je geniet ervan als door jouw tussenkomst nieuwe kansen of samenwerkingen ontstaan.' },
+  { naam: 'Lezen & studeren', kort: 'Jij ontdekt graag nieuwe kennis en inzichten. Je kunt helemaal opgaan in informatie, boeken of onderwerpen die je interessant vindt.' },
+  { naam: 'Experimenteren & uitproberen', kort: 'Jij ontdekt graag wat werkt door dingen gewoon te testen. Nieuwe manieren proberen, risico nemen en leren door ervaring vind jij interessant.' },
+  { naam: 'Fysiek bezig zijn', kort: 'Jij krijgt energie van bewegen, aanpakken en actief bezig zijn. Stilzitten is voor jou vaak moeilijker dan gewoon gáán.' },
+  { naam: 'Taxeren', kort: 'Jij vindt het interessant om waarde, kosten of haalbaarheid in te schatten. Rekenen, vergelijken en overzicht creëren geeft jou voldoening.' },
+  { naam: 'Dieren verzorgen', kort: 'Jij geniet van het verzorgen, begeleiden en aandacht geven aan dieren. Werken met dieren geeft vaak rust, plezier en verbinding 🐾' },
+  { naam: 'Veranderen & vernieuwen', kort: 'Jij krijgt energie van beweging en ontwikkeling. Processen, mensen of situaties helpen veranderen geeft jou voldoening.' },
+  { naam: 'Visie & beleid ontwikkelen', kort: 'Jij denkt graag na over de toekomst en hoe dingen slimmer of beter kunnen. Ideeën bedenken, plannen uitwerken en richting bepalen geeft jou voldoening.' },
+  { naam: 'Problemen oplossen & beslissingen nemen', kort: 'Jij houdt ervan om uitdagingen aan te pakken en knopen door te hakken. Oplossingen vinden geeft jou energie.' },
+  { naam: 'Helpen & ondersteunen', kort: 'Jij haalt voldoening uit iets kunnen betekenen voor anderen. Ondersteunen, meedenken of helpen geeft jou een goed gevoel.' },
+  { naam: 'Evenementen organiseren', kort: 'Jij geniet ervan om dingen te regelen, mensen samen te brengen en van losse ideeën een complete ervaring te maken. Van planning tot uitvoering: jij gaat erop aan.' },
+  { naam: 'Rekenen & berekeningen maken', kort: 'Jij werkt graag met cijfers, berekeningen en logica. Data en getallen geven jou eerder duidelijkheid dan hoofdpijn.' },
+  { naam: 'Motiveren & inspireren', kort: 'Jij vindt het leuk om mensen in beweging te krijgen. Anderen enthousiast maken of nieuwe energie geven geeft jou voldoening.' },
+  { naam: 'Uitvoeren & implementeren', kort: 'Jij vindt het fijn om plannen werkelijkheid te maken. Niet alleen bedenken, maar juist dóén en zorgen dat iets echt van de grond komt.' },
+  { naam: 'Beeldend uiten & creëren', kort: 'Jij denkt niet alleen in woorden, maar vooral in vormen, kleuren en materialen. Met je handen iets maken, schetsen, bouwen of vormgeven voelt voor jou als de meest natuurlijke manier om iets te zeggen.' },
+  { naam: 'Gegevens beheren & verwerken', kort: 'Jij werkt graag nauwkeurig met informatie, systemen of administratie. Alles netjes verwerken en overzicht houden geeft voldoening.' },
+  { naam: 'Evalueren & terugkijken', kort: 'Jij vindt het waardevol om stil te staan bij wat goed ging en wat beter kan. Reflecteren helpt jou om steeds slimmer te werken.' },
+  { naam: '1-op-1 gesprekken voeren', kort: 'Jij vindt het fijn om echt contact te maken met mensen. Luisteren, doorvragen en omgaan met emoties van anderen geeft betekenis aan gesprekken.' },
+  { naam: 'Schrijven, redigeren & spelen met taal', kort: 'Jij krijgt energie van werken met woorden. Schrijven, formuleren en ideeën omzetten in taal voelt voor jou als creëren. En daarna nog even schaven, schrappen en finetunen tot het precies klopt? Juist dat maakt het af. Jij houdt ervan om tekst niet alleen goed te maken, maar raak, scherp en helder.' },
+  { naam: 'Controleren & toezicht houden', kort: 'Jij houdt graag overzicht en checkt of alles goed verloopt. Oog hebben voor kwaliteit, veiligheid of afspraken past bij jou.' },
+  { naam: 'Politiek bedrijven', kort: 'Jij snapt hoe macht, belangen en besluitvorming werken. Navigeren tussen verschillende partijen, standpunten bij elkaar brengen en invloed uitoefenen op beleid of richting geeft jou energie.' },
+  { naam: 'Zingen, musiceren & componeren', kort: 'Muziek maken laat jou helemaal opgaan in het moment. Of je nu zingt, een instrument speelt of zelf muziek bedenkt: jij geniet van creatief bezig zijn met geluid en ritme.' },
+];
+// ═══════ DATA ═══════
+
+// GRID DEFINITION
+// Rows (vertical, left side) = 5 "hoe graag" zones
+// Cols (horizontal, top) = 3 "hoe goed" zones
+const ROW_HEADERS = [
+  {key:'heel_graag',  label:'Doe ik heel erg graag'},
+  {key:'met_plezier', label:'Doe ik met plezier'},
+  {key:'neutraal',    label:'Neutraal'},
+  {key:'liever_niet', label:'Doe ik liever niet'},
+  {key:'hekel_aan',   label:'Heb ik een hekel aan'},
+];
+const COL_HEADERS = [
+  {key:'goed_in',         label:'Ben ik heel goed in'},
+  {key:'redelijk_goed_in',label:'Ben ik redelijk goed in'},
+  {key:'niet_zo_goed_in', label:'Niet zo goed in'},
+];
+
+// BLOCKS — cells: [colKey, rowKey]
+const BLOCKS = [
+  {key:'a', css:'blk-a', title:'Op je plek!',
+   explain:'Dit is waar je wilt zijn — en al bent. Activiteiten die je graag doet én goed kunt. De kern van je werk zou hier moeten liggen.',
+   cells:[['goed_in','heel_graag'],['goed_in','met_plezier'],['redelijk_goed_in','heel_graag'],['redelijk_goed_in','met_plezier']]},
+  {key:'b', css:'blk-b', title:'Ontplooien!',
+   explain:'Je wilt het, maar de vaardigheid moet nog groeien. Een aanwijzing waar je energie zou kunnen investeren, als je dat wilt.',
+   cells:[['niet_zo_goed_in','heel_graag'],['niet_zo_goed_in','met_plezier']]},
+  {key:'c', css:'blk-c', title:'Beraden!',
+   explain:'Je kunt dit — soms zelfs heel goed. Maar het voedt je niet. Hoeveel ruimte mag dit innemen in je werk?',
+   cells:[['goed_in','neutraal'],['goed_in','liever_niet'],['goed_in','hekel_aan'],['redelijk_goed_in','liever_niet'],['redelijk_goed_in','hekel_aan']]},
+  {key:'d', css:'blk-d', title:'Vondst!',
+   explain:'Geen sterke gevoelens, geen sterke vaardigheid — maar soms schuilt hier een onverwachte vondst die de moeite waard is om te onderzoeken.',
+   cells:[['niet_zo_goed_in','neutraal'],['redelijk_goed_in','neutraal']]},
+  {key:'e', css:'blk-e', title:'Laten!',
+   explain:'Geen plezier, geen vaardigheid. Helder gebied — dit hoeft geen aandacht meer. Laten varen, zonder schuldgevoel.',
+   cells:[['niet_zo_goed_in','liever_niet'],['niet_zo_goed_in','hekel_aan']]},
+];
+
+const CELL_BLOCK = {};
+BLOCKS.forEach(b => b.cells.forEach(([col,row]) => { CELL_BLOCK[`${col}|${row}`] = b; }));
+
+// ═══════ STATE ═══════
+const TOTAL = ACTIVITEITEN.length;
+const SK = 'uplab_dl_v5';
+let S = load();
+
+function fresh(){
+  return {phase:1, deck:shuffle(), pl:{}};
+  // pl[idx] = {row, col|null}
+}
+function shuffle(){
+  const a = Array.from({length:TOTAL},(_,i)=>i);
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function load(){
+  try{const r=localStorage.getItem(SK);if(!r)return fresh();const p=JSON.parse(r);if(!p.deck||!p.pl)return fresh();return p;}catch{return fresh();}
+}
+function save(){try{localStorage.setItem(SK,JSON.stringify(S));}catch{}}
+
+// ═══════ BUILD GRID ═══════
+function buildGrid(){
+  const g = document.getElementById('doenGrid');
+  g.innerHTML = '';
+
+  // Row 1: col headers (hidden in p1 via CSS)
+  ['corner',...COL_HEADERS].forEach((c,i) => {
+    const el = document.createElement('div');
+    if(i===0){ el.className='grid-corner col-header-row'; }
+    else{ el.className='grid-col-header col-header-row'; el.textContent=c.label; el.dataset.col=c.key; }
+    g.appendChild(el);
+  });
+
+  // Rows 2-6: row header + 3 cells
+  ROW_HEADERS.forEach(r => {
+    const rh = document.createElement('div');
+    rh.className='grid-row-header';
+    rh.textContent=r.label;
+    g.appendChild(rh);
+
+    COL_HEADERS.forEach(c => {
+      const cell = document.createElement('div');
+      const blk = CELL_BLOCK[`${c.key}|${r.key}`];
+      cell.className=`grid-cell${blk?' '+blk.css:''}`;
+      cell.dataset.col=c.key; cell.dataset.row=r.key;
+      g.appendChild(cell);
+      wireDrop(cell);
+    });
+  });
+
+  buildOverlays();
+}
+
+// ═══════ RENDER ═══════
+function renderAll(){
+  renderStack();
+  renderGrid();
+  renderProgress();
+  updateUI();
+}
+
+function renderStack(){
+  const container=document.getElementById('cardStack');
+  const empty=document.getElementById('stackEmpty');
+  const counter=document.getElementById('stackCounter');
+  container.innerHTML='';
+
+  if(S.deck.length===0){
+    container.style.display='none';
+    empty.style.display='flex';
+    counter.textContent='0 over';
+    return;
+  }
+  container.style.display='block';
+  empty.style.display='none';
+  counter.textContent=`${S.deck.length} over`;
+
+  S.deck.slice(0,3).forEach((idx,i)=>{
+    const w=ACTIVITEITEN[idx];
+    const card=document.createElement('div');
+    card.className='stack-card'+(i===0?' top':'');
+    card.style.transform=`translate(${i*4}px,${i*4}px) rotate(${i===0?0:(i%2?1:-1)*(1+i)}deg)`;
+    card.style.zIndex=String(10-i);
+    card.innerHTML=`<div class="vname">${w.naam}</div>`;
+    if(i===0){card.draggable=true;card.dataset.index=idx;wireStackDrag(card,idx);}
+    container.appendChild(card);
+  });
+}
+
+function renderGrid(){
+  const g=document.getElementById('doenGrid');
+  // set phase class
+  g.className=`doen-grid ${S.phase===1?'p1':'p2'}${S.phase===3?' phase3':''}`;
+
+  g.querySelectorAll('.grid-cell').forEach(cell=>{
+    cell.innerHTML='';
+  });
+
+  Object.entries(S.pl).forEach(([idx,p])=>{
+    // In phase 1: place in col goed_in (first col), because cols 2+3 are hidden
+    // In phase 2+: use actual col, or goed_in as staging if col===null
+    const colKey = S.phase===1 ? 'goed_in' : (p.col || 'goed_in');
+    const cell = g.querySelector(`.grid-cell[data-col="${colKey}"][data-row="${p.row}"]`);
+    if(cell) appendMini(cell, parseInt(idx));
+  });
+
+  if(S.phase===3) requestAnimationFrame(positionOverlays);
+  else hideOverlays();
+}
+
+function appendMini(cell, idx){
+  const w=ACTIVITEITEN[idx];
+  const card=document.createElement('div');
+  card.className='mini-card';
+  card.draggable=true;
+  card.dataset.index=idx;
+  card.textContent=w.naam;
+  wireMiniDrag(card,idx);
+  cell.appendChild(card);
+}
+
+function renderProgress(){
+  let placed;
+  if(S.phase===1) placed=Object.keys(S.pl).length;
+  else placed=Object.values(S.pl).filter(p=>p.col!==null).length;
+  const pct=Math.round((placed/TOTAL)*100);
+  document.getElementById('progFill').style.width=pct+'%';
+  document.getElementById('progLabel').textContent=`${placed} / ${TOTAL}`;
+}
+
+function updateUI(){
+  const phases=[
+    {chip:'Fase 1 van 3',badge:'Fase 1 — Wat doe ik graag?',desc:'Sleep elke activiteit naar de rij die het beste past bij hoe graag je het doet.',
+     info:'Je gaat een drijfverenonderzoek doen — het <strong>doen en laten</strong>. Pak het bovenste kaartje en sleep het naar de rij die het beste weergeeft hoe graag je deze activiteit doet. Tijdens het slepen zie je de uitleg van de activiteit.'},
+    {chip:'Fase 2 van 3',badge:'Fase 2 — Hoe goed ben ik erin?',desc:'Sleep elke activiteit naar de kolom die past bij hoe goed je erin bent.',
+     info:'Goed gedaan! Nu voeg je de tweede dimensie toe. Sleep elk kaartje van de eerste kolom naar de kolom die past bij hoe goed je in deze activiteit bent. De rij (hoe graag) blijft hetzelfde.'},
+    {chip:'Fase 3 — Resultaten',badge:'Fase 3 — Jouw kaart 🗺️',desc:'Dit is jouw kaart. Hover op een gekleurd vlak voor de betekenis.',
+     info:'Dit is jouw kaart — bepaald door wat je graag doet én waar je goed in bent. Hover op een gevuld vlak voor de uitleg. Kopieer je overzicht en plak het in je Labboek.'},
+  ];
+  const ph=phases[Math.min(S.phase,3)-1];
+  document.getElementById('phaseChip').textContent=ph.chip;
+  document.getElementById('bannerBadge').textContent=ph.badge;
+  document.getElementById('bannerDesc').textContent=ph.desc;
+  document.getElementById('infoBox').innerHTML=ph.info;
+  document.getElementById('infoTitle').textContent=ph.badge;
+  document.getElementById('infoBody').innerHTML=`<p>${ph.info}</p>`;
+
+  // show/hide stack column in phase 3
+  // progress: alleen in fase 1, indienen-knop in fase 2
+  document.getElementById('progressWrap').style.display = S.phase===1 ? 'block' : 'none';
+  document.getElementById('submitWrap').style.display = S.phase===2 ? 'block' : 'none';
+  document.getElementById('stackCol').style.display = S.phase>=2 ? 'none' : '';
+  document.querySelector('.work-area').classList.toggle('no-stack', S.phase>=2);
+  document.getElementById('doneBanner').style.display = S.phase===3 ? 'block' : 'none';
+}
+
+// ═══════ PLACEMENT ═══════
+function place(idx, colKey, rowKey){
+  // remove from deck
+  const di=S.deck.indexOf(idx);
+  if(di>-1) S.deck.splice(di,1);
+
+  if(S.phase===1){
+    S.pl[idx]={row:rowKey, col:null};
+    save(); renderStack(); renderGrid(); renderProgress();
+    if(S.deck.length===0 && Object.keys(S.pl).length===TOTAL){
+      setTimeout(()=>openP('popFase2'),400);
+    }
+  } else {
+    const ex=S.pl[idx];
+    S.pl[idx]={row: ex?ex.row:rowKey, col:colKey};
+    save(); renderStack(); renderGrid(); renderProgress();
+  }
+}
+
+// ═══════ PHASE TRANSITIONS ═══════
+function startFase2(){
+  closeP('popFase2');
+  S.phase=2;
+  save();
+  document.querySelector('.grid-col').classList.add('phase2-scroll');
+  document.getElementById('doenGrid').style.minWidth = '440px';
+  renderAll();
+}
+function confirmFase3(){
+  closeP('popIndienen');
+  S.phase=3;
+  save(); renderAll();
+  requestAnimationFrame(positionOverlays);
+}
+
+// ═══════ DRAG — STACK ═══════
+let touchGhost=null;
+
+function wireStackDrag(card, idx){
+  card.addEventListener('dragstart',e=>{
+    e.dataTransfer.setData('text/plain',String(idx));
+    e.dataTransfer.effectAllowed='move';
+    card.classList.add('dragging');
+  });
+  card.addEventListener('drag',e=>{ if(e.clientX||e.clientY) showTip(idx,e.clientX,e.clientY); });
+  card.addEventListener('dragend',()=>{ card.classList.remove('dragging'); hideTip(); });
+  attachTouch(card, idx);
+}
+
+function wireMiniDrag(card, idx){
+  card.addEventListener('dragstart',e=>{
+    e.dataTransfer.setData('text/plain',String(idx));
+    e.dataTransfer.effectAllowed='move';
+    card.classList.add('dragging');
+  });
+  card.addEventListener('drag',e=>{ if(e.clientX||e.clientY) showTip(idx,e.clientX,e.clientY); });
+  card.addEventListener('dragend',()=>{ card.classList.remove('dragging'); hideTip(); });
+  attachTouch(card, idx);
+}
+
+function wireDrop(cell){
+  cell.addEventListener('dragover',e=>{ e.preventDefault(); cell.classList.add('dragover'); });
+  cell.addEventListener('dragleave',()=>cell.classList.remove('dragover'));
+  cell.addEventListener('drop',e=>{
+    e.preventDefault(); cell.classList.remove('dragover');
+    const idx=parseInt(e.dataTransfer.getData('text/plain'),10);
+    if(!isNaN(idx)) place(idx, cell.dataset.col, cell.dataset.row);
+  });
+}
+
+// ── Touch drag ──
+function attachTouch(card, idx){
+  card.addEventListener('touchstart',e=>{
+    const t=e.touches[0];
+    touchGhost=card.cloneNode(true);
+    const r=card.getBoundingClientRect();
+    Object.assign(touchGhost.style,{position:'fixed',zIndex:'600',pointerEvents:'none',opacity:'.85',width:r.width+'px',left:r.left+'px',top:r.top+'px'});
+    document.body.appendChild(touchGhost);
+    card.classList.add('dragging');
+    showTip(idx,t.clientX,t.clientY);
+  },{passive:true});
+
+  card.addEventListener('touchmove',e=>{
+    if(!touchGhost)return;
+    const t=e.touches[0];
+    const r=card.getBoundingClientRect();
+    touchGhost.style.left=(t.clientX-r.width/2)+'px';
+    touchGhost.style.top=(t.clientY-r.height/2)+'px';
+    moveTip(t.clientX,t.clientY);
+    document.querySelectorAll('.grid-cell.dragover').forEach(c=>c.classList.remove('dragover'));
+    document.elementFromPoint(t.clientX,t.clientY)?.closest('.grid-cell')?.classList.add('dragover');
+    e.preventDefault();
+  },{passive:false});
+
+  card.addEventListener('touchend',e=>{
+    if(!touchGhost)return;
+    const t=e.changedTouches[0];
+    document.querySelectorAll('.grid-cell.dragover').forEach(c=>c.classList.remove('dragover'));
+    const cell=document.elementFromPoint(t.clientX,t.clientY)?.closest('.grid-cell');
+    document.body.removeChild(touchGhost); touchGhost=null;
+    card.classList.remove('dragging'); hideTip();
+    if(cell) place(idx, cell.dataset.col, cell.dataset.row);
+  });
+}
+
+// ── Drag tooltip ──
+function showTip(idx,x,y){
+  const tip=document.getElementById('dragTip');
+  tip.textContent=ACTIVITEITEN[idx].kort;
+  tip.classList.add('show');
+  moveTip(x,y);
+}
+function moveTip(x,y){
+  const tip=document.getElementById('dragTip');
+  if(!tip.classList.contains('show'))return;
+  let l=x+16,t=y+16;
+  if(l+260>window.innerWidth)l=x-260;
+  if(t+80>window.innerHeight)t=y-90;
+  tip.style.left=l+'px'; tip.style.top=t+'px';
+}
+function hideTip(){document.getElementById('dragTip').classList.remove('show')}
+
+// ═══════ BLOCK OVERLAYS ═══════
+function buildOverlays(){
+  const c=document.getElementById('blockOverlays');
+  c.innerHTML='';
+
+  BLOCKS.forEach(b=>{
+    const el=document.createElement('div');
+    el.className=`blk-overlay ${b.css}`;
+    el.id=`ov_${b.key}`;
+    el.innerHTML=`<div class="ov-title">${b.title}</div>`;
+    c.appendChild(el);
+  });
+
+  // tooltip via grid mousemove
+  const grid=document.getElementById('doenGrid');
+  const tip=document.getElementById('blockTip');
+  grid.addEventListener('mousemove',e=>{
+    if(S.phase<3){tip.classList.remove('show');return;}
+    const cell=e.target.closest('.grid-cell');
+    if(!cell||!cell.children.length){tip.classList.remove('show');return;}
+    const blk=CELL_BLOCK[`${cell.dataset.col}|${cell.dataset.row}`];
+    if(!blk){tip.classList.remove('show');return;}
+    tip.textContent=blk.explain;
+    tip.classList.add('show');
+    let l=e.clientX+14,t=e.clientY+14;
+    if(l+300>window.innerWidth)l=e.clientX-300;
+    if(t+80>window.innerHeight)t=e.clientY-90;
+    tip.style.left=l+'px'; tip.style.top=t+'px';
+  });
+  grid.addEventListener('mouseleave',()=>tip.classList.remove('show'));
+}
+
+function positionOverlays(){
+  const scrollEl=document.getElementById('gridWrap');
+  const scrollRect=scrollEl.getBoundingClientRect();
+
+  BLOCKS.forEach(b=>{
+    const ov=document.getElementById(`ov_${b.key}`);
+    if(!ov)return;
+    if(S.phase<3){ov.classList.remove('show');return;}
+
+    const hasAny=b.cells.some(([col,row])=>
+      Object.values(S.pl).some(p=>(p.col||'goed_in')===col && p.row===row)
+    );
+    if(!hasAny){ov.classList.remove('show');return;}
+    ov.classList.add('show');
+
+    // vind de meest linksboven cel voor de pill-positie
+    let minL=Infinity, minT=Infinity;
+    b.cells.forEach(([col,row])=>{
+      const cell=document.querySelector(`.grid-cell[data-col="${col}"][data-row="${row}"]`);
+      if(!cell)return;
+      const r=cell.getBoundingClientRect();
+      const l=r.left-scrollRect.left;
+      const t=r.top-scrollRect.top;
+      minL=Math.min(minL,l);
+      minT=Math.min(minT,t);
+    });
+    Object.assign(ov.style,{left:minL+'px', top:minT+'px', width:'1px', height:'1px'});
+  });
+}
+function hideOverlays(){document.querySelectorAll('.blk-overlay').forEach(o=>o.classList.remove('show'));}
+
+// ═══════ COPY ═══════
+function copyResults(){
+  let text='MIJN DOEN EN LATEN — OVERZICHT\n\n';
+  BLOCKS.forEach(b=>{
+    const items=Object.entries(S.pl)
+      .filter(([,p])=>{
+        // gebruik werkelijke col, of goed_in als staging (col===null)
+        const col = p.col || 'goed_in';
+        return CELL_BLOCK[`${col}|${p.row}`]===b;
+      })
+      .map(([idx])=>ACTIVITEITEN[parseInt(idx)].naam);
+    text+=`═══ ${b.title} ═══\n${b.explain}\n\n`;
+    text+=items.length?items.map(n=>`- ${n}`).join('\n'):'- (geen activiteiten)';
+    text+='\n\n';
+  });
+  const btn=document.getElementById('btnCopy');
+  const ok=()=>{btn.textContent='✓ Gekopieerd!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Kopieer mijn overzicht';btn.classList.remove('copied');},3000);};
+  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(ok).catch(fb);}else fb();
+  function fb(){
+    const ta=document.createElement('textarea');
+    ta.value=text;Object.assign(ta.style,{position:'fixed',top:'0',left:'0',opacity:'0',pointerEvents:'none'});
+    document.body.appendChild(ta);ta.focus();ta.select();
+    try{document.execCommand('copy')&&ok();}catch{}
+    document.body.removeChild(ta);
+  }
+}
+
+// ═══════ POPUPS ═══════
+function openP(id){document.getElementById(id).classList.add('on')}
+function closeP(id){document.getElementById(id).classList.remove('on')}
+document.addEventListener('click',e=>{
+  document.querySelectorAll('.popup-overlay.on').forEach(o=>{
+    if(o.id==='popWelcome')return;
+    if(e.target===o)o.classList.remove('on');
+  });
+});
+
+// ═══════ RESTART ═══════
+function doRestart(){
+  S=fresh(); save();
+  closeP('popRestart');
+  document.querySelector('.grid-col').classList.remove('phase2-scroll');
+  document.getElementById('doenGrid').style.minWidth = '';
+  renderAll();
+  openP('popWelcome');
+}
+
+// ═══════ INIT ═══════
+function init(){
+  buildGrid();
+  renderAll();
+
+  document.getElementById('btnInfo').addEventListener('click',()=>openP('popInfo'));
+  document.getElementById('btnRestart').addEventListener('click',()=>openP('popRestart'));
+  document.getElementById('infoBox').addEventListener('click',()=>openP('popInfo'));
+  document.getElementById('btnCopy').addEventListener('click',copyResults);
+
+  window.addEventListener('resize',()=>{if(S.phase===3)requestAnimationFrame(positionOverlays);});
+
+  if(Object.keys(S.pl).length>0) closeP('popWelcome');
+  if(S.phase>=2){
+    document.querySelector('.grid-col').classList.add('phase2-scroll');
+    document.getElementById('doenGrid').style.minWidth = '440px';
+  }
+  if(S.phase===3) requestAnimationFrame(positionOverlays);
+}
+
+init();
+</script>
+</body>
+</html>
