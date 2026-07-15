@@ -1240,12 +1240,22 @@ function renderContent() {
       html += `<div class="sectie-h2-title">${h2.h2}</div>`;
       if (h2.intro) html += `<div class="sectie-h2-intro">${h2.intro}</div>`;
 
-      // Widget: talentenzoeker knop
+      // Widget: talentenzoeker knop (opent in nieuw tabblad met sessie-token, net als Dain)
       if (h2.widget === 'talentenzoeker') {
-        html += `<button onclick="document.getElementById('alchemistModal').style.display='flex'"
-          style="background:#549E39;color:white;border:none;padding:14px 32px;border-radius:10px;font-family:'Doppio One',sans-serif;font-size:16px;cursor:pointer;margin:8px 0 20px;">
+        const talentenUrl = 'https://uplab-nl.github.io/Alchemist_tools/Talentenchecker_Alchemist.html?st=' + encodeURIComponent(SESSIE_TOKEN || '');
+        html += `<a href="${talentenUrl}" target="_blank" rel="noopener"
+          style="display:inline-block;background:#549E39;color:white;text-decoration:none;border:none;padding:14px 32px;border-radius:10px;font-family:'Doppio One',sans-serif;font-size:16px;cursor:pointer;margin:8px 0 20px;">
           Start de Talentenzoeker 🔎
-        </button>`;
+        </a>`;
+      }
+
+      // Widget: kernwaardentool knop (zelfde opzet als de talentenzoeker)
+      if (h2.id === 'kompas-waarden') {
+        const waardenUrl = 'https://uplab-nl.github.io/Alchemist_tools/Waardebepaler_Alchemist.html?st=' + encodeURIComponent(SESSIE_TOKEN || '');
+        html += `<a href="${waardenUrl}" target="_blank" rel="noopener"
+          style="display:inline-block;background:#549E39;color:white;text-decoration:none;border:none;padding:14px 32px;border-radius:10px;font-family:'Doppio One',sans-serif;font-size:16px;cursor:pointer;margin:8px 0 20px;">
+          Start de Kernwaardentool 🔎
+        </a>`;
       }
 
       // Widget: relaties uitnodigen voor feedback
@@ -1255,24 +1265,23 @@ function renderContent() {
         html += `<div id="feedbackDropdownsContainer"></div>`;
       }
 
-      // Widget: download-blok in het dain-samenvatting subhoofdstuk
+      // Widget: doorschakel-blok naar Dain in het dain-samenvatting subhoofdstuk
       if (h2.id === 'dain-samenvatting') {
-        const heeftGedownload = localStorage.getItem('labboek_gedownload') === '1';
+        const dainUrl = 'https://uplab-nl.github.io/Alchemist_tools/Dain_Alchemist.html?st=' + encodeURIComponent(SESSIE_TOKEN || '');
         html += `
           <div class="privacy-notice" style="margin-bottom:16px;">
-            <p>🔒 <strong>Let op:</strong> Je PDF bevat de antwoorden die jij hebt ingevuld in het Labboek — inclusief je naam als je die hebt toegevoegd aan jouw missieverklaring. Die PDF wordt aangeboden aan Dain, onze AI-onderzoekspartner, die gebruikmaakt van de Anthropic API. Heb je je naam <em>niet</em> opgenomen in je missie? Dan is de PDF volledig anoniem.</p>
+            <p>🔒 <strong>Let op:</strong> Dain leest de antwoorden die jij hebt ingevuld rechtstreeks en beveiligd uit onze database — inclusief je naam als je die hebt toegevoegd aan jouw missieverklaring. Dain maakt daarbij gebruik van de Anthropic API. Heb je je naam <em>niet</em> opgenomen in je missie? Dan blijft je Labboek volledig anoniem.</p>
             <p style="margin-top:10px">Jouw antwoorden worden veilig opgeslagen in onze beveiligde database (Supabase) en worden nooit gedeeld met derden of gebruikt voor andere doeleinden dan het genereren van jouw persoonlijke inzichten. We gaan er zorgvuldig mee om — maar willen daar volledig transparant over zijn.</p>
             <p style="margin-top:10px">Wil je liever volledig anoniem blijven? Gebruik dan een <strong>alias of initialen</strong> in je missieverklaring. De kwaliteit van het advies blijft hetzelfde — Dain kijkt naar de inhoud, niet naar de naam.</p>
           </div>
           <div class="download-sectie download-dain" id="downloadDainBlok" style="margin-bottom:24px;">
             <div>
-              <h3>📄 Download jouw labboek</h3>
-              <p>Download jouw Labboek om het (anoniem) aan te bieden aan Dain.</p>
+              <h3>✨ Ga in gesprek met Dain</h3>
+              <p>Dain bekijkt je Labboek en geeft je op basis daarvan uitgebreid advies. Geen download of upload nodig — hij haalt je antwoorden er zelf bij.</p>
             </div>
-            <button class="btn-download" id="btnDownloadDain" onclick="downloadPDFEnToonTopbar()"
-              style="${heeftGedownload ? 'background:var(--g1);' : ''}">
-              ${heeftGedownload ? '✓ Gedownload' : '⬇ Download PDF'}
-            </button>
+            <a class="btn-download" href="${dainUrl}" target="_blank" rel="noopener" onclick="ontgrendelTopbarPdf()">
+              💬 Open Dain
+            </a>
           </div>`;
       }
 
@@ -2265,6 +2274,14 @@ async function downloadPDF() {
     if(b1){b1.disabled=false;b1.innerHTML='⬇ Download PDF';}
     if(b2){b2.disabled=false;b2.textContent='⬇ PDF';}
   }
+}
+
+// Ontgrendelt de snelle PDF-knop in de topbar zodra iemand naar Dain gaat
+// (dit deed de oude "download voor Dain"-knop ook al)
+function ontgrendelTopbarPdf() {
+  localStorage.setItem('labboek_gedownload', '1');
+  const btnPdf = document.getElementById('btnPdf');
+  if (btnPdf) btnPdf.style.display = 'flex';
 }
 
 // Download via de dain-knop: toont daarna ook de topbar-knop
