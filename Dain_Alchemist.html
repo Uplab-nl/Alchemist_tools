@@ -992,17 +992,55 @@ const THINKING_MESSAGES = {
     'Even denken...',
     'Ik denk heel even na over een goed antwoord, geef me een paar tellen...',
     'Momentje, ik zoek de juiste woorden...',
-    'Bijna! Ik werk het nog even af...'
+    'Ik laat het even goed bezinken...',
+    'Bijna! Ik werk het nog even af...',
+    'Nog heel even, ik wil het wel goed doen...',
+    'Ik weeg de opties nog even tegen elkaar af...',
+    'Geef me nog een paar seconden...',
+    'Ik zet de puntjes op de i...',
+    'Bijna klaar, hou nog even vol...'
   ],
   labboek: [
     'Ik neem even je Labboek door...',
     'Mooi materiaal, ik lees het rustig helemaal door...',
     'Ik leg je missie, kernwaarden en talenten naast elkaar...',
-    'Ik denk na over een paar richtingen die echt bij je passen, geef me een paar tellen...'
+    'Ik denk na over een paar richtingen die echt bij je passen...',
+    'Ik ben onder de indruk, je hebt hier goed werk geleverd...',
+    'Ik zoek naar het patroon achter al jouw antwoorden...',
+    'Ik check je must-haves en no-go\'s, die wil ik niet over het hoofd zien...',
+    'Ik denk ook alvast na over een paar verrassende opties voor je...',
+    'Nog even geduld, ik wil je een advies geven waar je echt iets aan hebt...',
+    'Ik koppel je talenten aan concrete functies...',
+    'Ik kijk hoe jouw missie in de praktijk vorm zou kunnen krijgen...',
+    'Bijna zover, ik werk de laatste details uit...',
+    'Ik weeg zorgvuldig af welke richtingen het beste bij je passen...',
+    'Nog heel even, dit verdient een doordacht antwoord...',
+    'Ik zet alles overzichtelijk voor je op een rij...'
+  ],
+  labboekPersoonlijk: [
+    'Ik neem jouw Labboek even goed door, {naam}...',
+    'Mooi materiaal, {naam} — ik lees het rustig helemaal door...',
+    'Ik denk na over een paar richtingen die echt bij jou passen, {naam}...',
+    'Geduld, {naam}, ik wil je een advies geven waar je echt wat aan hebt...'
   ]
 };
 
 let typingInterval = null;
+
+function buildThinkingList(context) {
+  const base = (THINKING_MESSAGES[context] || THINKING_MESSAGES.default).slice();
+  if (context === 'labboek' && deelnemerNaam) {
+    const persoonlijk = THINKING_MESSAGES.labboekPersoonlijk.map(function (t) {
+      return t.replace('{naam}', deelnemerNaam);
+    });
+    // Persoonlijke zinnen ertussen mixen, niet alleen aan het eind plakken
+    persoonlijk.forEach(function (zin, idx) {
+      const pos = Math.min(base.length, 2 + idx * 4);
+      base.splice(pos, 0, zin);
+    });
+  }
+  return base;
+}
 
 function showTyping(context = 'default') {
   const row = document.createElement('div');
@@ -1012,18 +1050,23 @@ function showTyping(context = 'default') {
   messagesInner.appendChild(row);
   chatWrap.scrollTop = chatWrap.scrollHeight;
 
-  const messagesList = THINKING_MESSAGES[context] || THINKING_MESSAGES.default;
+  const messagesList = buildThinkingList(context);
   const statusEl = document.getElementById('typingStatus');
   let i = 0;
   statusEl.textContent = messagesList[i];
 
   typingInterval = setInterval(() => {
-    i = (i + 1) % messagesList.length;
+    i++;
     const el = document.getElementById('typingStatus');
-    if (el) {
-      el.textContent = messagesList[i];
-      chatWrap.scrollTop = chatWrap.scrollHeight;
+    if (!el) return;
+    if (i >= messagesList.length) {
+      // Lijst op: laatste zin laten staan i.p.v. opnieuw beginnen (voorkomt zichtbare herhaling)
+      clearInterval(typingInterval);
+      typingInterval = null;
+      return;
     }
+    el.textContent = messagesList[i];
+    chatWrap.scrollTop = chatWrap.scrollHeight;
   }, 4000);
 }
 
