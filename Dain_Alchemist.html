@@ -239,6 +239,27 @@
 
   .msg-bubble strong { font-weight: 700; }
 
+  .msg-bubble h4 {
+    font-family: 'Doppio One', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.35;
+    color: var(--brand-primary);
+    margin: 16px 0 8px;
+  }
+  .msg-bubble h4:first-child { margin-top: 2px; }
+  .msg-bubble h4::after {
+    content: '';
+    display: block;
+    width: 34px;
+    height: 3px;
+    background: var(--accent1);
+    border-radius: 2px;
+    margin-top: 6px;
+  }
+  .msg-row.user .msg-bubble h4 { color: white; }
+  .msg-row.user .msg-bubble h4::after { background: white; opacity: 0.6; }
+
   .msg-time {
     font-size: 10.88px;
     color: var(--text-muted);
@@ -591,19 +612,45 @@ een nieuwe baan):
   talenten en drijfveren.
 - Geef daarnaast ook 2 verrassende banen/functies: richtingen waar de gebruiker waarschijnlijk
   nog niet aan heeft gedacht of nog nooit van heeft gehoord, maar die op de een of andere
-  manier toch goed zouden kunnen passen. Geef ook hiervoor aan waarom dit past (link naar
-  missie/kernwaarden/talenten/drijfveren), en benoem expliciet dat dit een verrassende of
-  onverwachte optie is -- bijvoorbeeld met iets als "deze komt misschien als verrassing,
-  maar...".
+  manier toch goed zouden kunnen passen.
 - Zoek bewust naar variatie: pik niet één talent eruit om alles aan te hangen. Eén voorkeur
   (bv. "werken met kinderen") kan op meerdere manieren vertaald worden (bv. geduld,
   ontwikkelen, groeien, betekenis geven voor anderen -> ook passend bij een rol als trainer).
-- Per baan:
-  - Leg uit waarom dit past (link naar minstens 1 kernwaarde + 1 of meer talenten/drijfveren
-    + de missie).
-  - Houd rekening met de con's -- dit zijn harde grenzen, geen suggesties.
-  - Benoem ook mogelijke aandachtspunten/con's van de baan zelf, zodat de gebruiker
-    realistisch kan kiezen.
+
+**Koppen per baan:**
+- Voor de 5 reguliere adviezen gebruik je een ###-kop met simpelweg de functietitel, bijvoorbeeld
+  "### Beleidsadviseur duurzaamheid".
+- Voor de 2 verrassende adviezen gebruik je een speelse, nieuwsgierig makende ###-kop in plaats
+  van kaal de functietitel neer te zetten -- bijvoorbeeld "### Misschien ook nog een idee:
+  beleidsadviseur duurzaamheid" of "### Dit klinkt gek, maar blijf even lezen: content
+  strategist" of "### Een linkerveldje: procesbegeleider". Verwerk de functietitel wel ergens
+  in die kop, maar laat de toon duidelijk afwijken van de kop bij de reguliere adviezen zodat
+  meteen zichtbaar is dat dit de verrassende categorie is.
+
+**Per baan werk je uitgebreid en concreet de volgende vier onderdelen uit -- dit mag en moet
+substantieel zijn, geen paar losse zinnetjes. De gebruiker heeft hier weken aan gewerkt en
+verdient een analyse die daarbij past:**
+
+1. **Waarom dit bij je past** -- Leg gedetailleerd uit hoe deze functie aansluit bij minimaal
+   twee kernwaarden, twee talenten en één of meer drijfveren uit het Labboek. Noem de
+   kernwaarden, talenten en drijfveren expliciet bij naam (niet alleen impliciet) en beschrijf
+   concreet hoe elk daarvan terugkomt in de dagelijkse praktijk van deze rol. Vermijd generieke
+   uitspraken -- verwijs steeds terug naar wat de gebruiker zelf heeft opgeschreven.
+2. **Jouw missie in deze rol** -- Beschrijf concreet hoe de gebruiker in deze functie invulling
+   kan geven aan zijn/haar persoonlijke missie. Niet abstract ("dit past bij je missie"), maar
+   tastbaar: welk type impact, voor wie, op welke manier -- gekoppeld aan de exacte missie zoals
+   die in het Labboek staat.
+3. **Toetsing aan je must-haves en no-go's** -- Ga expliciet langs de must-haves en no-go's die
+   in het Labboek staan en benoem per punt of en hoe deze functie daaraan voldoet. Waar een
+   match niet vanzelfsprekend is of mogelijk wringt met een no-go, benoem dat eerlijk in plaats
+   van het te verzwijgen -- dit is een harde toets, geen marketingpraatje.
+4. **Aandachtspunten van deze rol** -- Naast de toetsing aan de con's van de gebruiker: welke
+   inherente uitdagingen of mindere kanten heeft dit beroep of deze sector over het algemeen
+   (bijvoorbeeld werkdruk, onzekerheid, benodigde bijscholing), zodat de gebruiker een realistisch
+   beeld heeft.
+
+- Gebruik de vier onderdelen hierboven als subkopjes onder de ###-kop (bijvoorbeeld met
+  vetgedrukte labels), zodat het geheel overzichtelijk blijft ondanks de uitgebreidheid.
 - Sluit af met een vraag: "Wil je dat ik nog meer opties aandraag?" of "Zullen we een van
   deze banen verder uitdiepen?"
 
@@ -627,8 +674,9 @@ een nieuwe baan):
 - Blijf bij loopbaanadvies. Wijkt de gebruiker af naar een ander onderwerp (gezondheid,
   financiën, etc.), stuur vriendelijk en met humor terug naar het loopbaangesprek.
 - Beantwoord geen vragen buiten het loopbaancoach-domein.
-- Gebruik Markdown spaarzaam: vetgedrukte functietitels mogen, maar houd het overzichtelijk
-  en niet te lang per bericht.`;
+- Gebruik Markdown gestructureerd: ###-koppen per functietitel en vetgedrukte labels voor de
+  vier onderdelen daaronder. Een uitgebreid, goed gestructureerd antwoord is hier gewenst -- het
+  hoofddoel is diepgang en concreetheid, niet compactheid.`;
 
 const WELCOME_MESSAGE = HAS_TOKEN
   ? `Hey! Ik ben Dain — het digitale brein van Daan, speciaal getraind om met je mee te denken over jouw volgende stap. 🧪
@@ -865,9 +913,10 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-// Lichte markdown: **vet** en regeleinden
+// Lichte markdown: ### koppen, **vet** en regeleinden
 function formatText(text) {
   let safe = escapeHtml(text);
+  safe = safe.replace(/^###\s+(.+)$/gm, '<h4>$1</h4>');
   safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   return safe;
 }
@@ -1023,7 +1072,7 @@ async function callDain(context = 'default') {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        max_tokens: 5000,
+        max_tokens: 10000,
         system: SYSTEM_PROMPT,
         messages: apiMessages
       })
@@ -1276,7 +1325,7 @@ document.getElementById('btnSummary').addEventListener('click', async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        max_tokens: 5000,
+        max_tokens: 10000,
         system: SYSTEM_PROMPT,
         messages: apiMessages
       })
