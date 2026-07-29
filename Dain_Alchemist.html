@@ -1023,7 +1023,7 @@ async function callDain(context = 'default') {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        max_tokens: 1000,
+        max_tokens: 5000,
         system: SYSTEM_PROMPT,
         messages: apiMessages
       })
@@ -1276,7 +1276,7 @@ document.getElementById('btnSummary').addEventListener('click', async () => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        max_tokens: 1000,
+        max_tokens: 5000,
         system: SYSTEM_PROMPT,
         messages: apiMessages
       })
