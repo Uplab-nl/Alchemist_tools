@@ -1278,6 +1278,7 @@ async function streamAnthropic(body, onDelta) {
   const decoder = new TextDecoder();
   let buffer = '';
   let fullText = '';
+  let stopReason = null;
 
   while (true) {
     const { value, done } = await reader.read();
@@ -1294,13 +1295,46 @@ async function streamAnthropic(body, onDelta) {
       if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
         fullText += evt.delta.text;
         onDelta(fullText);
+      } else if (evt.type === 'message_delta' && evt.delta && evt.delta.stop_reason) {
+        stopReason = evt.delta.stop_reason;
       } else if (evt.type === 'error') {
         throw new Error((evt.error && evt.error.message) || 'Onbekende streamfout');
       }
     }
   }
 
-  return fullText;
+  return { text: fullText, stopReason };
+}
+
+// Wrapper om streamAnthropic() die automatisch doorvraagt als het antwoord
+// werd afgekapt door een tokenlimiet (stop_reason "max_tokens"), zodat de
+// deelnemer dit nooit als een afgebroken antwoord te zien krijgt. Werkt door
+// Claude's eigen (afgekapte) tekst als assistant-bericht terug te geven en te
+// vragen om vanaf dat punt verder te schrijven; de vervolgstukken worden
+// naadloos aan elkaar geplakt.
+async function streamAnthropicComplete(body, onDelta, maxRondes = 4) {
+  let combined = '';
+  let apiMessages = (body.messages || []).slice();
+  let ronde = 0;
+
+  while (ronde < maxRondes) {
+    ronde++;
+    const requestBody = Object.assign({}, body, { messages: apiMessages });
+    const soFarBeforeThisRound = combined;
+    const result = await streamAnthropic(requestBody, function (soFarThisRound) {
+      onDelta(soFarBeforeThisRound + soFarThisRound);
+    });
+    combined += result.text;
+
+    if (result.stopReason !== 'max_tokens' || !result.text) break;
+
+    // Geef Claude zijn eigen (afgekapte) tekst terug als vertrekpunt en
+    // vraag impliciet om vanaf daar verder te gaan. Trailing whitespace eraf,
+    // want sommige modelversies accepteren geen bericht dat daarop eindigt.
+    apiMessages = apiMessages.concat([{ role: 'assistant', content: result.text.replace(/\s+$/, '') }]);
+  }
+
+  return combined;
 }
 
 function startAssistantBubble(clientMsgId) {
@@ -1402,7 +1436,7 @@ async function callDain(context = 'default') {
   }
 
   try {
-    const fullText = await streamAnthropic({
+    const fullText = await streamAnthropicComplete({
       max_tokens: 15000,
       system: SYSTEM_PROMPT,
       messages: apiMessages,
@@ -1665,7 +1699,7 @@ document.getElementById('btnSummary').addEventListener('click', async () => {
   let started = false;
 
   try {
-    const summaryText = await streamAnthropic({
+    const summaryText = await streamAnthropicComplete({
       max_tokens: 15000,
       system: SYSTEM_PROMPT,
       messages: apiMessages,
