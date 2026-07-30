@@ -776,7 +776,7 @@ async function initDeelnemer() {
     const rows = await res.json();
     if (Array.isArray(rows) && rows[0]) {
       deelnemerId = rows[0].id;
-      deelnemerNaam = rows[0].naam;
+      deelnemerNaam = (rows[0].naam || '').trim().split(/\s+/)[0] || rows[0].naam;
       updateLabboekStatus();
     }
   } catch (e) {
@@ -1067,7 +1067,7 @@ function showTyping(context = 'default') {
     }
     el.textContent = messagesList[i];
     chatWrap.scrollTop = chatWrap.scrollHeight;
-  }, 4000);
+  }, 8000);
 }
 
 function hideTyping() {
@@ -1100,6 +1100,106 @@ function addUserTextMessage(text) {
 }
 
 /* =========================================================
+   STREAMING (leest de SSE-stream van Anthropic via dain-chat,
+   zodat tekst meteen woord-voor-woord verschijnt i.p.v. dat je
+   moet wachten tot het hele (lange) antwoord klaar is)
+   ========================================================= */
+async function streamAnthropic(body, onDelta) {
+  const response = await fetch(DAIN_CHAT_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+
+  if (!response.ok || !response.body) {
+    let errMsg = 'HTTP ' + response.status;
+    try {
+      const j = await response.json();
+      if (j && j.error) errMsg = j.error;
+    } catch (e) {}
+    throw new Error(errMsg);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let fullText = '';
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n');
+    buffer = lines.pop();
+    for (const line of lines) {
+      if (!line.startsWith('data:')) continue;
+      const jsonStr = line.slice(5).trim();
+      if (!jsonStr || jsonStr === '[DONE]') continue;
+      let evt;
+      try { evt = JSON.parse(jsonStr); } catch (e) { continue; }
+      if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') {
+        fullText += evt.delta.text;
+        onDelta(fullText);
+      } else if (evt.type === 'error') {
+        throw new Error((evt.error && evt.error.message) || 'Onbekende streamfout');
+      }
+    }
+  }
+
+  return fullText;
+}
+
+function startAssistantBubble(clientMsgId) {
+  const row = document.createElement('div');
+  row.className = 'msg-row dain';
+  row.id = 'streamRow-' + clientMsgId;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  row.appendChild(avatar);
+
+  const col = document.createElement('div');
+  col.className = 'msg-bubble-col';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  col.appendChild(bubble);
+
+  const time = document.createElement('div');
+  time.className = 'msg-time';
+  time.textContent = nowTime();
+  col.appendChild(time);
+
+  row.appendChild(col);
+  messagesInner.appendChild(row);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
+  return bubble;
+}
+
+function finalizeAssistantBubble(clientMsgId, text) {
+  const ts = nowTime();
+  messages.push({ role: 'assistant', content: text, text: text, ts, dbId: clientMsgId, feedback: null });
+  saveState();
+  logToSupabase('assistant', text, clientMsgId);
+
+  const row = document.getElementById('streamRow-' + clientMsgId);
+  if (!row) return;
+  const col = row.querySelector('.msg-bubble-col');
+  if (col && !col.querySelector('.feedback-buttons')) {
+    const fb = document.createElement('div');
+    fb.className = 'feedback-buttons';
+    fb.innerHTML =
+      '<button class="fb-btn fb-up" title="Goed advies">👍</button>' +
+      '<button class="fb-btn fb-down" title="Minder goed">👎</button>';
+    const upBtn = fb.querySelector('.fb-up');
+    const downBtn = fb.querySelector('.fb-down');
+    upBtn.addEventListener('click', () => handleFeedbackClick(clientMsgId, 'up', upBtn, downBtn));
+    downBtn.addEventListener('click', () => handleFeedbackClick(clientMsgId, 'down', upBtn, downBtn));
+    col.appendChild(fb);
+  }
+}
+
+/* =========================================================
    API CALL
    ========================================================= */
 async function callDain(context = 'default') {
@@ -1109,32 +1209,42 @@ async function callDain(context = 'default') {
 
   // Bouw messages-array voor de API op basis van opgeslagen geschiedenis
   const apiMessages = messages.map(m => ({ role: m.role, content: m.content }));
+  const clientMsgId = generateMsgId();
+  let bubbleEl = null;
 
   try {
-    const response = await fetch(DAIN_CHAT_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        max_tokens: 10000,
-        system: SYSTEM_PROMPT,
-        messages: apiMessages
-      })
+    const fullText = await streamAnthropic({
+      max_tokens: 10000,
+      system: SYSTEM_PROMPT,
+      messages: apiMessages,
+      stream: true
+    }, function (soFar) {
+      if (!bubbleEl) {
+        hideTyping();
+        bubbleEl = startAssistantBubble(clientMsgId);
+      }
+      bubbleEl.innerHTML = formatText(soFar);
+      chatWrap.scrollTop = chatWrap.scrollHeight;
     });
 
-    const data = await response.json();
     hideTyping();
+    const reply = fullText.trim() || 'Sorry, daar kreeg ik even geen antwoord op. Kun je het anders formuleren?';
 
-    if (data.content) {
-      const textBlocks = data.content.filter(b => b.type === 'text').map(b => b.text);
-      const reply = textBlocks.join('\n\n') || 'Sorry, daar kreeg ik even geen antwoord op. Kun je het anders formuleren?';
+    if (!bubbleEl) {
       addAssistantMessage(reply);
     } else {
-      addAssistantMessage('Hmm, er ging iets mis bij het ophalen van mijn antwoord. Probeer het zo nog eens! 🙏');
+      bubbleEl.innerHTML = formatText(reply);
+      finalizeAssistantBubble(clientMsgId, reply);
     }
   } catch (err) {
     console.error(err);
     hideTyping();
-    addAssistantMessage('Oeps, ik kon je bericht nu niet verwerken. Check je internetverbinding en probeer het opnieuw. 🙏');
+    if (bubbleEl && bubbleEl.textContent.trim()) {
+      // Er was al deels tekst binnengekomen -> dat bewaren i.p.v. weggooien
+      finalizeAssistantBubble(clientMsgId, bubbleEl.textContent);
+    } else {
+      addAssistantMessage('Oeps, ik kon je bericht nu niet verwerken. Check je internetverbinding en probeer het opnieuw. 🙏');
+    }
   } finally {
     isSending = false;
     btnSend.disabled = false;
@@ -1363,43 +1473,40 @@ document.getElementById('btnSummary').addEventListener('click', async () => {
   const apiMessages = messages.map(m => ({ role: m.role, content: m.content }));
   apiMessages.push({ role: 'user', content: SUMMARY_PROMPT });
 
+  let started = false;
+
   try {
-    const response = await fetch(DAIN_CHAT_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        max_tokens: 10000,
-        system: SYSTEM_PROMPT,
-        messages: apiMessages
-      })
+    const summaryText = await streamAnthropic({
+      max_tokens: 10000,
+      system: SYSTEM_PROMPT,
+      messages: apiMessages,
+      stream: true
+    }, function (soFar) {
+      started = true;
+      summaryContent.innerHTML = '<div style="font-size:14.4px; line-height:1.7;">' + formatText(soFar) + '</div>';
     });
 
-    const data = await response.json();
+    const finalText = summaryText.trim() || 'Kon geen samenvatting maken, probeer het zo nog eens.';
+    summaryContent.innerHTML = '<div style="font-size:14.4px; line-height:1.7;">' + formatText(finalText) + '</div>';
+    document.getElementById('summaryTextarea').value = finalText;
 
-    if (data.content) {
-      const textBlocks = data.content.filter(b => b.type === 'text').map(b => b.text);
-      const summaryText = textBlocks.join('\n\n') || 'Kon geen samenvatting maken, probeer het zo nog eens.';
-      summaryContent.innerHTML = '<div style="font-size:14.4px; line-height:1.7;">' + formatText(summaryText) + '</div>';
-      document.getElementById('summaryTextarea').value = summaryText;
+    if (deelnemerId) {
+      const noot = document.createElement('div');
+      noot.style.cssText = 'margin-top:10px;font-size:12.8px;color:var(--text-muted);';
+      noot.textContent = '⏳ Ik zet hem alvast voor je klaar in je Labboek...';
+      summaryContent.appendChild(noot);
 
-      if (deelnemerId) {
-        const noot = document.createElement('div');
-        noot.style.cssText = 'margin-top:10px;font-size:12.8px;color:var(--text-muted);';
-        noot.textContent = '⏳ Ik zet hem alvast voor je klaar in je Labboek...';
-        summaryContent.appendChild(noot);
-
-        const gelukt = await opslaanSamenvattingInLabboek(summaryText);
-        noot.style.color = gelukt ? 'var(--accent2)' : '#b23b3b';
-        noot.textContent = gelukt
-          ? '✅ Automatisch opgeslagen bij "Informeer je slim" in je Labboek.'
-          : '⚠️ Kon niet automatisch opslaan — kopieer hem hieronder even zelf.';
-      }
-    } else {
-      summaryContent.innerHTML = '<p>Sorry, er ging iets mis bij het maken van de samenvatting. Probeer het zo nog eens.</p>';
+      const gelukt = await opslaanSamenvattingInLabboek(finalText);
+      noot.style.color = gelukt ? 'var(--accent2)' : '#b23b3b';
+      noot.textContent = gelukt
+        ? '✅ Automatisch opgeslagen bij "Informeer je slim" in je Labboek.'
+        : '⚠️ Kon niet automatisch opslaan — kopieer hem hieronder even zelf.';
     }
   } catch (err) {
     console.error(err);
-    summaryContent.innerHTML = '<p>Oeps, ik kon geen samenvatting ophalen. Check je internetverbinding en probeer het opnieuw. 🙏</p>';
+    if (!started) {
+      summaryContent.innerHTML = '<p>Oeps, ik kon geen samenvatting ophalen. Check je internetverbinding en probeer het opnieuw. 🙏</p>';
+    }
   }
 });
 
