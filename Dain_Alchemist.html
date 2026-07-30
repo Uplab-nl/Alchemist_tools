@@ -376,6 +376,14 @@
   .labboek-cta-btn:hover { background: var(--accent2); }
   .labboek-cta-wrap { padding: 6px 12px 2px; text-align: center; }
 
+  .quick-reply-row { display: flex; margin: 4px 0 16px 38px; animation: fadeIn 0.25s ease; }
+  .quick-reply-btn {
+    background: white; border: 2px solid var(--accent1); color: var(--accent1);
+    border-radius: 20px; padding: 10px 18px; font-family: 'Roboto', sans-serif;
+    font-size: 13.6px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+  }
+  .quick-reply-btn:hover { background: var(--accent1); color: white; }
+
   /* ─── POPUPS ─── */
   .popup-overlay {
     display: none;
@@ -681,7 +689,9 @@ verdient een analyse die daarbij past:**
 const WELCOME_MESSAGE = HAS_TOKEN
   ? `Hey! Ik ben Dain — het digitale brein van Daan, speciaal getraind om met je mee te denken over jouw volgende stap. 🧪
 
-Ik zie dat je vanuit je Labboek komt. Klik hieronder op "📖 Bekijk mijn labboek" en ik duik er meteen in — geen download of upload nodig, ik lees je antwoorden rechtstreeks en veilig uit de database.`
+Ik zie dat je vanuit je Labboek komt, dus dat scheelt ons een hoop werk. Klik op de knop hieronder en ik duik meteen in je hele onderzoek — je talenten, kernwaarden, missie, noem maar op. Geen download of upload nodig, ik lees alles rechtstreeks en veilig uit de database.
+
+Daarna komen we samen tot een aantal richtingen die écht bij je passen, en kun je me alles vragen wat je maar wilt.`
   : `Hey! Ik ben Dain — het digitale brein van Daan, speciaal getraind om met je mee te denken over jouw volgende stap. 🧪
 
 Heb je je Labboek al af? Klik op de paperclip hieronder en deel 'm met me — als PDF of als tekst, jij mag het zeggen — dan duik ik er helemaal in en kom ik met een aantal richtingen die écht bij je passen.
@@ -745,22 +755,38 @@ function saveState() {
 }
 
 function updateLabboekStatus() {
-  if (labboek) {
-    labboekStatus.style.display = 'block';
-    labboekStatus.innerHTML = '';
-    labboekStatus.textContent = '📄 Labboek "' + (labboek.name || 'tekst') + '" is bekend bij Dain';
-  } else if (HAS_TOKEN && deelnemerId) {
-    toonLabboekKnop();
-  } else {
-    labboekStatus.style.display = 'none';
+  labboekStatus.style.display = 'none'; // de oude losse balk gebruiken we niet meer
+  removeLabboekChip();
+
+  if (!HAS_TOKEN || !deelnemerId) return;
+
+  if (labboek && labboek.type === 'db') {
+    renderLabboekChip('🔄 Labboek opnieuw bekijken');
+  } else if (!labboek) {
+    renderLabboekChip('📖 Bekijk mijn Labboek');
   }
+  // Handmatig geüpload bestand (labboek.type 'pdf'/'text'): geen chip nodig,
+  // dat loopt al via de paperclip-flow.
 }
 
-function toonLabboekKnop() {
-  labboekStatus.style.display = 'block';
-  labboekStatus.innerHTML = '<div class="labboek-cta-wrap"><button class="labboek-cta-btn" id="btnBekijkLabboek">📖 Bekijk mijn labboek</button></div>';
+function removeLabboekChip() {
+  const bestaand = document.getElementById('labboekChipRow');
+  if (bestaand) bestaand.remove();
+}
+
+function renderLabboekChip(label) {
+  removeLabboekChip();
+  const row = document.createElement('div');
+  row.className = 'quick-reply-row';
+  row.id = 'labboekChipRow';
+  row.innerHTML = '<button class="quick-reply-btn" id="btnBekijkLabboek">' + label + '</button>';
+  messagesInner.appendChild(row);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
   const btn = document.getElementById('btnBekijkLabboek');
-  if (btn) btn.addEventListener('click', bekijkLabboek);
+  if (btn) btn.addEventListener('click', () => {
+    removeLabboekChip();
+    bekijkLabboek();
+  });
 }
 
 /* =========================================================
@@ -1022,18 +1048,34 @@ const THINKING_MESSAGES = {
     'Mooi materiaal, {naam} — ik lees het rustig helemaal door...',
     'Ik denk na over een paar richtingen die echt bij jou passen, {naam}...',
     'Geduld, {naam}, ik wil je een advies geven waar je echt wat aan hebt...'
+  ],
+  defaultPersoonlijk: [
+    'Momentje, {naam}, ik denk even goed na...',
+    'Geef me een paar tellen, {naam}...',
+    'Ik wil je een goed antwoord geven, {naam}, heel even geduld...'
   ]
 };
 
 let typingInterval = null;
+const INTRO_MESSAGE_COUNT = 5;
+const INTRO_MESSAGE_DURATION_MS = 1800; // 5 zinnen x 1,8s = ± 9s opwarmtijd voordat het antwoord verschijnt
+
+function shuffleArray(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
 
 function buildThinkingList(context) {
   const base = (THINKING_MESSAGES[context] || THINKING_MESSAGES.default).slice();
-  if (context === 'labboek' && deelnemerNaam) {
-    const persoonlijk = THINKING_MESSAGES.labboekPersoonlijk.map(function (t) {
+  const persoonlijkKey = context + 'Persoonlijk';
+  if (deelnemerNaam && THINKING_MESSAGES[persoonlijkKey]) {
+    const persoonlijk = THINKING_MESSAGES[persoonlijkKey].map(function (t) {
       return t.replace('{naam}', deelnemerNaam);
     });
-    // Persoonlijke zinnen ertussen mixen, niet alleen aan het eind plakken
     persoonlijk.forEach(function (zin, idx) {
       const pos = Math.min(base.length, 2 + idx * 4);
       base.splice(pos, 0, zin);
@@ -1042,7 +1084,32 @@ function buildThinkingList(context) {
   return base;
 }
 
-function showTyping(context = 'default') {
+// Kiest willekeurig INTRO_MESSAGE_COUNT wachtzinnen uit de lijst voor deze context,
+// met de garantie dat er (als de naam bekend is) minstens 1 persoonlijke zin bij zit.
+function pickIntroMessages(context) {
+  const persoonlijkKey = context + 'Persoonlijk';
+  const heeftPersoonlijk = !!(deelnemerNaam && THINKING_MESSAGES[persoonlijkKey] && THINKING_MESSAGES[persoonlijkKey].length);
+
+  if (!heeftPersoonlijk) {
+    const pool = shuffleArray((THINKING_MESSAGES[context] || THINKING_MESSAGES.default).slice());
+    return pool.slice(0, INTRO_MESSAGE_COUNT);
+  }
+
+  const persoonlijkePool = shuffleArray(THINKING_MESSAGES[persoonlijkKey].map(function (t) {
+    return t.replace('{naam}', deelnemerNaam);
+  }));
+  const algemenePool = shuffleArray((THINKING_MESSAGES[context] || THINKING_MESSAGES.default).slice());
+
+  const verplicht = [persoonlijkePool[0]];
+  const rest = algemenePool.slice(0, INTRO_MESSAGE_COUNT - 1);
+  return shuffleArray(verplicht.concat(rest));
+}
+
+// Toont een vaste reeks van INTRO_MESSAGE_COUNT willekeurige wachtzinnen (elk
+// INTRO_MESSAGE_DURATION_MS zichtbaar) en roept daarna onIntroDone() aan.
+// Zo krijgt de gebruiker altijd eerst die opwarmtekst te zien, ook als het
+// echte (gestreamde) antwoord ondertussen al lang binnenkomt.
+function showTyping(context = 'default', onIntroDone) {
   const row = document.createElement('div');
   row.className = 'msg-row dain';
   row.id = 'typingRow';
@@ -1050,24 +1117,27 @@ function showTyping(context = 'default') {
   messagesInner.appendChild(row);
   chatWrap.scrollTop = chatWrap.scrollHeight;
 
-  const messagesList = buildThinkingList(context);
+  const messagesList = pickIntroMessages(context);
   const statusEl = document.getElementById('typingStatus');
   let i = 0;
-  statusEl.textContent = messagesList[i];
+  statusEl.textContent = messagesList[0] || '';
 
   typingInterval = setInterval(() => {
     i++;
     const el = document.getElementById('typingStatus');
-    if (!el) return;
     if (i >= messagesList.length) {
-      // Lijst op: laatste zin laten staan i.p.v. opnieuw beginnen (voorkomt zichtbare herhaling)
+      // Alle 5 wachtzinnen zijn getoond: stop het rouleren en geef het sein
+      // dat het echte antwoord nu getoond mag worden.
       clearInterval(typingInterval);
       typingInterval = null;
+      if (typeof onIntroDone === 'function') onIntroDone();
       return;
     }
-    el.textContent = messagesList[i];
-    chatWrap.scrollTop = chatWrap.scrollHeight;
-  }, 8000);
+    if (el) {
+      el.textContent = messagesList[i];
+      chatWrap.scrollTop = chatWrap.scrollHeight;
+    }
+  }, INTRO_MESSAGE_DURATION_MS);
 }
 
 function hideTyping() {
@@ -1205,12 +1275,43 @@ function finalizeAssistantBubble(clientMsgId, text) {
 async function callDain(context = 'default') {
   isSending = true;
   btnSend.disabled = true;
-  showTyping(context);
+
+  // De opwarmsequentie van 5 wachtzinnen is alleen bedoeld voor de eerste,
+  // uitgebreide Labboek-analyse. Bij gewone vervolgberichten mag het
+  // antwoord gewoon meteen verschijnen zodra het binnenkomt.
+  const useIntro = context === 'labboek';
 
   // Bouw messages-array voor de API op basis van opgeslagen geschiedenis
   const apiMessages = messages.map(m => ({ role: m.role, content: m.content }));
   const clientMsgId = generateMsgId();
   let bubbleEl = null;
+  let latestText = '';
+  let introDone = !useIntro;
+  let resolveIntro;
+  const introFinished = new Promise(function (resolve) { resolveIntro = resolve; });
+  if (!useIntro) resolveIntro();
+
+  // Toont pas iets van het echte antwoord zodra ZOWEL de opwarmsequentie
+  // (indien van toepassing) is afgerond ALS er al tekst is binnengekomen.
+  function tryReveal() {
+    if (!introDone || !latestText) return;
+    if (!bubbleEl) {
+      hideTyping();
+      bubbleEl = startAssistantBubble(clientMsgId);
+    }
+    bubbleEl.innerHTML = formatText(latestText);
+    chatWrap.scrollTop = chatWrap.scrollHeight;
+  }
+
+  if (useIntro) {
+    showTyping(context, function () {
+      introDone = true;
+      tryReveal();
+      resolveIntro();
+    });
+  } else {
+    showTyping(context);
+  }
 
   try {
     const fullText = await streamAnthropic({
@@ -1219,13 +1320,13 @@ async function callDain(context = 'default') {
       messages: apiMessages,
       stream: true
     }, function (soFar) {
-      if (!bubbleEl) {
-        hideTyping();
-        bubbleEl = startAssistantBubble(clientMsgId);
-      }
-      bubbleEl.innerHTML = formatText(soFar);
-      chatWrap.scrollTop = chatWrap.scrollHeight;
+      latestText = soFar;
+      tryReveal();
     });
+
+    // Ook als het antwoord sneller klaar is dan de opwarmsequentie: wacht
+    // eerst netjes tot alle 5 wachtzinnen zijn geweest voordat we tonen.
+    if (!introDone) await introFinished;
 
     hideTyping();
     const reply = fullText.trim() || 'Sorry, daar kreeg ik even geen antwoord op. Kun je het anders formuleren?';
