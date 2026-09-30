@@ -852,7 +852,7 @@ function renderPhase(phase) {
     // info btn handled per phase
   }
 
-  
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 // ===== GRID 1 =====
@@ -1235,10 +1235,12 @@ function showPopup(title, body, actions) {
   });
 
   document.getElementById('overlay').classList.add('active');
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 function closePopup() {
   document.getElementById('overlay').classList.remove('active');
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 window.closePopup = closePopup;
 
@@ -1284,6 +1286,38 @@ window.doReset = doReset;
 document.getElementById('overlay').addEventListener('click', (e) => {
   if (e.target === document.getElementById('overlay')) closePopup();
 });
+
+// ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
+(function () {
+  if (!window.frameElement && window.parent === window) return; // sta niet in een iframe, niets te melden
+
+  // Laat de pagina krimpen tot z'n echte inhoud i.p.v. altijd minstens 100vh
+  var s = document.createElement('style');
+  s.textContent = 'html,body{min-height:0 !important;height:auto !important;overflow:visible !important;}';
+  document.head.appendChild(s);
+
+  var lastH = 0;
+  function reportHeight() {
+    var b = document.body, d = document.documentElement;
+    var h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0,
+                      d ? d.scrollHeight : 0, d ? d.offsetHeight : 0);
+    if (h > 40 && Math.abs(h - lastH) > 3) {
+      lastH = h;
+      try { window.parent.postMessage({ __uplabResize: true, h: h + 2 }, '*'); } catch (e) {}
+    }
+  }
+  window.__uplabReportHeight = reportHeight;
+
+  reportHeight();
+  try { new ResizeObserver(reportHeight).observe(document.body); } catch (e) {}
+  try {
+    new MutationObserver(reportHeight).observe(document.body,
+      { subtree: true, childList: true, attributes: true, characterData: true });
+  } catch (e) {}
+  [120, 350, 700, 1200, 2000, 3500].forEach(function (t) { setTimeout(reportHeight, t); });
+  setInterval(reportHeight, 1500); // vangnet
+  window.addEventListener('resize', reportHeight);
+})();
 
 // ===== START =====
 init();
