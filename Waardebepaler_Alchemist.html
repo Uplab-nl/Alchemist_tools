@@ -27,7 +27,6 @@
     overflow-x: hidden;
   }
 
-  /* STICKY HEADER */
   .sticky-header {
     position: sticky;
     top: 0;
@@ -100,7 +99,6 @@
     background: rgba(255,255,255,0.22);
   }
 
-  /* DIAGONAL HEADER BANNER */
   .header-banner {
     background: var(--brand-primary);
     position: relative;
@@ -119,7 +117,6 @@
     clip-path: polygon(0 100%, 100% 0, 100% 100%);
   }
 
-  /* Gray diagonal strip */
   .header-banner::before {
     content: '';
     position: absolute;
@@ -167,14 +164,12 @@
     letter-spacing: 0.5px;
   }
 
-  /* MAIN CONTENT */
   .main {
     max-width: 1000px;
     margin: 0 auto;
     padding: 30px 20px 60px;
   }
 
-  /* GRID */
   .values-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -189,7 +184,6 @@
     }
   }
 
-  /* FLIP CARD */
   .flip-card {
     height: 90px;
     perspective: 800px;
@@ -253,7 +247,6 @@
     text-align: center;
   }
 
-  /* SELECTED STATE */
   .flip-card.selected .flip-front {
     background: var(--accent1);
     border-color: var(--accent2);
@@ -273,7 +266,6 @@
     font-weight: bold;
   }
 
-  /* CUSTOM CARD */
   .custom-card {
     height: 90px;
     border-radius: 10px;
@@ -326,7 +318,6 @@
     font-size: 0.72rem;
   }
 
-  /* SUBMIT BUTTON */
   .btn-primary {
     background: var(--accent1);
     color: white;
@@ -350,7 +341,6 @@
     transform: translateY(0);
   }
 
-  /* RESULTS SCREEN */
   .results-screen {
     text-align: center;
     padding: 20px 0;
@@ -423,7 +413,6 @@
   .btn-copy:hover { background: #3a3636; }
   .btn-copy.copied { background: var(--accent1); }
 
-  /* PHASE INFO TEXT */
   .phase-info-box {
     background: var(--light-bg);
     border-radius: 10px;
@@ -446,7 +435,6 @@
     color: var(--accent1);
   }
 
-  /* POPUP */
   .popup-overlay {
     display: none;
     position: fixed;
@@ -542,7 +530,6 @@
 
   .popup-btn-secondary:hover { border-color: var(--brand-primary); }
 
-  /* INFO LIST IN POPUP */
   .info-word-list {
     columns: 2;
     column-gap: 16px;
@@ -558,11 +545,9 @@
     .popup-box { padding: 22px 18px; }
   }
 
-  /* HIDE/SHOW */
   .screen { display: none; }
   .screen.active { display: block; }
 
-  /* SECTION DIVIDER */
   .section-label {
     font-family: 'Doppio One', sans-serif;
     font-size: 1rem;
@@ -575,7 +560,6 @@
 </head>
 <body>
 
-<!-- ─── STICKY HEADER ─── -->
 <div class="sticky-header">
   <div class="header-left">
 
@@ -591,7 +575,6 @@
   </div>
 </div>
 
-<!-- ─── SCREEN 1 ─── -->
 <div id="screen1" class="screen active">
   <div class="header-banner">
     <div class="header-banner-content">
@@ -613,7 +596,6 @@
   </div>
 </div>
 
-<!-- ─── SCREEN 2 ─── -->
 <div id="screen2" class="screen">
   <div class="header-banner">
     <div class="header-banner-content">
@@ -635,7 +617,6 @@
   </div>
 </div>
 
-<!-- ─── SCREEN 3 ─── -->
 <div id="screen3" class="screen">
   <div class="header-banner">
     <div class="header-banner-content">
@@ -657,7 +638,6 @@
   </div>
 </div>
 
-<!-- ─── SCREEN RESULTS ─── -->
 <div id="screenResults" class="screen">
   <div class="header-banner">
     <div class="header-banner-content">
@@ -683,9 +663,6 @@
   </div>
 </div>
 
-<!-- ────────────────────── POPUPS ────────────────────── -->
-
-<!-- Welcome popup fase 1 -->
 <div class="popup-overlay active" id="popupWelcome">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupWelcome')">✕</button>
@@ -699,7 +676,6 @@
   </div>
 </div>
 
-<!-- Popup fase 2 -->
 <div class="popup-overlay" id="popupFase2">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupFase2')">✕</button>
@@ -712,7 +688,6 @@
   </div>
 </div>
 
-<!-- Popup fase 3 -->
 <div class="popup-overlay" id="popupFase3">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupFase3')">✕</button>
@@ -724,7 +699,6 @@
   </div>
 </div>
 
-<!-- Popup opnieuw beginnen -->
 <div class="popup-overlay" id="popupRestart">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupRestart')">✕</button>
@@ -735,7 +709,6 @@
   </div>
 </div>
 
-<!-- Popup te veel -->
 <div class="popup-overlay" id="popupTooMany">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupTooMany')">✕</button>
@@ -745,7 +718,6 @@
   </div>
 </div>
 
-<!-- Popup te weinig (submit) -->
 <div class="popup-overlay" id="popupTooFew">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupTooFew')">✕</button>
@@ -755,7 +727,6 @@
   </div>
 </div>
 
-<!-- Info popup – alle kernwaarden -->
 <div class="popup-overlay" id="popupInfoList">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupInfoList')">✕</button>
@@ -766,7 +737,6 @@
   </div>
 </div>
 
-<!-- Fase info popup (klikbaar vanuit info-box) -->
 <div class="popup-overlay" id="popupPhaseInfo">
   <div class="popup-box">
     <button class="popup-close" onclick="closePopup('popupPhaseInfo')">✕</button>
@@ -777,9 +747,6 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// DATA – KERNWAARDEN (uit het Alchemist document)
-// ═══════════════════════════════════════════════════════════
 const WAARDEN = [
   {
     naam: "Eerlijkheid",
@@ -1043,12 +1010,8 @@ const WAARDEN = [
   }
 ];
 
-// Extra info list (Patrick Schiel bron)
 const INFO_WORDS = ["Acceptatie","Aandacht","Aanzet","Aanpassingsvermogen","Aansprakelijkheid","Aantrekkingskracht","Aardigheid","Affectie","Afstemming","Ambitie","Autonomie","Balans","Begrip","Beheersing","Behulpzaamheid","Bekwaamheid","Belangeloosheid","Betrouwbaarheid","Betrokkenheid","Bevlogenheid","Bezieling","Bescheidenheid","Besluitvaardigheid","Bewustzijn","Blijdschap","Broederschap","Burgerschap","Compassie","Concentratie","Consequentie","Consistentie","Creativiteit","Daadkracht","Dankbaarheid","Deelbaarheid","Deskundigheid","Dienstbaarheid","Discipline","Doelgerichtheid","Doorzettingsvermogen","Draagkracht","Duidelijkheid","Duurzaamheid","Echtheid","Eerlijkheid","Eigenheid","Energie","Engagement","Enthousiasme","Eenvoud","Evenwicht","Eer","Eerbied","Erkenning","Eenheid","Familie","Fantasie","Feitelijkheid","Flexibiliteit","Focus","Forgiveness (vergeving)","Fortuin","Frisheid","Fun","Gelijkwaardigheid","Geduld","Gehoorzaamheid","Geïnspireerdheid","Geloof","Gemak","Gemeenschap","Genegenheid","Generositeit","Gerechtigheid","Gerichtheid","Gezondheid","Gezelligheid","Glimlach","Goedheid","Goede wil","Groeibereidheid","Gulheid","Harmonie","Hartelijkheid","Helderheid","Herkenning","Herstel","Hoop","Humor","IJver","Inleving","Innerlijke rust","Innerlijke kracht","Innovatie","Inspiratie","Integriteit","Intelligentie","Interesse","Intimiteit","Inzet","Invloed","Inzicht","Jeugdigheid","Juiste maat","Juistheid","Kalmte","Kansen","Kennis","Kennisdeling","Kennisdrang","Kracht","Kritisch denken","Kwaliteit","Kwetsbaarheid","Lef","Leiderschap","Leerbereidheid","Leergierigheid","Leren","Liefdadigheid","Liefde","Liefdevolheid","Liefde voor waarheid","Loyaliteit","Luisteren","Luchtigheid","Macht","Menselijkheid","Mentorschap","Mildheid","Moed","Motivatie","Nauwkeurigheid","Naastenliefde","Nederigheid","Nieuwsgierigheid","Nuchterheid","Onafhankelijkheid","Onbaatzuchtigheid","Onderzoekendheid","Ondersteuning","Ondernemerschap","Ontdekkingsdrang","Onthechting","Ontvankelijkheid","Ontwikkeling","Oprechtheid","Openheid","Optimisme","Orde","Overgave","Overtuiging","Passie","Plezier","Positiviteit","Potentie","Presentie","Prestatie","Principes","Proactief","Professionaliteit","Punctualiteit","Rechtvaardigheid","Reflectie","Respect","Resultaatgerichtheid","Richting","Ruimte","Rust","Samenwerking","Samenhorigheid","Schoonheid","Simpliciteit","Sinceriteit","Solidariteit","Spel","Spirit","Spiritualiteit","Stabiliteit","Standvastigheid","Steun","Stilte","Stiptheid","Streven","Structuur","Succes","Sympathie","Teamspeler","Tevredenheid","Trouw","Toegankelijkheid","Toewijding","Tolerantie","Transparantie","Trots","Trouw aan jezelf","Toekomstgerichtheid","Tact","Tederheid","Teamwerk","Transformatie","Troost","Uithoudingsvermogen","Uitmuntendheid","Uitstraling","Uniciteit","Vakmanschap","Vaardigheid","Veerkracht","Veiligheid","Vernieuwing","Verantwoordelijkheid","Verbinding","Vertrouwen","Verwondering","Verscheidenheid","Vindingrijkheid","Vitaalheid","Voldoening","Volharding","Vrede","Vreugde","Vriendschap","Vrijgevigheid","Vrijheid","Waarachtigheid","Waakzaamheid","Waardering","Warmte","Welwillendheid","Wijsheid","Wilskracht","Zachtheid","Zelfacceptatie","Zelfbeheersing","Zelfbewustzijn","Zelfvertrouwen","Zelfkennis","Zelfliefde","Zelfstandigheid","Zelfzorg","Zekerheid","Zingeving","Zorg","Zorgvuldigheid","Zorgzaamheid","Zuiverheid"];
 
-// ═══════════════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════════════
 const LIMITS = { 1: 10, 2: 6, 3: 4 };
 
 let state = {
@@ -1074,9 +1037,6 @@ function loadState() {
   return false;
 }
 
-// ═══════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   buildInfoList();
   const hadState = loadState();
@@ -1096,7 +1056,6 @@ window.addEventListener('DOMContentLoaded', () => {
     showScreen(1);
   }
 
-  // Event listeners
   document.getElementById('submit1').addEventListener('click', submitPhase1);
   document.getElementById('submit2').addEventListener('click', submitPhase2);
   document.getElementById('submit3').addEventListener('click', submitPhase3);
@@ -1109,9 +1068,6 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('phaseInfo3').addEventListener('click', () => showPhasePopup(3));
 });
 
-// ═══════════════════════════════════════════════════════════
-// GRID BUILDER
-// ═══════════════════════════════════════════════════════════
 function buildGrid(phase) {
   const container = document.getElementById(`grid${phase}`);
   container.innerHTML = '';
@@ -1182,7 +1138,6 @@ function buildGrid(phase) {
     card.addEventListener('click', () => toggleValue(card, phase, key, limit));
   });
 
-  // Add custom card only in phase 1
   if (phase === 1) {
     const customCard = document.createElement('div');
     customCard.className = 'custom-card' + (state.customSelected ? ' selected' : '');
@@ -1205,12 +1160,11 @@ function buildGrid(phase) {
 
     input.addEventListener('focus', () => {
       if (!state.customSelected) {
-        // Just focus to type, don't auto-select
       }
     });
 
     customCard.addEventListener('click', (e) => {
-      if (e.target === input) return; // typing
+      if (e.target === input) return;
       if (input.value.trim()) {
         toggleCustomValue(phase, limit);
       }
@@ -1255,7 +1209,6 @@ function toggleValue(card, phase, name, limit) {
   } else {
     if (sel.length >= limit) {
       openPopup('popupTooMany');
-      // For custom card in phase 2/3 we already toggled, undo it
       if (name === '__custom__') card.classList.remove('selected');
       return;
     }
@@ -1292,9 +1245,6 @@ function toggleCustomValue(phase, limit) {
   updateCounter();
 }
 
-// ═══════════════════════════════════════════════════════════
-// SUBMIT HANDLERS
-// ═══════════════════════════════════════════════════════════
 function submitPhase1() {
   const count = state.selected[1].length;
   if (count < 10) {
@@ -1339,9 +1289,6 @@ function submitPhase3() {
   updateCounter();
 }
 
-// ═══════════════════════════════════════════════════════════
-// RESULTS
-// ═══════════════════════════════════════════════════════════
 function renderResults() {
   const container = document.getElementById('resultsContainer');
   container.innerHTML = '';
@@ -1443,9 +1390,6 @@ function copyResults() {
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// COUNTER
-// ═══════════════════════════════════════════════════════════
 function updateCounter() {
   const phase = state.phase;
   const count = state.done ? 4 : (state.selected[phase] || []).length;
@@ -1455,9 +1399,6 @@ function updateCounter() {
   badge.className = 'counter-badge' + (count > limit ? ' warning' : '');
 }
 
-// ═══════════════════════════════════════════════════════════
-// SCREEN MANAGEMENT
-// ═══════════════════════════════════════════════════════════
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   if (id === 'results') {
@@ -1466,20 +1407,19 @@ function showScreen(id) {
     document.getElementById(`screen${id}`).classList.add('active');
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
-// ═══════════════════════════════════════════════════════════
-// POPUP MANAGEMENT
-// ═══════════════════════════════════════════════════════════
 function openPopup(id) {
   document.getElementById(id).classList.add('active');
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 function closePopup(id) {
   document.getElementById(id).classList.remove('active');
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
-// Click outside popup to close (except welcome)
 document.addEventListener('click', (e) => {
   const overlays = document.querySelectorAll('.popup-overlay.active');
   overlays.forEach(overlay => {
@@ -1506,9 +1446,6 @@ function showPhasePopup(phase) {
   openPopup('popupPhaseInfo');
 }
 
-// ═══════════════════════════════════════════════════════════
-// RESTART
-// ═══════════════════════════════════════════════════════════
 function doRestart() {
   state = { phase: 1, selected: { 1: [], 2: [], 3: [] }, customValue: '', customSelected: false, done: false };
   saveState();
@@ -1521,13 +1458,42 @@ function doRestart() {
   updateCounter();
 }
 
-// ═══════════════════════════════════════════════════════════
-// INFO WORD LIST
-// ═══════════════════════════════════════════════════════════
 function buildInfoList() {
   const container = document.getElementById('infoWordList');
   container.innerHTML = INFO_WORDS.map(w => `<div>${w}</div>`).join('');
 }
+
+// ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
+(function () {
+  if (!window.frameElement && window.parent === window) return; // sta niet in een iframe, niets te melden
+
+  // Laat de pagina krimpen tot z'n echte inhoud i.p.v. altijd minstens 100vh
+  var s = document.createElement('style');
+  s.textContent = 'html,body{min-height:0 !important;height:auto !important;}';
+  document.head.appendChild(s);
+
+  var lastH = 0;
+  function reportHeight() {
+    var b = document.body, d = document.documentElement;
+    var h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0,
+                      d ? d.scrollHeight : 0, d ? d.offsetHeight : 0);
+    if (h > 40 && Math.abs(h - lastH) > 3) {
+      lastH = h;
+      try { window.parent.postMessage({ __uplabResize: true, h: h + 2 }, '*'); } catch (e) {}
+    }
+  }
+  window.__uplabReportHeight = reportHeight;
+
+  reportHeight();
+  try { new ResizeObserver(reportHeight).observe(document.body); } catch (e) {}
+  try {
+    new MutationObserver(reportHeight).observe(document.body,
+      { subtree: true, childList: true, attributes: true, characterData: true });
+  } catch (e) {}
+  [120, 350, 700, 1200, 2000, 3500].forEach(function (t) { setTimeout(reportHeight, t); });
+  setInterval(reportHeight, 1500); // vangnet
+  window.addEventListener('resize', reportHeight);
+})();
 </script>
 </body>
 </html>
