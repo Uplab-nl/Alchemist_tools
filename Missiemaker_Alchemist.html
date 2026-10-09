@@ -1286,10 +1286,12 @@ function loadState() {
 // ═══════════════════════════════════════════════════════════
 function openPopup(id) {
   document.getElementById(id).classList.add('active');
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 function closePopup(id) {
   document.getElementById(id).classList.remove('active');
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -1304,6 +1306,7 @@ function showScreen(n) {
   document.getElementById('stepBadge').textContent = STEP_LABELS[badgeStep] || 'Klaar 🎉';
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 function restoreScreenContent() {
@@ -1802,6 +1805,37 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // else: step 1, welcome popup is already open
 });
+
+// ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
+(function () {
+  if (!window.frameElement && window.parent === window) return;
+
+  var s = document.createElement('style');
+  s.textContent = 'html,body{min-height:0 !important;height:auto !important;}';
+  document.head.appendChild(s);
+
+  var lastH = 0;
+  function reportHeight() {
+    var b = document.body, d = document.documentElement;
+    var h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0,
+                      d ? d.scrollHeight : 0, d ? d.offsetHeight : 0);
+    if (h > 40 && Math.abs(h - lastH) > 3) {
+      lastH = h;
+      try { window.parent.postMessage({ __uplabResize: true, h: h + 2 }, '*'); } catch (e) {}
+    }
+  }
+  window.__uplabReportHeight = reportHeight;
+
+  reportHeight();
+  try { new ResizeObserver(reportHeight).observe(document.body); } catch (e) {}
+  try {
+    new MutationObserver(reportHeight).observe(document.body,
+      { subtree: true, childList: true, attributes: true, characterData: true });
+  } catch (e) {}
+  [120, 350, 700, 1200, 2000, 3500].forEach(function (t) { setTimeout(reportHeight, t); });
+  setInterval(reportHeight, 1500);
+  window.addEventListener('resize', reportHeight);
+})();
 </script>
 </body>
 </html>
