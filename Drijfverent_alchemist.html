@@ -793,6 +793,7 @@ h1,h2,h3,.font-head{
   function showScreen(name){
     document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
     document.getElementById("screen-" + name).classList.add("active");
+    if (window.__uplabReportHeight) window.__uplabReportHeight();
   }
 
   function renderDuel(){
@@ -1111,10 +1112,12 @@ h1,h2,h3,.font-head{
     });
 
     document.getElementById("overlay").classList.add("active");
+    if (window.__uplabReportHeight) window.__uplabReportHeight();
   }
 
   function closePopup(){
     document.getElementById("overlay").classList.remove("active");
+    if (window.__uplabReportHeight) window.__uplabReportHeight();
   }
   window.closePopup = closePopup;
 
@@ -1200,6 +1203,7 @@ h1,h2,h3,.font-head{
     var showing = wrap.classList.toggle("show");
     this.textContent = showing ? "Verberg volledig overzicht" : "Bekijk alle 21 drijfveren";
     if(!showing){ hidePopover(); activePopoverDriverId = null; }
+    if (window.__uplabReportHeight) window.__uplabReportHeight();
   });
   document.getElementById("btnRestart").addEventListener("click", startFreshSession);
   document.getElementById("btnRestartDuel").addEventListener("click", confirmAndRestart);
@@ -1225,6 +1229,37 @@ h1,h2,h3,.font-head{
     document.getElementById("copyFallback").classList.remove("show");
   });
 
+})();
+
+// ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
+(function () {
+  if (!window.frameElement && window.parent === window) return;
+
+  var s = document.createElement('style');
+  s.textContent = 'html,body{min-height:0 !important;height:auto !important;}';
+  document.head.appendChild(s);
+
+  var lastH = 0;
+  function reportHeight() {
+    var b = document.body, d = document.documentElement;
+    var h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0,
+                      d ? d.scrollHeight : 0, d ? d.offsetHeight : 0);
+    if (h > 40 && Math.abs(h - lastH) > 3) {
+      lastH = h;
+      try { window.parent.postMessage({ __uplabResize: true, h: h + 2 }, '*'); } catch (e) {}
+    }
+  }
+  window.__uplabReportHeight = reportHeight;
+
+  reportHeight();
+  try { new ResizeObserver(reportHeight).observe(document.body); } catch (e) {}
+  try {
+    new MutationObserver(reportHeight).observe(document.body,
+      { subtree: true, childList: true, attributes: true, characterData: true });
+  } catch (e) {}
+  [120, 350, 700, 1200, 2000, 3500].forEach(function (t) { setTimeout(reportHeight, t); });
+  setInterval(reportHeight, 1500);
+  window.addEventListener('resize', reportHeight);
 })();
 </script>
 </body>
