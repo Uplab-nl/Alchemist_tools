@@ -15,17 +15,15 @@
   --card-bg: #fafafa;
   --border: #e0e0e0;
   --muted: #666;
-  /* block colors */
-  --col-a: #3E6913;   /* Op je plek — donkergroen */
-  --col-b: #D98E33;   /* Ontplooien — oranje */
-  --col-c: #5B5FC7;   /* Beraden  — blauw  */
-  --col-d: #A6437A;   /* Vondst   — magenta*/
-  --col-e: #C0504D;   /* Laten    — rood   */
+  --col-a: #3E6913;
+  --col-b: #D98E33;
+  --col-c: #5B5FC7;
+  --col-d: #A6437A;
+  --col-e: #C0504D;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);min-height:100vh}
 
-/* ── HEADER ── */
 .sticky-header{
   position:sticky;top:0;z-index:200;
   background:var(--brand);padding:10px 20px;
@@ -39,7 +37,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .btn-icon{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;transition:background .2s;white-space:nowrap}
 .btn-icon:hover{background:rgba(255,255,255,.22)}
 
-/* ── BANNER ── */
 .banner{background:var(--brand);position:relative;overflow:hidden;padding:30px 30px 52px}
 .banner::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:44px;background:#fff;clip-path:polygon(0 100%,100% 0,100% 100%)}
 .banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#3a3838 0%,transparent 55%);opacity:.5}
@@ -49,7 +46,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .banner p{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:300}
 .phase-badge{display:inline-block;background:var(--green);color:#fff;font-size:.72rem;font-family:'Doppio One',sans-serif;padding:3px 11px;border-radius:11px;margin-bottom:10px;letter-spacing:.4px}
 
-/* ── MAIN ── */
 .main{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
 
 .btn-submit{
@@ -59,19 +55,14 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 }
 .btn-submit:hover{background:var(--green-dark)}
 
-/* progress */
 .progress-wrap{margin:0 0 14px}
 .progress-track{width:100%;height:7px;background:var(--border);border-radius:6px;overflow:hidden}
 .progress-fill{height:100%;background:var(--green);border-radius:6px;transition:width .3s}
 .progress-label{font-family:'Doppio One',sans-serif;font-size:.75rem;color:var(--green-dark);margin-top:5px;text-align:center}
 
-/* info box */
 .info-box{background:var(--bg);border-left:4px solid var(--green);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:.86rem;color:#444;line-height:1.6;cursor:pointer;position:relative}
 .info-box::after{content:'ⓘ meer info';position:absolute;bottom:7px;right:12px;font-size:.72rem;color:var(--green)}
 
-/* ════════════════════════════
-   MAIN LAYOUT: sticky stack + grid side by side
-   ════════════════════════════ */
 .work-area{
   display:flex;
   gap:16px;
@@ -82,11 +73,9 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
   flex:1;
 }
 
-/* ── STICKY STACK COLUMN ── */
 .stack-col{
-  /* sticky within the work area */
   position:sticky;
-  top:56px; /* height of sticky header */
+  top:56px;
   z-index:100;
   flex-shrink:0;
   width:160px;
@@ -116,14 +105,8 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 }
 .stack-counter{font-family:'Doppio One',sans-serif;font-size:.72rem;color:var(--green-dark);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px 10px;text-align:center}
 
-/* ── GRID COLUMN ── */
 .grid-col{flex:1;min-width:0;overflow-x:auto;padding:4px 0}
 
-/* ════════════════════════════
-   THE GRID — altijd 4 kolommen in de DOM
-   Fase 1: kolomheaders + cols 2+3 verborgen; col 1 neemt volle breedte
-   Fase 2: alle 4 kolommen zichtbaar; hoek linksboven leeg
-*/
 .doen-grid{
   display:grid;
   grid-template-columns: 140px 1fr 1fr 1fr;
@@ -131,28 +114,21 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
   min-width:0;
 }
 
-/* ── FASE 1 ── */
-/* Verberg kolomheaderrij volledig */
 .doen-grid.p1 .col-header-row { display:none }
 
-/* Verberg cellen kolom 2 en 3 */
 .doen-grid.p1 .grid-cell[data-col="redelijk_goed_in"],
 .doen-grid.p1 .grid-cell[data-col="niet_zo_goed_in"] { visibility:hidden; width:0; padding:0; margin:0; min-height:0; border:none; }
 
-/* Kolom 1 neemt in fase 1 alle beschikbare breedte */
 .doen-grid.p1 { grid-template-columns: 140px 1fr 0px 0px; }
 
-/* ── FASE 2 ── */
 .doen-grid.p2 {
   grid-template-columns: 140px repeat(3, minmax(110px,1fr));
   min-width: 500px;
 }
 
-/* Kolomheaderrij: standaard verborgen, in fase 2 zichtbaar */
 .col-header-row { display:none }
 .doen-grid.p2 .col-header-row { display:flex; align-items:center; justify-content:center; }
 
-/* Lege hoekcel linksboven: verborgen in p1, zichtbaar in p2 */
 .grid-corner { display:none; }
 .doen-grid.p2 .grid-corner { display:block; }
 .grid-col-header{
@@ -163,7 +139,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 }
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
-/* row headers */
 .grid-row-header{
   background:var(--green);color:#fff;font-family:'Doppio One',sans-serif;
   font-size:.78rem;line-height:1.3;border-radius:8px;padding:10px 8px;
@@ -171,7 +146,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
   min-height:90px;
 }
 
-/* data cells */
 .grid-cell{
   background: rgba(41,39,39,.09);
   border: 2px solid rgba(41,39,39,.35);
@@ -183,14 +157,12 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 }
 .grid-cell.dragover{border-color:var(--green)!important;outline:2px solid var(--green);outline-offset:2px}
 
-/* block tints — zelfde bruin-zwart basis, iets lichter border voor blokken in fase 3 */
 .grid-cell.blk-a{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
 .grid-cell.blk-b{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
 .grid-cell.blk-c{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
 .grid-cell.blk-d{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
 .grid-cell.blk-e{background:rgba(41,39,39,.09);border-color:rgba(41,39,39,.35)}
 
-/* mini cards */
 .mini-card{
   background:var(--brand);color:#fff;border-radius:6px;
   font-family:'Doppio One',sans-serif;font-size:.66rem;line-height:1.2;
@@ -203,11 +175,7 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .mini-card:active{cursor:grabbing}
 .mini-card.dragging{opacity:.3}
 
-/* ════════════════════════════
-   BLOCK OVERLAYS (phase 3 only)
-   ════════════════════════════ */
 #blockOverlays{position:absolute;top:0;left:0;pointer-events:none;z-index:10}
-/* Overlay — pill boven elk blok (optie A) */
 .blk-overlay{
   position:absolute;pointer-events:none;
   display:none;overflow:visible;
@@ -232,19 +200,16 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .blk-overlay.blk-d .ov-title{background:var(--col-d)}
 .blk-overlay.blk-e .ov-title{background:var(--col-e)}
 
-/* Cel-kleur per blok in fase 3 — exact per cel, geen overlap */
 .phase3 .grid-cell.blk-a{background:rgba(84,158,57,.35);border-color:rgba(84,158,57,.6)}
 .phase3 .grid-cell.blk-b{background:rgba(217,142,51,.35);border-color:rgba(217,142,51,.6)}
 .phase3 .grid-cell.blk-c{background:rgba(91,95,199,.35);border-color:rgba(91,95,199,.6)}
 .phase3 .grid-cell.blk-d{background:rgba(166,67,122,.35);border-color:rgba(166,67,122,.6)}
 .phase3 .grid-cell.blk-e{background:rgba(192,80,77,.35);border-color:rgba(192,80,77,.6)}
 
-/* Vergroot de kolomheaders in fase 3 zodat de pills er niet overheen vallen */
 .phase3 .grid-col-header {
   padding-bottom: 22px;
 }
 
-/* block tooltip */
 #blockTip{
   position:fixed;z-index:300;background:var(--brand);color:rgba(255,255,255,.95);
   font-size:.8rem;line-height:1.55;border-radius:10px;padding:13px 15px;
@@ -253,16 +218,14 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 }
 #blockTip.show{display:block}
 
-/* drag tooltip */
 #dragTip{
-  position:fixed;z-index:500;max-width:250px;background:var(--brand);
+  position:fixed;z-index:650;max-width:250px;background:var(--brand);
   color:rgba(255,255,255,.92);font-size:.77rem;line-height:1.5;
   border-radius:10px;padding:11px 13px;box-shadow:0 8px 20px rgba(0,0,0,.3);
   pointer-events:none;display:none;
 }
 #dragTip.show{display:block}
 
-/* ── DONE BANNER ── */
 .done-banner{
   background:var(--bg);border-left:4px solid var(--green);border-radius:10px;
   padding:16px 20px;margin-top:18px;font-size:.88rem;color:#444;line-height:1.6;
@@ -275,7 +238,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .btn-copy:hover{background:#3a3636}
 .btn-copy.copied{background:var(--green)}
 
-/* ── POPUPS ── */
 .popup-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
   z-index:999;padding:20px;overflow-y:auto;backdrop-filter:blur(2px);
@@ -297,7 +259,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .popup-btn-sec:hover{border-color:var(--brand)}
 @media(max-width:480px){.popup-box{padding:20px 16px}}
 
-/* responsive */
 @media(max-width:600px){
   .work-area{gap:10px}
   .stack-col{width:130px;top:52px}
@@ -312,7 +273,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 </head>
 <body>
 
-<!-- STICKY HEADER -->
 <div class="sticky-header">
   <div class="header-title">Uplab · Alchemist<br><span>Doen en laten</span></div>
   <div class="header-right">
@@ -322,7 +282,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
   </div>
 </div>
 
-<!-- BANNER -->
 <div class="banner">
   <div class="banner-content">
     <div class="phase-badge" id="bannerBadge">Fase 1 — Wat doe ik graag?</div>
@@ -342,14 +301,12 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
   </div>
 
   <div class="work-area">
-    <!-- STICKY STACK -->
     <div class="stack-col" id="stackCol">
       <div class="card-stack" id="cardStack"></div>
       <div class="stack-empty" id="stackEmpty" style="display:none">Stapel leeg ✅</div>
       <div class="stack-counter" id="stackCounter">64 over</div>
     </div>
 
-    <!-- GRID -->
     <div class="grid-col">
       <div style="position:relative;padding:4px 4px;overflow:visible" id="gridWrap">
         <div class="doen-grid p1" id="doenGrid"></div>
@@ -372,7 +329,6 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 <div id="dragTip"></div>
 <div id="blockTip"></div>
 
-<!-- POPUPS -->
 <div class="popup-overlay on" id="popWelcome">
   <div class="popup-box">
     <button class="popup-close" onclick="closeP('popWelcome')">✕</button>
@@ -492,11 +448,7 @@ const ACTIVITEITEN = [
   { naam: 'Politiek bedrijven', kort: 'Jij snapt hoe macht, belangen en besluitvorming werken. Navigeren tussen verschillende partijen, standpunten bij elkaar brengen en invloed uitoefenen op beleid of richting geeft jou energie.' },
   { naam: 'Zingen, musiceren & componeren', kort: 'Muziek maken laat jou helemaal opgaan in het moment. Of je nu zingt, een instrument speelt of zelf muziek bedenkt: jij geniet van creatief bezig zijn met geluid en ritme.' },
 ];
-// ═══════ DATA ═══════
 
-// GRID DEFINITION
-// Rows (vertical, left side) = 5 "hoe graag" zones
-// Cols (horizontal, top) = 3 "hoe goed" zones
 const ROW_HEADERS = [
   {key:'heel_graag',  label:'Doe ik heel erg graag'},
   {key:'met_plezier', label:'Doe ik met plezier'},
@@ -510,7 +462,6 @@ const COL_HEADERS = [
   {key:'niet_zo_goed_in', label:'Niet zo goed in'},
 ];
 
-// BLOCKS — cells: [colKey, rowKey]
 const BLOCKS = [
   {key:'a', css:'blk-a', title:'Op je plek!',
    explain:'Dit is waar je wilt zijn — en al bent. Activiteiten die je graag doet én goed kunt. De kern van je werk zou hier moeten liggen.',
@@ -532,14 +483,12 @@ const BLOCKS = [
 const CELL_BLOCK = {};
 BLOCKS.forEach(b => b.cells.forEach(([col,row]) => { CELL_BLOCK[`${col}|${row}`] = b; }));
 
-// ═══════ STATE ═══════
 const TOTAL = ACTIVITEITEN.length;
 const SK = 'uplab_dl_v5';
 let S = load();
 
 function fresh(){
   return {phase:1, deck:shuffle(), pl:{}};
-  // pl[idx] = {row, col|null}
 }
 function shuffle(){
   const a = Array.from({length:TOTAL},(_,i)=>i);
@@ -551,12 +500,10 @@ function load(){
 }
 function save(){try{localStorage.setItem(SK,JSON.stringify(S));}catch{}}
 
-// ═══════ BUILD GRID ═══════
 function buildGrid(){
   const g = document.getElementById('doenGrid');
   g.innerHTML = '';
 
-  // Row 1: col headers (hidden in p1 via CSS)
   ['corner',...COL_HEADERS].forEach((c,i) => {
     const el = document.createElement('div');
     if(i===0){ el.className='grid-corner col-header-row'; }
@@ -564,7 +511,6 @@ function buildGrid(){
     g.appendChild(el);
   });
 
-  // Rows 2-6: row header + 3 cells
   ROW_HEADERS.forEach(r => {
     const rh = document.createElement('div');
     rh.className='grid-row-header';
@@ -584,12 +530,12 @@ function buildGrid(){
   buildOverlays();
 }
 
-// ═══════ RENDER ═══════
 function renderAll(){
   renderStack();
   renderGrid();
   renderProgress();
   updateUI();
+  if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 function renderStack(){
@@ -622,7 +568,6 @@ function renderStack(){
 
 function renderGrid(){
   const g=document.getElementById('doenGrid');
-  // set phase class
   g.className=`doen-grid ${S.phase===1?'p1':'p2'}${S.phase===3?' phase3':''}`;
 
   g.querySelectorAll('.grid-cell').forEach(cell=>{
@@ -630,8 +575,6 @@ function renderGrid(){
   });
 
   Object.entries(S.pl).forEach(([idx,p])=>{
-    // In phase 1: place in col goed_in (first col), because cols 2+3 are hidden
-    // In phase 2+: use actual col, or goed_in as staging if col===null
     const colKey = S.phase===1 ? 'goed_in' : (p.col || 'goed_in');
     const cell = g.querySelector(`.grid-cell[data-col="${colKey}"][data-row="${p.row}"]`);
     if(cell) appendMini(cell, parseInt(idx));
@@ -678,8 +621,6 @@ function updateUI(){
   document.getElementById('infoTitle').textContent=ph.badge;
   document.getElementById('infoBody').innerHTML=`<p>${ph.info}</p>`;
 
-  // show/hide stack column in phase 3
-  // progress: alleen in fase 1, indienen-knop in fase 2
   document.getElementById('progressWrap').style.display = S.phase===1 ? 'block' : 'none';
   document.getElementById('submitWrap').style.display = S.phase===2 ? 'block' : 'none';
   document.getElementById('stackCol').style.display = S.phase>=2 ? 'none' : '';
@@ -687,15 +628,14 @@ function updateUI(){
   document.getElementById('doneBanner').style.display = S.phase===3 ? 'block' : 'none';
 }
 
-// ═══════ PLACEMENT ═══════
 function place(idx, colKey, rowKey){
-  // remove from deck
   const di=S.deck.indexOf(idx);
   if(di>-1) S.deck.splice(di,1);
 
   if(S.phase===1){
     S.pl[idx]={row:rowKey, col:null};
     save(); renderStack(); renderGrid(); renderProgress();
+    if (window.__uplabReportHeight) window.__uplabReportHeight();
     if(S.deck.length===0 && Object.keys(S.pl).length===TOTAL){
       setTimeout(()=>openP('popFase2'),400);
     }
@@ -703,10 +643,10 @@ function place(idx, colKey, rowKey){
     const ex=S.pl[idx];
     S.pl[idx]={row: ex?ex.row:rowKey, col:colKey};
     save(); renderStack(); renderGrid(); renderProgress();
+    if (window.__uplabReportHeight) window.__uplabReportHeight();
   }
 }
 
-// ═══════ PHASE TRANSITIONS ═══════
 function startFase2(){
   closeP('popFase2');
   S.phase=2;
@@ -722,7 +662,6 @@ function confirmFase3(){
   requestAnimationFrame(positionOverlays);
 }
 
-// ═══════ DRAG — STACK ═══════
 let touchGhost=null;
 
 function wireStackDrag(card, idx){
@@ -757,7 +696,6 @@ function wireDrop(cell){
   });
 }
 
-// ── Touch drag ──
 function attachTouch(card, idx){
   card.addEventListener('touchstart',e=>{
     const t=e.touches[0];
@@ -792,7 +730,6 @@ function attachTouch(card, idx){
   });
 }
 
-// ── Drag tooltip ──
 function showTip(idx,x,y){
   const tip=document.getElementById('dragTip');
   tip.textContent=ACTIVITEITEN[idx].kort;
@@ -802,14 +739,13 @@ function showTip(idx,x,y){
 function moveTip(x,y){
   const tip=document.getElementById('dragTip');
   if(!tip.classList.contains('show'))return;
-  let l=x+16,t=y+16;
-  if(l+260>window.innerWidth)l=x-260;
-  if(t+80>window.innerHeight)t=y-90;
+  let l=x+28,t=y+28;
+  if(l+260>window.innerWidth)l=x-288;
+  if(t+80>window.innerHeight)t=y-118;
   tip.style.left=l+'px'; tip.style.top=t+'px';
 }
 function hideTip(){document.getElementById('dragTip').classList.remove('show')}
 
-// ═══════ BLOCK OVERLAYS ═══════
 function buildOverlays(){
   const c=document.getElementById('blockOverlays');
   c.innerHTML='';
@@ -822,7 +758,6 @@ function buildOverlays(){
     c.appendChild(el);
   });
 
-  // tooltip via grid mousemove
   const grid=document.getElementById('doenGrid');
   const tip=document.getElementById('blockTip');
   grid.addEventListener('mousemove',e=>{
@@ -856,7 +791,6 @@ function positionOverlays(){
     if(!hasAny){ov.classList.remove('show');return;}
     ov.classList.add('show');
 
-    // vind de meest linksboven cel voor de pill-positie
     let minL=Infinity, minT=Infinity;
     b.cells.forEach(([col,row])=>{
       const cell=document.querySelector(`.grid-cell[data-col="${col}"][data-row="${row}"]`);
@@ -872,13 +806,11 @@ function positionOverlays(){
 }
 function hideOverlays(){document.querySelectorAll('.blk-overlay').forEach(o=>o.classList.remove('show'));}
 
-// ═══════ COPY ═══════
 function copyResults(){
   let text='MIJN DOEN EN LATEN — OVERZICHT\n\n';
   BLOCKS.forEach(b=>{
     const items=Object.entries(S.pl)
       .filter(([,p])=>{
-        // gebruik werkelijke col, of goed_in als staging (col===null)
         const col = p.col || 'goed_in';
         return CELL_BLOCK[`${col}|${p.row}`]===b;
       })
@@ -899,9 +831,8 @@ function copyResults(){
   }
 }
 
-// ═══════ POPUPS ═══════
-function openP(id){document.getElementById(id).classList.add('on')}
-function closeP(id){document.getElementById(id).classList.remove('on')}
+function openP(id){document.getElementById(id).classList.add('on'); if (window.__uplabReportHeight) window.__uplabReportHeight();}
+function closeP(id){document.getElementById(id).classList.remove('on'); if (window.__uplabReportHeight) window.__uplabReportHeight();}
 document.addEventListener('click',e=>{
   document.querySelectorAll('.popup-overlay.on').forEach(o=>{
     if(o.id==='popWelcome')return;
@@ -909,7 +840,6 @@ document.addEventListener('click',e=>{
   });
 });
 
-// ═══════ RESTART ═══════
 function doRestart(){
   S=fresh(); save();
   closeP('popRestart');
@@ -919,7 +849,6 @@ function doRestart(){
   openP('popWelcome');
 }
 
-// ═══════ INIT ═══════
 function init(){
   buildGrid();
   renderAll();
@@ -940,6 +869,37 @@ function init(){
 }
 
 init();
+
+// ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
+(function () {
+  if (!window.frameElement && window.parent === window) return;
+
+  var s = document.createElement('style');
+  s.textContent = 'html,body{min-height:0 !important;height:auto !important;}';
+  document.head.appendChild(s);
+
+  var lastH = 0;
+  function reportHeight() {
+    var b = document.body, d = document.documentElement;
+    var h = Math.max(b ? b.scrollHeight : 0, b ? b.offsetHeight : 0,
+                      d ? d.scrollHeight : 0, d ? d.offsetHeight : 0);
+    if (h > 40 && Math.abs(h - lastH) > 3) {
+      lastH = h;
+      try { window.parent.postMessage({ __uplabResize: true, h: h + 2 }, '*'); } catch (e) {}
+    }
+  }
+  window.__uplabReportHeight = reportHeight;
+
+  reportHeight();
+  try { new ResizeObserver(reportHeight).observe(document.body); } catch (e) {}
+  try {
+    new MutationObserver(reportHeight).observe(document.body,
+      { subtree: true, childList: true, attributes: true, characterData: true });
+  } catch (e) {}
+  [120, 350, 700, 1200, 2000, 3500].forEach(function (t) { setTimeout(reportHeight, t); });
+  setInterval(reportHeight, 1500);
+  window.addEventListener('resize', reportHeight);
+})();
 </script>
 </body>
 </html>
