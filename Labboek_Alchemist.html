@@ -1075,8 +1075,37 @@ async function laadWerkboek() {
     checkNotificaties();
     laadRelaties(); // laadRelaties roept ook renderFeedbackDropdowns aan
     renderHoofdstukComments();
+    probeerAutoPdf();
   } catch(e) { alert(`Oops: ${e.message}`); }
   finally { setLoading(false); }
+}
+
+// ══════════════════════════════════════════════════
+// LOSSE PDF-DOWNLOADKNOP (extern, buiten het labboek)
+// Opent deze pagina met ?autopdf=1 → zodra het werkboek geladen is,
+// wordt automatisch de PDF gedownload, zonder dat iemand hoeft rond te klikken.
+// ══════════════════════════════════════════════════
+let autoPdfGestart = false;
+function autoPdfGevraagd() {
+  try { return new URLSearchParams(window.location.search).get('autopdf') === '1'; }
+  catch(e) { return false; }
+}
+function meldOuder(bericht) {
+  try { if (window.parent && window.parent !== window) window.parent.postMessage(Object.assign({ __uplabPdf: true }, bericht), '*'); } catch(e) {}
+}
+async function probeerAutoPdf() {
+  if (!autoPdfGevraagd() || autoPdfGestart) return;
+  autoPdfGestart = true;
+  meldOuder({ status: 'bezig' });
+  // even wachten tot de render/layout helemaal klaar is
+  setTimeout(async () => {
+    try {
+      await downloadPDF();
+      meldOuder({ status: 'klaar' });
+    } catch(e) {
+      meldOuder({ status: 'fout', bericht: e.message });
+    }
+  }, 600);
 }
 
 // ══════════════════════════════════════════════════
