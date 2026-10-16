@@ -1277,9 +1277,12 @@ async function streamAnthropic(body, onDelta) {
     let errMsg = 'HTTP ' + response.status;
     try {
       const j = await response.json();
-      if (j && j.error) errMsg = j.error;
+      // De Edge Function stuurt {error: "tekst"}, Anthropic zelf {error: {message: "..."}}
+      if (j && j.error) errMsg = (typeof j.error === 'string') ? j.error : (j.error.message || errMsg);
     } catch (e) {}
-    throw new Error(errMsg);
+    const fout = new Error(errMsg);
+    fout.status = response.status;
+    throw fout;
   }
 
   const reader = response.body.getReader();
@@ -1416,6 +1419,34 @@ function finalizeAssistantBubble(clientMsgId, text, afgekapt) {
 /* =========================================================
    API CALL
    ========================================================= */
+// Vertaalt een technische fout naar een eerlijke, begrijpelijke melding.
+// De melding wordt alleen getoond, niet in de gespreksgeschiedenis gezet,
+// zodat hij niet als 'antwoord van Dain' naar de API wordt teruggestuurd.
+function toonFoutmelding(err, wasPdf) {
+  const msg = String((err && err.message) || '');
+  const status = err && err.status;
+  let tekst;
+
+  if (status === 403 || /alleen beschikbaar/i.test(msg)) {
+    tekst = 'Oeps, ik mag vanaf deze website niet praten. Dain werkt alleen binnen het Uplab-programma. Laat het Daan even weten, dan zet hij de deur voor je open. 🔒';
+  } else if (status === 413 || /too large|te groot|request_too_large/i.test(msg)) {
+    tekst = 'Oei, dat bestand is te zwaar voor me om in één keer te lezen. Probeer een kleinere PDF, of plak de tekst van je Labboek via de paperclip. 📄';
+  } else if (status === 429 || status === 529 || /overloaded|rate.?limit/i.test(msg)) {
+    tekst = 'Het is even superdruk bij mij. Wacht een minuutje en probeer het dan opnieuw. ☕';
+  } else if (err instanceof TypeError || /failed to fetch|networkerror|load failed/i.test(msg)) {
+    tekst = 'Ik kon geen verbinding maken. Check je internetverbinding en probeer het opnieuw. 🙏';
+  } else {
+    tekst = 'Er ging iets mis aan mijn kant (' + (msg || 'onbekende fout') + '). Probeer het zo nog eens. 🙏';
+  }
+
+  tekst += wasPdf
+    ? '\n\nJe Labboek is niet aangekomen, dus upload hem gerust nog een keer.'
+    : '\n\nJe bericht is niet aangekomen, dus stuur het gerust nog een keer.';
+
+  renderMessage({ role: 'assistant', text: tekst, ts: nowTime() });
+  logToSupabase('assistant', '[Fout getoond aan deelnemer] ' + msg);
+}
+
 async function callDain(context = 'default') {
   isSending = true;
   btnSend.disabled = true;
@@ -1493,7 +1524,18 @@ async function callDain(context = 'default') {
       // en de "Schrijf verder"-knop tonen zodat de deelnemer het zelf kan afmaken
       finalizeAssistantBubble(clientMsgId, bubbleEl.textContent, true);
     } else {
-      addAssistantMessage('Oeps, ik kon je bericht nu niet verwerken. Check je internetverbinding en probeer het opnieuw. 🙏');
+      // Het mislukte bericht uit de geschiedenis halen, zodat het (bv. een
+      // zware PDF) niet bij elke volgende poging opnieuw wordt meegestuurd.
+      const laatste = messages[messages.length - 1];
+      let wasPdf = false;
+      if (laatste && laatste.role === 'user') {
+        wasPdf = Array.isArray(laatste.content) && laatste.content.some(b => b && b.type === 'document');
+        messages.pop();
+        if (laatste.fileLabel) { labboek = null; localStorage.removeItem(STORAGE_KEY_LABBOEK); }
+        saveState();
+      }
+      toonFoutmelding(err, wasPdf);
+      updateLabboekStatus();
     }
   } finally {
     isSending = false;
