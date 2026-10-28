@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dain · Sollicitatiegesprek oefenen · Uplab</title>
+<link href="https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-primary: #292727;
+    --accent1: #549E39;
+    --accent2: #3E6913;
+    --white: #FFFFFF;
+    --light-bg: #f5f5f5;
+    --chat-bg: #f0f1ec;
+    --card-bg: #fafafa;
+    --border-light: #e0e0e0;
+    --avatar-img: url('data:image/jpeg;base64,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');
+    --text-muted: #666;
+  }
+
+  .dain-widget, .dain-widget * { box-sizing: border-box; margin: 0; padding: 0; }
+  .dain-widget button { position: static !important; inset: auto !important; float: none !important; }
+
+  .dain-widget {
+    font-family: 'Roboto', sans-serif;
+    background: var(--white);
+    color: var(--brand-primary);
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: var(--app-height, 100dvh);
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  @media (min-width: 860px) {
+    .app {
+      height: min(var(--app-height, 100dvh), 720px);
+      max-width: 720px;
+      margin: 0 auto;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+  }
+
+  /* ─── STICKY HEADER ─── */
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--brand-primary);
+    padding: 12px 52px 12px 16px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    flex-shrink: 0;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 12px; }
+
+  .avatar-d {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-image: var(--avatar-img);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .header-title {
+    font-family: 'Doppio One', sans-serif;
+    color: var(--accent1);
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .header-title-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent1);
+  }
+
+  .ai-badge {
+    display: inline-block !important;
+    width: auto !important;
+    background: var(--accent1);
+    color: #292727 !important;
+    font-family: 'Roboto', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: 3px;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+
+  .header-sub {
+    font-family: 'Roboto', sans-serif;
+    font-size: 11.2px;
+    color: #c9c9c9 !important;
+    font-weight: 400;
+    display: block;
+  }
+
+  .header-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 8px;
+    flex-shrink: 0 !important;
+    align-items: center;
+    width: auto !important;
+  }
+
+  .btn-icon {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: white;
+    border-radius: 8px;
+    padding: 7px 12px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12.8px;
+    transition: all 0.2s;
+    white-space: nowrap;
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    flex: none !important;
+    flex-shrink: 0 !important;
+  }
+  .btn-icon:hover { background: rgba(255,255,255,0.22); }
+
+  /* ─── DIAGONAL BANNER ─── */
+  .header-banner {
+    background: var(--brand-primary);
+    position: relative;
+    overflow: hidden;
+    padding: 22px 20px 38px;
+    flex-shrink: 0;
+  }
+
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: var(--chat-bg);
+    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 100%;
+    background: linear-gradient(135deg, #3a3838 0%, transparent 55%);
+    opacity: 0.5;
+  }
+
+  .header-banner-content { position: relative; z-index: 2; }
+
+  .header-banner h1 {
+    font-family: 'Doppio One', sans-serif;
+    color: var(--white);
+    font-size: clamp(18.4px, 4vw, 24px);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .header-banner h1 span { color: var(--accent1); }
+  .header-banner p { color: #d9d9d9; font-size: 13.6px; max-width: 480px; }
+
+  /* ─── CHAT AREA ─── */
+  .privacy-note {
+    background: var(--chat-bg);
+    color: var(--text-muted);
+    font-size: 11.52px;
+    text-align: center;
+    padding: 6px 16px 0;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+
+  .chat-wrap {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--chat-bg);
+  }
+
+  .messages-inner {
+    padding: 18px 14px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .msg-row { display: flex; gap: 8px; max-width: 100%; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .msg-row.user { justify-content: flex-end; }
+
+  .msg-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background-image: var(--avatar-img);
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  .msg-bubble-col { display: flex; flex-direction: column; max-width: 78%; }
+  .msg-row.user .msg-bubble-col { align-items: flex-end; }
+
+  .msg-bubble {
+    padding: 9px 13px;
+    border-radius: 14px;
+    font-size: 14.72px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.06);
+  }
+
+  .msg-row.dain .msg-bubble {
+    background: var(--white);
+    color: var(--brand-primary);
+    border-radius: 4px 14px 14px 14px;
+    border: 1px solid var(--border-light);
+  }
+
+  .msg-row.user .msg-bubble {
+    background: var(--accent1);
+    color: white;
+    border-radius: 14px 4px 14px 14px;
+  }
+
+  .msg-bubble strong { font-weight: 700; }
+  .msg-bubble .msg-list { margin: 6px 0; padding-left: 20px; }
+  .msg-bubble .msg-list li { margin-bottom: 5px; line-height: 1.45; }
+  .msg-bubble .msg-list li:last-child { margin-bottom: 0; }
+
+  .msg-bubble h4 {
+    font-family: 'Doppio One', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.35;
+    color: var(--brand-primary);
+    margin: 16px 0 8px;
+  }
+  .msg-bubble h4:first-child { margin-top: 2px; }
+  .msg-bubble h4::after {
+    content: '';
+    display: block;
+    width: 34px;
+    height: 3px;
+    background: var(--accent1);
+    border-radius: 2px;
+    margin-top: 6px;
+  }
+  .msg-row.user .msg-bubble h4 { color: white; }
+  .msg-row.user .msg-bubble h4::after { background: white; opacity: 0.6; }
+
+  .msg-time {
+    font-size: 10.88px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    padding: 0 4px;
+  }
+
+  .feedback-buttons {
+    display: flex;
+    gap: 4px;
+    margin-top: 2px;
+    padding: 0 4px;
+  }
+  .btn-schrijf-verder {
+    align-self: flex-start;
+    margin-top: 8px;
+    background: white; border: 2px solid var(--accent1); color: var(--accent1);
+    border-radius: 10px; padding: 9px 14px; font-family: 'Roboto', sans-serif;
+    font-size: 13.2px; font-weight: 500; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-schrijf-verder:hover { background: var(--accent1); color: white; }
+  .fb-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15.2px;
+    padding: 2px 5px;
+    border-radius: 6px;
+    opacity: 0.45;
+    transition: opacity 0.15s, background 0.15s, transform 0.1s;
+    line-height: 1;
+  }
+  .fb-btn:hover { opacity: 0.85; background: var(--light-bg); }
+  .fb-btn.active { opacity: 1; background: var(--light-bg); transform: scale(1.1); }
+  .fb-btn.fb-up.active { background: rgba(84,158,57,0.18); }
+  .fb-btn.fb-down.active { background: rgba(192,57,43,0.15); }
+
+  .file-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 13.6px;
+  }
+  .msg-row.dain .file-chip { background: var(--light-bg); }
+  .file-chip .file-icon { font-size: 19.2px; }
+
+  /* Typing indicator */
+  .typing-dots { display: flex; gap: 4px; padding: 4px 2px; }
+  .typing-dots span {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--text-muted);
+    animation: blink 1.2s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+
+  /* ─── INPUT BAR ─── */
+  .input-bar {
+    flex-shrink: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border-light);
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .input-bar textarea {
+    flex: 1;
+    resize: none;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
+    padding: 10px 16px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14.72px;
+    line-height: 1.4;
+    max-height: 110px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .input-bar textarea:focus { border-color: var(--accent1); }
+
+  .round-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18.4px;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .round-btn.send { background: var(--accent1); color: white; }
+  .round-btn.send:hover { background: var(--accent2); }
+  .round-btn.send:disabled { background: #b8d8ac; cursor: not-allowed; }
+  .round-btn.attach { background: var(--light-bg); color: var(--brand-primary); border: 1px solid var(--border-light); }
+  .round-btn.attach:hover { background: var(--border-light); }
+
+  .labboek-status {
+    font-size: 11.52px;
+    color: var(--accent2);
+    text-align: center;
+    padding: 4px 12px 0;
+    background: var(--white);
+  }
+
+  .labboek-cta-btn {
+    background: var(--accent1);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Doppio One', sans-serif;
+    font-size: 12.8px;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .labboek-cta-btn:hover { background: var(--accent2); }
+  .labboek-cta-wrap { padding: 6px 12px 2px; text-align: center; }
+
+  .quick-reply-row { display: flex; justify-content: flex-end; margin: 4px 0 16px; animation: fadeIn 0.25s ease; }
+  .quick-reply-card {
+    max-width: 78%; background: var(--accent1); color: white;
+    border-radius: 14px 4px 14px 14px; padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .quick-reply-card p { font-size: 14.4px; line-height: 1.4; color: white; }
+  .quick-reply-actions { display: flex; flex-direction: column; gap: 8px; }
+  .quick-reply-btn {
+    background: white; border: none; color: var(--accent2);
+    border-radius: 10px; padding: 11px 14px; font-family: 'Roboto', sans-serif;
+    font-size: 13.6px; font-weight: 500; cursor: pointer; text-align: left;
+    transition: background 0.15s;
+  }
+  .quick-reply-btn:hover { background: #eef3ea; }
+
+  /* ─── POPUPS ─── */
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+    backdrop-filter: blur(2px);
+  }
+  .popup-overlay.active {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 60px;
+  }
+  .popup-box {
+    background: white;
+    border-radius: 14px;
+    max-width: 480px;
+    width: 100%;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .popup-box h2 {
+    font-family: 'Doppio One', sans-serif;
+    font-size: 18.4px;
+    margin-bottom: 14px;
+    color: var(--brand-primary);
+    padding-right: 20px;
+  }
+  .popup-box p { font-size: 14.4px; line-height: 1.7; color: #444; margin-bottom: 12px; }
+  .popup-close {
+    position: absolute; top: 14px; right: 14px;
+    background: none; border: none; font-size: 20.8px;
+    cursor: pointer; color: var(--text-muted); line-height: 1; padding: 4px;
+  }
+  .popup-close:hover { color: var(--brand-primary); }
+  .popup-btn {
+    background: var(--accent1); color: white; border: none; border-radius: 8px;
+    font-family: 'Doppio One', sans-serif; padding: 11px 24px; cursor: pointer;
+    font-size: 14.08px; margin-top: 6px; margin-right: 8px; transition: background 0.2s;
+  }
+  .popup-btn:hover { background: var(--accent2); }
+  .popup-btn-secondary {
+    background: transparent; color: var(--brand-primary); border: 2px solid var(--border-light);
+    border-radius: 8px; font-family: 'Roboto', sans-serif; padding: 9px 22px; cursor: pointer;
+    font-size: 13.76px; margin-top: 6px; transition: all 0.2s;
+  }
+  .popup-btn-secondary:hover { border-color: var(--brand-primary); }
+  .popup-box textarea {
+    width: 100%; min-height: 160px; border: 1px solid var(--border-light);
+    border-radius: 8px; padding: 10px; font-family: 'Roboto', sans-serif;
+    font-size: 14.08px; resize: vertical; margin-bottom: 10px;
+  }
+
+  @media (max-width: 480px) {
+    .popup-box { padding: 20px; }
+    .header-banner h1 { font-size: 16.8px; }
+  }
+
+  /* ─── INLOGKAART ─── */
+  .login-card {
+    background: var(--white); border: 1px solid var(--border-light); border-radius: 14px;
+    padding: 20px; margin: 6px 0 12px; max-width: 420px; align-self: center; width: 100%;
+  }
+  .login-card h3 { font-family: 'Doppio One', sans-serif; font-weight: 400; font-size: 17px; margin-bottom: 6px; }
+  .login-card p { font-size: 13.6px; color: #555; line-height: 1.5; margin-bottom: 10px; }
+  .login-card label { display: block; font-size: 13px; font-weight: 500; margin: 10px 0 4px; }
+  .login-card input[type=text] {
+    width: 100%; border: 2px solid var(--border-light); border-radius: 9px; padding: 10px 12px;
+    font-family: 'Roboto', sans-serif; font-size: 14px; outline: none;
+  }
+  .login-card input[type=text]:focus { border-color: var(--accent1); }
+  .login-consent { display: flex; gap: 8px; align-items: flex-start; margin-top: 12px; font-size: 12px; color: #555; line-height: 1.5; }
+  .login-consent input { margin-top: 2px; accent-color: var(--accent1); }
+  .login-err { color: #c0392b; font-size: 12.5px; margin-top: 8px; min-height: 16px; }
+  .login-btn {
+    width: 100%; margin-top: 10px; background: var(--accent1); color: white; border: none; border-radius: 10px;
+    font-family: 'Doppio One', sans-serif; font-size: 14px; padding: 11px; cursor: pointer;
+  }
+  .login-btn:hover { background: var(--accent2); }
+  .login-btn:disabled { opacity: .6; cursor: wait; }
+  .input-bar.uit { opacity: .5; pointer-events: none; }
+</style>
+</head>
+<body>
+
+<div class="dain-widget">
+<div class="app">
+
+  <div class="sticky-header">
+    <div class="header-left">
+      <div class="avatar-d"></div>
+      <div class="header-title">
+        <div class="header-title-row">Dain <span class="ai-badge">AI</span></div>
+        <span class="header-sub">Jouw sparringpartner voor het sollicitatiegesprek</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" id="btnSummary" title="Samenvatting en aandachtspunten">📋 Samenvatting</button>
+      <button class="btn-icon" id="btnRestart" title="Opnieuw beginnen">↺ Opnieuw</button>
+    </div>
+  </div>
+
+  <div class="chat-wrap" id="chatWrap">
+    <div class="header-banner">
+      <div class="header-banner-content">
+        <h1>Oefen je sollicitatiegesprek <span>🎙️</span></h1>
+        <p>Dain speelt de interviewer. Antwoord zoals je dat in een echt gesprek zou doen — fouten maken mag hier juist.</p>
+      </div>
+    </div>
+    <div class="privacy-note">🔒 Dit gesprek wordt geanonimiseerd bewaard, zodat Daan Dain steeds beter kan maken.</div>
+    <div class="messages-inner" id="messagesInner"></div>
+  </div>
+
+  <div class="input-bar uit" id="inputBar">
+    <textarea id="msgInput" placeholder="Typ je antwoord..." rows="1"></textarea>
+    <button class="round-btn send" id="btnSend" title="Versturen">➤</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popupRestart">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupRestart')">✕</button>
+    <h2>Opnieuw beginnen?</h2>
+    <p>Het huidige oefengesprek wordt gewist. Je samenvatting in je Labboek blijft gewoon staan.</p>
+    <button class="popup-btn" id="confirmRestart">Ja, opnieuw beginnen</button>
+    <button class="popup-btn-secondary" onclick="closePopup('popupRestart')">Annuleren</button>
+  </div>
+</div>
+
+<div class="popup-overlay" id="popupSummary">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup('popupSummary')">✕</button>
+    <h2>Samenvatting en aandachtspunten</h2>
+    <div id="summaryContent"></div>
+    <textarea id="summaryTextarea" style="position:absolute; left:-9999px;" aria-hidden="true"></textarea>
+    <div style="margin-top: 14px;">
+      <button class="popup-btn" id="copySummaryBtn">📋 Kopieer samenvatting</button>
+      <button class="popup-btn-secondary" onclick="closePopup('popupSummary')">Sluiten</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+/* =========================================================
+   VIEWPORT-HOOGTE (fix voor mobiel toetsenbord)
+   ---------------------------------------------------------
+   100vh op mobiel houdt geen rekening met het toetsenbord --
+   zodra dat opent, verschuift de layout naar boven of raakt
+   het invoerveld uit beeld. We houden daarom zelf de écht
+   zichtbare hoogte bij (via visualViewport, met fallback) en
+   zetten die als CSS-variabele. .app gebruikt die variabele
+   in plaats van 100vh.
+   ========================================================= */
+(function () {
+  function setAppHeight() {
+    var h = (window.visualViewport ? window.visualViewport.height : window.innerHeight);
+    document.documentElement.style.setProperty('--app-height', h + 'px');
+  }
+  setAppHeight();
+  window.addEventListener('resize', setAppHeight);
+  window.addEventListener('orientationchange', setAppHeight);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setAppHeight);
+    window.visualViewport.addEventListener('scroll', setAppHeight);
+  }
+})();
+</script>
+<script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const SUPABASE_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+const DAIN_CHAT_ENDPOINT = SUPABASE_URL + '/functions/v1/dain-chat';
+const LS_SESSIE = 'uplab_labboek_embed_v1';          // zelfde sessie als de Labboek-blokjes
+const LS_GESPREK = 'dain_sollicitatie_messages_';     // + deelnemer-id
+
+// Labboek-vragen die Dain als achtergrond gebruikt
+const V = {
+  rol:        '1d3488e2-0301-4a12-9d45-19acb484da82', // Welke baan of rol heb je op het oog?
+  eindpunt:   '2c73939b-40cf-420b-b061-797a165346db',
+  killer:     '5de9af27-ed9c-46f7-a873-8e90ea09a8d3', // De 3 vragen waar ik het meest tegen opzie
+  talenten:   'bc8232d0-0d4e-44ef-b305-f0dd13f7ff0f',
+  waarden:    '237f569d-328a-41c8-a435-0b07e0ca97d9',
+  missie:     'db090cd8-fbc1-49e7-a101-6527315f06d0',
+  inHuis:     '7ec395c5-892c-4fe4-be9e-098c8663e092',
+  ontbreekt:  'f7bdcfd7-0dd6-48b5-b2b2-f20419b25bcd',
+  vacatures:  'abb811e7-d9a5-414e-b4d0-3988c2176a7d',
+  position:   'add62078-ce00-4a0b-b153-262deedba0af',
+  pitch:      '74c0a9b5-7a38-4602-92b7-5208a5559868'
+};
+const SAMENVATTING_VRAAG_ID = '842783a5-3946-4e36-ad62-084ea350ecbc'; // "Oefen het gesprek…"
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let sessie = null;          // { token, deelnemer_id }
+let deelnemerNaam = '';
+let context = {};           // vraag-sleutel -> antwoord
+let messages = [];          // { role, content, hidden?, ts }
+let isSending = false;
+
+const chatWrap = document.getElementById('chatWrap');
+const messagesInner = document.getElementById('messagesInner');
+const msgInput = document.getElementById('msgInput');
+const btnSend = document.getElementById('btnSend');
+const inputBar = document.getElementById('inputBar');
+
+function dbHeaders(extra) {
+  return Object.assign({
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+    'x-sessie-token': sessie ? sessie.token : ''
+  }, extra || {});
+}
+
+/* =========================================================
+   SESSIE: uit de URL (?st=), uit de Labboek-inlog, of zelf inloggen
+   ========================================================= */
+function leesSessie() {
+  const st = new URLSearchParams(window.location.search).get('st');
+  if (st) return { token: st, deelnemer_id: null };
+  try {
+    const o = JSON.parse(localStorage.getItem(LS_SESSIE) || 'null');
+    if (o && o.token) return o;
+  } catch (e) {}
+  return null;
+}
+
+function toonLogin(melding) {
+  inputBar.classList.add('uit');
+  messagesInner.innerHTML = '';
+  const kaart = document.createElement('div');
+  kaart.className = 'login-card';
+  kaart.innerHTML =
+    '<h3>Log in met je Labboek</h3>' +
+    '<p>' + escapeHtml(melding || 'Dan weet Dain voor welke functie je oefent en welke vragen jij het spannendst vindt.') + '</p>' +
+    '<label for="lgNaam">Jouw naam</label><input type="text" id="lgNaam" autocomplete="name" placeholder="Voor- en achternaam">' +
+    '<label for="lgCode">Toegangscode</label><input type="text" id="lgCode" autocomplete="off" placeholder="Je code">' +
+    '<label class="login-consent"><input type="checkbox" id="lgOk"> Ik ga akkoord met de verwerking van mijn Labboek-gegevens door Unleash Potential Lab. Mijn gegevens worden veilig opgeslagen en niet met derden gedeeld.</label>' +
+    '<div class="login-err" id="lgErr"></div>' +
+    '<button type="button" class="login-btn" id="lgBtn">Inloggen</button>';
+  messagesInner.appendChild(kaart);
+
+  document.getElementById('lgBtn').addEventListener('click', async function () {
+    const naam = document.getElementById('lgNaam').value.trim();
+    const code = document.getElementById('lgCode').value.trim();
+    const ok = document.getElementById('lgOk').checked;
+    const err = document.getElementById('lgErr');
+    err.textContent = '';
+    if (!naam || !code) { err.textContent = 'Vul je naam én je toegangscode in.'; return; }
+    if (!ok) { err.textContent = 'Vink aan dat je akkoord gaat met de verwerking van je gegevens.'; return; }
+    this.disabled = true; this.textContent = 'Even geduld…';
+    try {
+      const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/labboek_login', {
+        method: 'POST',
+        headers: dbHeaders({ 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ p_code: code, p_naam: naam, p_toestemming: true })
+      });
+      const j = await r.json();
+      const row = Array.isArray(j) ? j[0] : j;
+      if (!r.ok || !row || !row.sessie_token) throw new Error('code');
+      sessie = { token: row.sessie_token, deelnemer_id: row.deelnemer_id, naam: row.naam || naam, voornaam: row.voornaam || '' };
+      try { localStorage.setItem(LS_SESSIE, JSON.stringify(sessie)); } catch (e) {}
+      start();
+    } catch (e) {
+      this.disabled = false; this.textContent = 'Inloggen';
+      err.textContent = e.message === 'code' ? 'Deze code lijkt niet te kloppen. Check hem nog even.' : 'Er ging iets mis met de verbinding. Probeer het nog eens.';
+    }
+  });
+}
+
+async function laadDeelnemer() {
+  const res = await fetch(SUPABASE_URL + '/rest/v1/labboek_deelnemers?select=id,naam&order=aangemaakt_op.desc&limit=1', { headers: dbHeaders() });
+  const rows = await res.json();
+  if (!res.ok || !Array.isArray(rows) || !rows[0]) return false;
+  sessie.deelnemer_id = rows[0].id;
+  deelnemerNaam = ((rows[0].naam || '').trim().split(/\s+/)[0]) || '';
+  return true;
+}
+
+async function laadContext() {
+  const ids = Object.values(V).join(',');
+  const res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?select=vraag_id,antwoord&deelnemer_id=eq.' + sessie.deelnemer_id + '&vraag_id=in.(' + ids + ')', { headers: dbHeaders() });
+  const rows = await res.json();
+  context = {};
+  if (Array.isArray(rows)) {
+    for (const k in V) {
+      const r = rows.find(x => x.vraag_id === V[k]);
+      if (r && r.antwoord && r.antwoord.trim()) context[k] = r.antwoord.trim().slice(0, 1500);
+    }
+  }
+}
+
+function functieNaam() { return context.rol || context.eindpunt || ''; }
+
+/* =========================================================
+   SYSTEM PROMPT
+   ========================================================= */
+function bouwSystemPrompt() {
+  const blok = (label, waarde) => waarde ? '### ' + label + '\n' + waarde + '\n\n' : '';
+  const functie = functieNaam();
+  return `Je bent Dain, de AI-sparringpartner van het Alchemist Programma van Uplab Career. In deze chat oefen je met de deelnemer${deelnemerNaam ? ' (' + deelnemerNaam + ')' : ''} een sollicitatiegesprek.
+
+## De functie waarvoor geoefend wordt
+${functie ? functie : '(nog onbekend: vraag de deelnemer eerst in één zin voor welke functie hij of zij wil oefenen, en begin daarna pas met het gesprek)'}
+
+## De drie vragen waar de deelnemer het meest tegen opziet (uit het Labboek)
+${context.killer ? context.killer : '(niet ingevuld: kies dan zelf drie lastige vragen die passen bij de functie en het profiel)'}
+
+## Achtergrond van de deelnemer (gebruik dit om scherpe, realistische vragen te stellen)
+${blok('Kerntalenten', context.talenten)}${blok('Kernwaarden', context.waarden)}${blok('Missie', context.missie)}${blok('Wat de deelnemer al in huis heeft', context.inHuis)}${blok('Wat er nog ontbreekt', context.ontbreekt)}${blok('Wat vacatures vragen', context.vacatures)}${blok('Position statement', context.position)}${blok('Elevator pitch', context.pitch)}
+## Verloop van het gesprek
+1. Je opent kort en vriendelijk als interviewer: stel jezelf voor als degene die het gesprek voert voor deze functie, en stel dan als eerste vraag: "Vertel eens wat over jezelf."
+2. Daarna stel je één voor één veelgestelde sollicitatievragen die passen bij deze functie, zoals: waarom deze functie, wat breng je mee, een situatievraag (vertel over een keer dat…), hoe ga je om met tegenslag of kritiek, waar liggen je ontwikkelpunten, waarom zouden we jou kiezen.
+3. De drie vragen waar de deelnemer tegen opziet stel je ALTIJD, verspreid door het gesprek. Formuleer ze zoals een echte interviewer dat zou doen.
+4. Stel in totaal zo'n zeven tot negen vragen. Stel steeds maar één vraag tegelijk.
+5. Blijf tijdens het gesprek in je rol als interviewer: reageer kort en natuurlijk op een antwoord (een knik, een doorvraag als het antwoord vaag of algemeen is), maar geef nog géén feedback of tips. Vraag gerust één keer door als iemand om de vraag heen draait — dat doet een echte interviewer ook.
+6. Loopt het gesprek ten einde (na je laatste vraag), sluit het dan af zoals een interviewer dat doet en vraag daarna, uit je rol: "Wil je feedback op het gesprek?"
+7. Wil de deelnemer feedback, geef die dan als Dain, de coach. Per onderwerp: wat ging goed, wat kan sterker en hoe. Besteed extra aandacht aan de drie spannende vragen. Wees eerlijk en concreet, verwijs naar wat de deelnemer letterlijk zei, en eindig bemoedigend. Gebruik daarbij ###-koppen per onderdeel en "- " voor opsommingen.
+8. Wil de deelnemer halverwege stoppen of meteen feedback, volg dan de deelnemer.
+
+## Stijl
+- Nederlands, je/jij-vorm, warm maar professioneel. Als interviewer realistisch: niet overdreven vriendelijk, niet streng.
+- Korte berichten tijdens het interview (een reactie van één of twee zinnen plus de volgende vraag).
+- Geen reismetaforen. Blijf bij het sollicitatiegesprek; wijkt de deelnemer af, breng het vriendelijk terug.`;
+}
+
+/* =========================================================
+   RENDERING
+   ========================================================= */
+function nowTime() { const d = new Date(); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
+function escapeHtml(str) { const div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+
+function formatText(text) {
+  let safe = escapeHtml(text);
+  safe = safe.replace(/^###\s+(.+)$/gm, '<h4>$1</h4>');
+  safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  const lines = safe.split('\n'); const out = []; let inList = false;
+  for (const l of lines) {
+    const m = l.match(/^-\s+(.+)$/);
+    if (m) { if (!inList) { out.push('<ul class="msg-list">'); inList = true; } out.push('<li>' + m[1] + '</li>'); }
+    else { if (inList) { out.push('</ul>'); inList = false; } out.push(l); }
+  }
+  if (inList) out.push('</ul>');
+  return out.join('\n');
+}
+
+function isChatNearBottom() { return chatWrap.scrollTop + chatWrap.clientHeight >= chatWrap.scrollHeight - 80; }
+
+function renderMessage(m) {
+  if (m.hidden) return null;
+  const row = document.createElement('div');
+  row.className = 'msg-row ' + (m.role === 'user' ? 'user' : 'dain');
+  if (m.role !== 'user') { const av = document.createElement('div'); av.className = 'msg-avatar'; row.appendChild(av); }
+  const col = document.createElement('div'); col.className = 'msg-bubble-col';
+  const bubble = document.createElement('div'); bubble.className = 'msg-bubble';
+  bubble.innerHTML = formatText(m.content || '');
+  col.appendChild(bubble);
+  const time = document.createElement('div'); time.className = 'msg-time'; time.textContent = m.ts || '';
+  col.appendChild(time);
+  row.appendChild(col);
+  messagesInner.appendChild(row);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
+  return bubble;
+}
+
+function showTyping() {
+  const row = document.createElement('div');
+  row.className = 'msg-row dain'; row.id = 'typingRow';
+  row.innerHTML = '<div class="msg-avatar"></div><div class="msg-bubble-col"><div class="msg-bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div></div>';
+  messagesInner.appendChild(row);
+  chatWrap.scrollTop = chatWrap.scrollHeight;
+}
+function hideTyping() { const r = document.getElementById('typingRow'); if (r) r.remove(); }
+
+function renderStartKaart() {
+  const functie = functieNaam();
+  const row = document.createElement('div');
+  row.className = 'msg-row dain'; row.id = 'startRow';
+  const intro =
+    'Hoi' + (deelnemerNaam ? ' ' + deelnemerNaam : '') + '! Klaar om te oefenen? 🎙️\n\n' +
+    (functie
+      ? 'Ik speel zo de interviewer voor deze functie:\n**' + functie.split('\n')[0].slice(0, 160) + '**\n\n'
+      : 'Ik weet nog niet voor welke functie je oefent — dat vraag ik je zo eerst.\n\n') +
+    (context.killer
+      ? 'De drie vragen waar jij het meest tegen opziet, komen er gegarandeerd in voor. Sorry. Of eigenlijk: graag gedaan.\n\n'
+      : 'Je hebt de drie vragen waar je tegen opziet nog niet ingevuld in je Labboek, dus ik kies er zelf een paar lastige uit.\n\n') +
+    'Antwoord zoals je dat in een echt gesprek zou doen. Na afloop vraag ik of je feedback wilt.';
+  row.innerHTML = '<div class="msg-avatar"></div><div class="msg-bubble-col"><div class="msg-bubble">' + formatText(intro) +
+    '<div style="margin-top:12px;"><button class="labboek-cta-btn" id="btnStart">▶ Start het oefengesprek</button></div></div></div>';
+  messagesInner.appendChild(row);
+  document.getElementById('btnStart').addEventListener('click', () => {
+    row.remove();
+    inputBar.classList.remove('uit');
+    messages.push({ role: 'user', content: 'Ik ben er klaar voor. Start het oefengesprek.', hidden: true, ts: nowTime() });
+    saveState();
+    callDain();
+  });
+}
+
+/* =========================================================
+   OPSLAAN (per deelnemer, in de browser)
+   ========================================================= */
+function gesprekKey() { return LS_GESPREK + (sessie ? sessie.deelnemer_id : 'onbekend'); }
+function saveState() { try { localStorage.setItem(gesprekKey(), JSON.stringify(messages)); } catch (e) {} }
+function loadState() { try { const r = JSON.parse(localStorage.getItem(gesprekKey()) || '[]'); return Array.isArray(r) ? r : []; } catch (e) { return []; } }
+
+/* =========================================================
+   STREAMING NAAR DAIN-CHAT
+   ========================================================= */
+async function streamAnthropic(body, onDelta) {
+  const response = await fetch(DAIN_CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!response.ok || !response.body) {
+    let errMsg = 'HTTP ' + response.status;
+    try { const j = await response.json(); if (j && j.error) errMsg = (typeof j.error === 'string') ? j.error : (j.error.message || errMsg); } catch (e) {}
+    const fout = new Error(errMsg); fout.status = response.status; throw fout;
+  }
+  const reader = response.body.getReader(); const decoder = new TextDecoder();
+  let buffer = '', fullText = '', stopReason = null;
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split('\n'); buffer = lines.pop();
+    for (const line of lines) {
+      if (!line.startsWith('data:')) continue;
+      const jsonStr = line.slice(5).trim();
+      if (!jsonStr || jsonStr === '[DONE]') continue;
+      let evt; try { evt = JSON.parse(jsonStr); } catch (e) { continue; }
+      if (evt.type === 'content_block_delta' && evt.delta && evt.delta.type === 'text_delta') { fullText += evt.delta.text; onDelta(fullText); }
+      else if (evt.type === 'message_delta' && evt.delta && evt.delta.stop_reason) stopReason = evt.delta.stop_reason;
+      else if (evt.type === 'error') throw new Error((evt.error && evt.error.message) || 'Onbekende streamfout');
+    }
+  }
+  return { text: fullText, stopReason };
+}
+
+function apiMessages(extra) {
+  // De API wil afwisselend user/assistant; opeenvolgende berichten van dezelfde rol voegen we samen
+  const out = [];
+  messages.concat(extra || []).forEach(m => {
+    const last = out[out.length - 1];
+    if (last && last.role === m.role) last.content += '\n\n' + m.content;
+    else out.push({ role: m.role, content: m.content });
+  });
+  return out;
+}
+
+function foutTekst(err) {
+  const msg = String((err && err.message) || ''); const status = err && err.status;
+  if (status === 403 || /alleen beschikbaar/i.test(msg)) return 'Oeps, ik mag vanaf deze website niet praten. Laat het Daan even weten. 🔒';
+  if (status === 429 || status === 529 || /overloaded|rate.?limit/i.test(msg)) return 'Het is even superdruk bij mij. Wacht een minuutje en probeer het opnieuw. ☕';
+  if (err instanceof TypeError || /failed to fetch|networkerror|load failed/i.test(msg)) return 'Ik kon geen verbinding maken. Check je internetverbinding en probeer het opnieuw. 🙏';
+  return 'Er ging iets mis aan mijn kant (' + (msg || 'onbekende fout') + '). Probeer het zo nog eens. 🙏';
+}
+
+async function callDain() {
+  isSending = true; btnSend.disabled = true;
+  showTyping();
+  let bubble = null;
+  try {
+    const res = await streamAnthropic({ max_tokens: 3000, system: bouwSystemPrompt(), messages: apiMessages(), stream: true }, (soFar) => {
+      const onder = isChatNearBottom();
+      if (!bubble) { hideTyping(); bubble = renderMessage({ role: 'assistant', content: '', ts: nowTime() }); }
+      bubble.innerHTML = formatText(soFar);
+      if (onder) chatWrap.scrollTop = chatWrap.scrollHeight;
+    });
+    hideTyping();
+    const reply = res.text.trim() || 'Sorry, daar kreeg ik even geen antwoord op. Probeer het nog eens.';
+    if (!bubble) renderMessage({ role: 'assistant', content: reply, ts: nowTime() });
+    else bubble.innerHTML = formatText(reply);
+    messages.push({ role: 'assistant', content: reply, ts: nowTime() });
+    saveState();
+    logToSupabase('assistant', reply);
+  } catch (err) {
+    console.error(err);
+    hideTyping();
+    if (bubble && bubble.textContent.trim()) {
+      messages.push({ role: 'assistant', content: bubble.textContent, ts: nowTime() });
+    } else {
+      // Mislukte beurt niet in de geschiedenis laten staan
+      const laatste = messages[messages.length - 1];
+      if (laatste && laatste.role === 'user') messages.pop();
+      renderMessage({ role: 'assistant', content: foutTekst(err) + '\n\nJe laatste bericht is niet aangekomen, dus stuur het gerust nog een keer.', ts: nowTime() });
+    }
+    saveState();
+  } finally {
+    isSending = false; btnSend.disabled = false; msgInput.focus();
+  }
+}
+
+async function sendTextMessage() {
+  const text = msgInput.value.trim();
+  if (!text || isSending) return;
+  msgInput.value = ''; autoResize();
+  const m = { role: 'user', content: text, ts: nowTime() };
+  messages.push(m); renderMessage(m); saveState();
+  logToSupabase('user', text);
+  await callDain();
+}
+function autoResize() { msgInput.style.height = 'auto'; msgInput.style.height = Math.min(msgInput.scrollHeight, 110) + 'px'; }
+
+/* =========================================================
+   LOGGING (geanonimiseerd, zelfde tabel als de Dain-chat)
+   ========================================================= */
+function logSessieId() {
+  let id = null;
+  try { id = localStorage.getItem('dain_sollicitatie_session_id'); } catch (e) {}
+  if (!id) { id = 'sollicitatie_' + Math.random().toString(36).slice(2) + Date.now(); try { localStorage.setItem('dain_sollicitatie_session_id', id); } catch (e) {} }
+  return id;
+}
+async function logToSupabase(role, content) {
+  try {
+    await fetch(SUPABASE_URL + '/rest/v1/dain_chatlog', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY, 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ session_id: logSessieId(), role, message: content })
+    });
+  } catch (e) {}
+}
+
+/* =========================================================
+   SAMENVATTING + OPSLAAN IN HET LABBOEK
+   ========================================================= */
+const SUMMARY_PROMPT = `Stap nu uit je rol als interviewer. Maak op basis van het hele oefengesprek hierboven een samenvatting voor de deelnemer, in het Nederlands en in de jij-vorm. Gebruik exact dit format:
+
+**Samenvatting van het oefengesprek**
+(2-3 zinnen: voor welke functie werd geoefend en hoe verliep het gesprek)
+
+**Wat ging goed**
+- (2-4 concrete punten, verwijs naar wat de deelnemer echt zei)
+
+**Belangrijkste aandachtspunten**
+- (2-4 concrete punten met een tip hoe het sterker kan; besteed extra aandacht aan de drie vragen waar de deelnemer tegen opzag)
+
+**Volgende stap**
+(1-2 zinnen: wat de deelnemer voor een echt gesprek nog kan oefenen of voorbereiden)
+
+Kort, eerlijk en bemoedigend. Start direct met **Samenvatting van het oefengesprek**, zonder inleidende zin.`;
+
+async function opslaanInLabboek(tekst) {
+  if (!sessie || !sessie.deelnemer_id) return false;
+  try {
+    const headers = dbHeaders({ 'Content-Type': 'application/json' });
+    const r = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?select=id&deelnemer_id=eq.' + sessie.deelnemer_id + '&vraag_id=eq.' + SAMENVATTING_VRAAG_ID, { headers });
+    const bestaand = await r.json();
+    let res;
+    if (Array.isArray(bestaand) && bestaand[0]) {
+      res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?id=eq.' + bestaand[0].id, { method: 'PATCH', headers, body: JSON.stringify({ antwoord: tekst, bijgewerkt_op: new Date().toISOString() }) });
+    } else {
+      res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden', { method: 'POST', headers, body: JSON.stringify({ deelnemer_id: sessie.deelnemer_id, vraag_id: SAMENVATTING_VRAAG_ID, antwoord: tekst }) });
+    }
+    return res.ok;
+  } catch (e) { return false; }
+}
+
+document.getElementById('btnSummary').addEventListener('click', async () => {
+  const echteBerichten = messages.filter(m => !m.hidden && m.role === 'user');
+  const sc = document.getElementById('summaryContent');
+  openPopup('popupSummary');
+  if (!echteBerichten.length) {
+    sc.innerHTML = '<p>Er is nog geen oefengesprek om samen te vatten. Start eerst het gesprek en beantwoord een paar vragen.</p>';
+    return;
+  }
+  sc.innerHTML = '<div style="font-size:13.6px; color:var(--text-muted); margin-bottom:6px;">Ik zet je gesprek even op een rij...</div><div class="typing-dots" style="padding:10px 0;"><span></span><span></span><span></span></div>';
+  try {
+    const res = await streamAnthropic({ max_tokens: 2000, system: bouwSystemPrompt(), messages: apiMessages([{ role: 'user', content: SUMMARY_PROMPT }]), stream: true }, (soFar) => {
+      sc.innerHTML = '<div style="font-size:14.4px; line-height:1.7; white-space:pre-wrap;">' + formatText(soFar) + '</div>';
+    });
+    const tekst = res.text.trim();
+    sc.innerHTML = '<div style="font-size:14.4px; line-height:1.7; white-space:pre-wrap;">' + formatText(tekst) + '</div>';
+    document.getElementById('summaryTextarea').value = tekst;
+    const noot = document.createElement('div');
+    noot.style.cssText = 'margin-top:10px;font-size:12.8px;color:var(--text-muted);';
+    noot.textContent = '⏳ Ik zet hem alvast in je Labboek...';
+    sc.appendChild(noot);
+    const gelukt = await opslaanInLabboek(tekst);
+    noot.style.color = gelukt ? 'var(--accent2)' : '#b23b3b';
+    noot.textContent = gelukt
+      ? '✅ Automatisch opgeslagen bij "Oefen het gesprek" in je Labboek.'
+      : '⚠️ Kon niet automatisch opslaan — kopieer hem hieronder even zelf.';
+  } catch (err) {
+    sc.innerHTML = '<p>' + escapeHtml(foutTekst(err)) + '</p>';
+  }
+});
+
+document.getElementById('copySummaryBtn').addEventListener('click', () => {
+  const ta = document.getElementById('summaryTextarea');
+  const btn = document.getElementById('copySummaryBtn');
+  if (!ta.value) return;
+  const herstel = () => { btn.textContent = '📋 Kopieer samenvatting'; };
+  const fallback = () => {
+    ta.style.position = 'fixed'; ta.style.left = '0'; ta.style.top = '0'; ta.style.opacity = '0';
+    ta.focus(); ta.select();
+    try { document.execCommand('copy'); btn.textContent = '✅ Gekopieerd!'; } catch (e) { btn.textContent = '⚠️ Kopiëren mislukt'; }
+    ta.style.position = 'absolute'; ta.style.left = '-9999px';
+    setTimeout(herstel, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(ta.value).then(() => { btn.textContent = '✅ Gekopieerd!'; setTimeout(herstel, 2000); }).catch(fallback);
+  } else fallback();
+});
+
+/* =========================================================
+   POPUPS & EVENTS
+   ========================================================= */
+function openPopup(id) { document.getElementById(id).classList.add('active'); }
+function closePopup(id) { document.getElementById(id).classList.remove('active'); }
+document.querySelectorAll('.popup-overlay').forEach(ov => ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('active'); }));
+
+btnSend.addEventListener('click', sendTextMessage);
+msgInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendTextMessage(); } });
+msgInput.addEventListener('input', autoResize);
+
+document.getElementById('btnRestart').addEventListener('click', () => openPopup('popupRestart'));
+document.getElementById('confirmRestart').addEventListener('click', () => {
+  messages = []; saveState();
+  messagesInner.innerHTML = '';
+  inputBar.classList.add('uit');
+  closePopup('popupRestart');
+  renderStartKaart();
+});
+
+/* =========================================================
+   START
+   ========================================================= */
+async function start() {
+  messagesInner.innerHTML = '';
+  showTyping();
+  try {
+    const ok = await laadDeelnemer();
+    if (!ok) {
+      hideTyping();
+      try { localStorage.removeItem(LS_SESSIE); } catch (e) {}
+      sessie = null;
+      toonLogin('Je sessie is verlopen. Log opnieuw in om verder te oefenen.');
+      return;
+    }
+    await laadContext();
+  } catch (e) {
+    hideTyping();
+    renderMessage({ role: 'assistant', content: foutTekst(e) });
+    return;
+  }
+  hideTyping();
+  messages = loadState();
+  if (messages.length) {
+    messages.forEach(renderMessage);
+    inputBar.classList.remove('uit');
+  } else {
+    renderStartKaart();
+  }
+}
+
+sessie = leesSessie();
+if (sessie) start(); else toonLogin();
+</script>
+</body>
+</html>
