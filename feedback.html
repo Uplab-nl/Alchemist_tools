@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedbackverzoek · Uplab Alchemist</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Doppio+One&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#292727;--accent1:#549E39;--accent2:#3E6913;--bg:#f5f5f5;--border:#e0e0e0;--muted:#666;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Roboto',Arial,sans-serif;background:var(--bg);color:var(--brand);min-height:100vh;}
+.df{font-family:'Doppio One',Arial,sans-serif;font-variant-ligatures:none;font-feature-settings:'liga' 0,'clig' 0;}
+.top{background:var(--brand);position:relative;overflow:hidden;padding:26px 20px 52px;}
+.top::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#3a3838 0%,transparent 55%);opacity:.5;}
+.top::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:40px;background:var(--bg);clip-path:polygon(0 100%,100% 0,100% 100%);}
+.top-in{position:relative;z-index:2;max-width:640px;margin:0 auto;}
+.merk{color:#c9c9c9;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.merk span{color:var(--accent1);}
+.top h1{color:#fff;font-size:clamp(22px,5vw,30px);line-height:1.25;}
+.top h1 span{color:var(--accent1);}
+.wrap{max-width:640px;margin:-10px auto 40px;padding:0 16px;position:relative;z-index:3;}
+.kaart{background:#fff;border-radius:16px;box-shadow:0 10px 32px rgba(0,0,0,.08);overflow:hidden;}
+.inhoud{padding:30px 32px;}
+.inhoud p{font-size:15.5px;line-height:1.7;color:#444;margin-bottom:14px;}
+.inhoud p strong{color:var(--brand);}
+.vragenlijst{margin:4px 0 18px 20px;color:#444;font-size:15px;line-height:1.9;}
+.btn{background:var(--accent1);color:#fff;border:none;border-radius:12px;font-size:16px;padding:14px 28px;cursor:pointer;transition:background .2s;}
+.btn:hover{background:var(--accent2);}
+.btn:disabled{opacity:.55;cursor:wait;}
+.btn-sec{background:none;border:2px solid var(--border);color:var(--brand);border-radius:12px;font-family:'Roboto',Arial,sans-serif;font-size:15px;padding:12px 20px;cursor:pointer;}
+.btn-sec:hover{border-color:var(--brand);}
+.voortgang{height:5px;background:#eef3ea;}
+.voortgang div{height:100%;background:var(--accent1);width:0;transition:width .3s;}
+.teller{display:flex;justify-content:space-between;align-items:center;padding:14px 32px 0;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);}
+.teller .opt{color:var(--muted);letter-spacing:.3px;text-transform:none;}
+.vraag{font-size:clamp(19px,4vw,22px);line-height:1.4;margin:14px 0 16px;}
+textarea{width:100%;min-height:170px;border:2px solid var(--border);border-radius:12px;padding:14px 16px;font-family:'Roboto',Arial,sans-serif;font-size:15.5px;line-height:1.6;color:var(--brand);resize:vertical;outline:none;transition:border-color .2s;}
+textarea:focus{border-color:var(--accent1);}
+.hulp{font-size:13px;color:var(--muted);margin-top:8px;min-height:18px;}
+.hulp.fout{color:#c0392b;}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;}
+.midden{text-align:center;}
+.icoon{font-size:46px;margin-bottom:14px;}
+.midden h2{font-size:24px;margin-bottom:12px;}
+.laden{color:var(--muted);font-size:15px;text-align:center;padding:40px 0;}
+.voet{text-align:center;font-size:12.5px;color:#999;margin-top:22px;line-height:1.6;}
+.voet a{color:var(--accent2);}
+.scherm{display:none;}
+.scherm.aan{display:block;}
+@media (max-width:520px){.inhoud{padding:24px 20px;}.teller{padding:14px 20px 0;}.nav .btn{padding:13px 20px;}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-in">
+    <div class="merk df">Uplab · <span>Alchemist</span> · Feedbackverzoek</div>
+    <h1 class="df" id="kop">Jouw blik is <span>goud waard</span></h1>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="kaart">
+
+    <!-- Laden -->
+    <div class="scherm aan" id="sLaden"><div class="inhoud"><div class="laden">Even laden…</div></div></div>
+
+    <!-- Intro -->
+    <div class="scherm" id="sIntro">
+      <div class="inhoud">
+        <p>Hoi <strong id="iRelatie">daar</strong>,</p>
+        <p><strong id="iDeelnemer">Iemand die jou goed kent</strong> doet mee aan het Alchemist Programma van Uplab: een onderzoek naar waar iemand goed in is, wat bij hem of haar past en welke richting daar het beste bij aansluit.</p>
+        <p>Een eerlijke blik van buitenaf is daarbij onmisbaar. We kijken namelijk allemaal door een gekleurde bril naar onszelf. Daarom deze acht vragen:</p>
+        <ol class="vragenlijst" id="iLijst"></ol>
+        <p>Het kost zo'n 10 minuten. Schrijf gewoon op wat in je opkomt — eerlijk en concreet helpt het meest. Een voorbeeld zegt vaak meer dan een bijvoeglijk naamwoord.</p>
+        <button class="btn df" id="startBtn" type="button">Starten →</button>
+      </div>
+    </div>
+
+    <!-- Vragen -->
+    <div class="scherm" id="sVraag">
+      <div class="voortgang"><div id="balk"></div></div>
+      <div class="teller df"><span id="teller">Vraag 1 van 8</span><span class="opt" id="optioneel"></span></div>
+      <div class="inhoud">
+        <div class="vraag df" id="vraagTekst"></div>
+        <textarea id="antwoord" placeholder="Typ hier je antwoord…"></textarea>
+        <div class="hulp" id="hulp">Je antwoorden worden tussendoor bewaard op dit apparaat.</div>
+        <div class="nav">
+          <button class="btn-sec" id="vorigeBtn" type="button">← Vorige</button>
+          <button class="btn df" id="volgendeBtn" type="button">Volgende →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Klaar -->
+    <div class="scherm" id="sKlaar">
+      <div class="inhoud midden">
+        <div class="icoon">🙏</div>
+        <h2 class="df">Hartstikke bedankt!</h2>
+        <p id="klaarTekst">Je antwoorden zijn verstuurd. Je hebt iemand net een waardevol puzzelstukje gegeven voor zijn of haar onderzoek.</p>
+      </div>
+    </div>
+
+    <!-- Fout -->
+    <div class="scherm" id="sFout">
+      <div class="inhoud midden">
+        <div class="icoon">🔍</div>
+        <h2 class="df" id="foutKop">Deze link werkt niet (meer)</h2>
+        <p id="foutTekst">De link is mogelijk onvolledig gekopieerd. Open hem nog eens rechtstreeks vanuit de e-mail. Lukt het dan nog niet? Laat het degene weten die je heeft uitgenodigd.</p>
+      </div>
+    </div>
+
+  </div>
+  <div class="voet">Meer weten over dit programma? Ga naar <a href="https://www.uplab.me" target="_blank" rel="noopener">www.uplab.me</a></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var SB_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+
+  // "opslag" is de vraag zoals de deelnemer hem in het Labboek terugziet (ik-vorm).
+  // "toon" is de vraag zoals de invuller hem ziet ({naam} = voornaam deelnemer).
+  var VRAGEN = [
+    { opslag: 'Wat vind jij typisch mij?', toon: 'Wat vind jij typisch {naam}?' },
+    { opslag: 'Waar vind jij dat ik moeiteloos goed in ben?', toon: 'Waar vind jij dat {naam} moeiteloos goed in is?' },
+    { opslag: 'In wat voor situaties zie je dat ik echt in mijn element ben?', toon: 'In wat voor situaties zie je dat {naam} echt in zijn of haar element is?' },
+    { opslag: 'Als je mij zou omschrijven in 3 woorden, welke zouden dat zijn?', toon: 'Als je {naam} zou omschrijven in 3 woorden, welke zouden dat zijn?' },
+    { opslag: 'Wanneer heb je mij iets zien doen waarvan je dacht: dat is zijn/haar talent?', toon: 'Wanneer heb je {naam} iets zien doen waarvan je dacht: dát is een talent?' },
+    { opslag: 'Hoe maak ik volgens jou de dag van anderen een beetje beter?', toon: 'Hoe maakt {naam} volgens jou de dag van anderen een beetje beter?' },
+    { opslag: 'Als ik later mijn droomwerkplek vind, wat ben ik daar dan aan het doen?', toon: 'Stel: {naam} vindt later de droomwerkplek. Wat is {naam} daar dan aan het doen?' },
+    { opslag: 'Heb je nog een laatste tip?', toon: 'Heb je nog een laatste tip voor {naam}?', optioneel: true }
+  ];
+
+  var token = new URLSearchParams(location.search).get('token');
+  var relatie = null;
+  var naam = 'deze persoon';
+  var antwoorden = [];
+  var idx = 0;
+  var bezig = false;
+  var opslagKey = 'uplab_feedback_' + (token || '');
+
+  function $(id) { return document.getElementById(id); }
+  function toon(scherm) {
+    ['sLaden', 'sIntro', 'sVraag', 'sKlaar', 'sFout'].forEach(function (s) { $(s).classList.toggle('aan', s === scherm); });
+    window.scrollTo(0, 0);
+  }
+  function hdrs(extra) {
+    var h = { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'x-relatie-token': token };
+    for (var k in (extra || {})) h[k] = extra[k];
+    return h;
+  }
+  function vul(t) { return t.replace(/\{naam\}/g, naam); }
+  function bewaar() { try { localStorage.setItem(opslagKey, JSON.stringify(antwoorden)); } catch (e) {} }
+  function laadConcept() { try { var a = JSON.parse(localStorage.getItem(opslagKey) || 'null'); if (Array.isArray(a)) return a; } catch (e) {} return null; }
+
+  // ── Start ──
+  function init() {
+    if (!token || !/^[0-9a-f]{20,}$/i.test(token)) { toon('sFout'); return; }
+
+    var relatieReq = fetch(SB_URL + '/rest/v1/labboek_relaties?select=id,naam,feedback_ontvangen&token=eq.' + encodeURIComponent(token), { headers: hdrs() })
+      .then(function (r) { return r.ok ? r.json() : []; });
+    // Voornaam van de deelnemer (via een beveiligde functie; als die er niet is, werkt de pagina gewoon door)
+    var naamReq = fetch(SB_URL + '/rest/v1/rpc/feedback_deelnemer_voornaam', { method: 'POST', headers: hdrs({ 'Content-Type': 'application/json' }), body: JSON.stringify({ p_token: token }) })
+      .then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+
+    Promise.all([relatieReq, naamReq]).then(function (res) {
+      var rows = res[0];
+      if (!Array.isArray(rows) || !rows[0]) { toon('sFout'); return; }
+      relatie = rows[0];
+      if (typeof res[1] === 'string' && res[1].trim()) naam = res[1].trim();
+
+      if (relatie.feedback_ontvangen) {
+        $('klaarTekst').textContent = 'Je hebt deze vragen al eerder beantwoord. Dank je wel voor je hulp — echt waardevol!';
+        toon('sKlaar');
+        return;
+      }
+
+      $('iRelatie').textContent = (relatie.naam || '').trim().split(/\s+/)[0] || 'daar';
+      if (naam !== 'deze persoon') {
+        $('iDeelnemer').textContent = naam;
+        $('kop').innerHTML = esc(naam) + ' vraagt om <span>jouw blik</span>';
+      }
+      $('iLijst').innerHTML = VRAGEN.map(function (v) { return '<li>' + esc(vul(v.toon)) + '</li>'; }).join('');
+
+      antwoorden = laadConcept() || VRAGEN.map(function () { return ''; });
+      toon('sIntro');
+    }).catch(function () {
+      $('foutKop').textContent = 'Er ging iets mis met de verbinding';
+      $('foutTekst').textContent = 'Check je internetverbinding en ververs de pagina.';
+      toon('sFout');
+    });
+  }
+
+  function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+  // ── Vragen ──
+  function renderVraag() {
+    var v = VRAGEN[idx];
+    $('teller').textContent = 'Vraag ' + (idx + 1) + ' van ' + VRAGEN.length;
+    $('optioneel').textContent = v.optioneel ? 'optioneel' : '';
+    $('balk').style.width = Math.round((idx / VRAGEN.length) * 100) + '%';
+    $('vraagTekst').textContent = vul(v.toon);
+    $('antwoord').value = antwoorden[idx] || '';
+    $('hulp').className = 'hulp';
+    $('hulp').textContent = 'Je antwoorden worden tussendoor bewaard op dit apparaat.';
+    $('vorigeBtn').style.visibility = idx === 0 ? 'hidden' : 'visible';
+    $('volgendeBtn').textContent = idx === VRAGEN.length - 1 ? 'Versturen ✓' : 'Volgende →';
+    $('antwoord').focus();
+  }
+
+  $('startBtn').addEventListener('click', function () { idx = 0; toon('sVraag'); renderVraag(); });
+  $('antwoord').addEventListener('input', function () { antwoorden[idx] = this.value; bewaar(); });
+  $('vorigeBtn').addEventListener('click', function () { if (idx > 0) { idx--; renderVraag(); } });
+  $('volgendeBtn').addEventListener('click', function () {
+    var v = VRAGEN[idx];
+    if (!v.optioneel && (antwoorden[idx] || '').trim().length < 2) {
+      $('hulp').className = 'hulp fout';
+      $('hulp').textContent = 'Vul hier nog even iets in — een paar woorden is al genoeg.';
+      return;
+    }
+    if (idx < VRAGEN.length - 1) { idx++; renderVraag(); return; }
+    verstuur();
+  });
+
+  // ── Versturen ──
+  function verstuur() {
+    if (bezig) return;
+    bezig = true;
+    var knop = $('volgendeBtn');
+    knop.disabled = true; knop.textContent = 'Versturen…';
+
+    var rijen = [];
+    VRAGEN.forEach(function (v, i) {
+      var a = (antwoorden[i] || '').trim();
+      if (a) rijen.push({ relatie_id: relatie.id, vraag_nr: i + 1, vraag: v.opslag, antwoord: a });
+    });
+
+    fetch(SB_URL + '/rest/v1/labboek_feedback', {
+      method: 'POST', headers: hdrs({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }), body: JSON.stringify(rijen)
+    }).then(function (r) {
+      if (!r.ok) throw new Error('opslaan');
+      return fetch(SB_URL + '/rest/v1/labboek_relaties?id=eq.' + relatie.id, {
+        method: 'PATCH', headers: hdrs({ 'Content-Type': 'application/json', 'Prefer': 'return=minimal' }),
+        body: JSON.stringify({ feedback_ontvangen: true, feedback_op: new Date().toISOString() })
+      });
+    }).then(function (r) {
+      if (!r.ok) throw new Error('afronden');
+      try { localStorage.removeItem(opslagKey); } catch (e) {}
+      // Bevestigingsmail naar de deelnemer (mag stil mislukken; de feedback staat al veilig opgeslagen)
+      fetch(SB_URL + '/functions/v1/stuur-feedback-bevestiging', {
+        method: 'POST', headers: hdrs({ 'Content-Type': 'application/json' }), body: JSON.stringify({ relatie_id: relatie.id })
+      }).catch(function () {});
+      $('balk').style.width = '100%';
+      if (naam !== 'deze persoon') $('klaarTekst').textContent = 'Je antwoorden zijn verstuurd naar ' + naam + '. Je hebt net een waardevol puzzelstukje gegeven voor dit onderzoek — dank je wel!';
+      toon('sKlaar');
+    }).catch(function () {
+      bezig = false;
+      knop.disabled = false; knop.textContent = 'Versturen ✓';
+      $('hulp').className = 'hulp fout';
+      $('hulp').textContent = 'Versturen lukte niet. Je antwoorden staan nog veilig op dit apparaat — check je verbinding en probeer het opnieuw.';
+    });
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
