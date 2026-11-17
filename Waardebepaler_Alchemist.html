@@ -15,6 +15,7 @@
     --card-bg: #fafafa;
     --border-light: #e0e0e0;
     --text-muted: #666;
+    --cream: #f0f1ec;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,147 +28,63 @@
     overflow-x: hidden;
   }
 
+  /* APP-KADER (Dain-stijl: crème, ronde hoeken) */
+  .app { background: var(--cream); width: 100%; min-height: 100vh; }
+  @media (min-width: 860px) {
+    .app { max-width: 1100px; margin: 0 auto 24px; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); min-height: 0; overflow: clip; }
+  }
+
+  /* STICKY HEADER (Dain-stijl) */
   .sticky-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    position: sticky; top: 0; z-index: 100;
     background: var(--brand-primary);
-    padding: 12px 60px 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    padding: 12px 52px 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px 18px;
   }
-
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .tool-emoji {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 1;
   }
-
-  .logo-svg {
-    width: 38px;
-    height: 38px;
-    flex-shrink: 0;
-  }
-
-  .header-title {
-    font-family: 'Doppio One', sans-serif;
-    color: var(--white);
-    font-size: 1rem;
-    line-height: 1.2;
-  }
-
-  .header-title span {
-    color: var(--accent1);
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .counter-badge {
-    background: var(--accent1);
-    color: white;
-    font-family: 'Doppio One', sans-serif;
-    font-size: 0.85rem;
-    padding: 6px 14px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
-
-  .counter-badge.warning {
-    background: #e67e22;
-  }
-
+  .header-title { font-family: 'Doppio One', sans-serif; color: var(--accent1); font-size: 16px; line-height: 1.25; }
+  .header-sub { font-family: 'Roboto', sans-serif; font-size: 11.2px; color: #c9c9c9; font-weight: 400; display: block; }
+  .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
   .btn-icon {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: white;
-    border-radius: 8px;
-    padding: 7px 12px;
-    cursor: pointer;
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.8rem;
-    transition: all 0.2s;
-    white-space: nowrap;
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: white;
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-family: 'Roboto', sans-serif;
+    font-size: 12.8px; transition: background 0.2s; white-space: nowrap; min-width: 104px; text-align: center;
   }
+  .btn-icon:hover { background: rgba(255,255,255,0.22); }
 
-  .btn-icon:hover {
-    background: rgba(255,255,255,0.22);
-  }
+  /* voortgang in de bovenbalk */
+  .progress-wrap { flex-basis: 100%; margin: 2px 0 0; }
+  .progress-track { width: 100%; height: 7px; background: rgba(255,255,255,0.15); border-radius: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0; background: var(--accent1); border-radius: 6px; transition: width 0.3s; }
+  .progress-label { font-family: 'Doppio One', sans-serif; font-size: 12px; color: #d9d9d9; margin-top: 4px; }
+  .progress-wrap.full .progress-label { color: var(--accent1); }
 
-  .header-banner {
-    background: var(--brand-primary);
-    position: relative;
-    overflow: hidden;
-    padding: 36px 30px 60px;
-  }
-
+  /* SCHUINE RAND (één geheel met de bovenbalk) */
+  .header-banner { background: var(--brand-primary); position: relative; overflow: hidden; height: 30px; margin-top: -1px; }
   .header-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    right: 0;
-    height: 50px;
-    background: var(--white);
-    clip-path: polygon(0 100%, 100% 0, 100% 100%);
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 30px;
+    background: var(--cream); clip-path: polygon(0 100%, 100% 0, 100% 100%);
   }
 
-  .header-banner::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background: linear-gradient(135deg, #3a3838 0%, transparent 55%);
-    opacity: 0.5;
-  }
-
-  .header-banner-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-  }
-
-  .header-banner h1 {
-    font-family: 'Doppio One', sans-serif;
-    color: var(--white);
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-
-  .header-banner h1 span {
-    color: var(--accent1);
-  }
-
-  .header-banner p {
-    color: rgba(255,255,255,0.75);
-    font-size: 0.9rem;
-    font-weight: 300;
-  }
-
+  /* fase-label + intro in het lichte deel */
   .phase-badge {
-    display: inline-block;
-    background: var(--accent1);
-    color: white;
-    font-size: 0.75rem;
-    font-family: 'Doppio One', sans-serif;
-    padding: 4px 12px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    letter-spacing: 0.5px;
+    display: inline-block; background: var(--accent1); color: white; font-size: 0.75rem;
+    font-family: 'Doppio One', sans-serif; padding: 4px 12px; border-radius: 12px; margin-bottom: 10px; letter-spacing: 0.5px;
   }
+  .intro-title { font-family: 'Doppio One', sans-serif; font-size: clamp(1.25rem, 3.5vw, 1.6rem); line-height: 1.25; color: var(--brand-primary); margin-bottom: 4px; }
+  .intro-title span { color: var(--accent1); }
+  .intro-text { font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 16px; }
 
   .main {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 30px 20px 60px;
+    padding: 14px 20px 60px;
   }
 
   .values-grid {
@@ -215,7 +132,7 @@
     justify-content: center;
     padding: 8px;
     border: 2px solid var(--border-light);
-    background: var(--card-bg);
+    background: var(--white);
     transition: border-color 0.2s, background 0.2s;
     overflow: hidden;
   }
@@ -343,7 +260,6 @@
 
   .results-screen {
     text-align: center;
-    padding: 20px 0;
   }
 
   .results-title {
@@ -412,9 +328,11 @@
 
   .btn-copy:hover { background: #3a3636; }
   .btn-copy.copied { background: var(--accent1); }
+  .btn-copy:disabled { opacity: .6; cursor: wait; }
+  .btn-copy { margin-top: 10px; }
 
   .phase-info-box {
-    background: var(--light-bg);
+    background: var(--white);
     border-radius: 10px;
     padding: 16px 20px;
     margin-bottom: 20px;
@@ -556,35 +474,37 @@
     padding-bottom: 6px;
     border-bottom: 2px solid var(--border-light);
   }
+  .storage-warning {
+    background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px;
+    padding: 12px 16px; margin-top: 20px; font-size: 0.8rem; color: #795548; line-height: 1.5; text-align: center;
+  }
 </style>
 </head>
 <body>
 
+<div class="app">
+
 <div class="sticky-header">
   <div class="header-left">
-
-    <div class="header-title">
-      Uplab · Alchemist<br>
-      <span>Onderzoek je waarden</span>
-    </div>
+    <div class="tool-emoji">🧭</div>
+    <div class="header-title">Waardebepaler<span class="header-sub" id="headerSub">Fase 1 van 3 · De eerste selectie</span></div>
   </div>
-  <div class="header-right">
-    <span class="counter-badge" id="stickyCounter">0 / 10</span>
+  <div class="header-actions">
     <button class="btn-icon" id="btnInfo" title="Info">ⓘ Info</button>
     <button class="btn-icon" id="btnRestart" title="Opnieuw beginnen">↺ Opnieuw</button>
   </div>
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+    <div class="progress-label" id="stickyCounter">0 / 10 gekozen</div>
+  </div>
 </div>
+<div class="header-banner" aria-hidden="true"></div>
 
 <div id="screen1" class="screen active">
-  <div class="header-banner">
-    <div class="header-banner-content">
-      <div class="phase-badge">Fase 1 van 3</div>
-      <h1>Wat zijn mijn waarden?<br><span>De eerste selectie 🔎</span></h1>
-      <p>Kies 10 waarden die het beste voor jou aanvoelen.</p>
-    </div>
-  </div>
-
   <div class="main">
+    <div class="phase-badge">Fase 1 van 3</div>
+    <h1 class="intro-title">Wat zijn mijn waarden? <span>De eerste selectie 🔎</span></h1>
+    <p class="intro-text">Kies 10 waarden die het beste voor jou aanvoelen.</p>
     <div class="phase-info-box" id="phaseInfo1">
       Net als in de vorige module over jouw waarden krijg je een flinke lijst — dit keer jouw mogelijke <strong>kernwaarden</strong>. Hover over een waarde om de uitleg te zien, en klik om te selecteren. Selecteer jouw eerste top 10.
     </div>
@@ -597,15 +517,10 @@
 </div>
 
 <div id="screen2" class="screen">
-  <div class="header-banner">
-    <div class="header-banner-content">
-      <div class="phase-badge">Fase 2 van 3</div>
-      <h1>Wat zijn mijn waarden?<br><span>Selecteer de parels 🦪</span></h1>
-      <p>Kies de 6 beste uit jouw selectie van 10.</p>
-    </div>
-  </div>
-
   <div class="main">
+    <div class="phase-badge">Fase 2 van 3</div>
+    <h1 class="intro-title">Wat zijn mijn waarden? <span>Selecteer de parels 🦪</span></h1>
+    <p class="intro-text">Kies de 6 beste uit jouw selectie van 10.</p>
     <div class="phase-info-box" id="phaseInfo2">
       Waarden zijn de echte <strong>koersbepalers</strong> in jouw leven. Teveel waarden geven een gebrek aan focus. Kies nu jouw persoonlijke top 6 — welke waarden maken jou écht uniek?
     </div>
@@ -618,15 +533,10 @@
 </div>
 
 <div id="screen3" class="screen">
-  <div class="header-banner">
-    <div class="header-banner-content">
-      <div class="phase-badge">Fase 3 van 3</div>
-      <h1>Wat zijn mijn waarden?<br><span>Vind de kern 🌋</span></h1>
-      <p>Kies jouw 4 absolute kernwaarden.</p>
-    </div>
-  </div>
-
   <div class="main">
+    <div class="phase-badge">Fase 3 van 3</div>
+    <h1 class="intro-title">Wat zijn mijn waarden? <span>Vind de kern 🌋</span></h1>
+    <p class="intro-text">Kies jouw 4 absolute kernwaarden.</p>
     <div class="phase-info-box" id="phaseInfo3">
       Lekker bezig! Je hebt nu je 6 belangrijkste waarden op een rij. Om echt goed focus te houden gaan we nog afscheid nemen van 2 waarden. Niet omdat die minder belangrijk zijn, maar om de <strong>echte kern</strong> eruit te halen.
     </div>
@@ -639,29 +549,26 @@
 </div>
 
 <div id="screenResults" class="screen">
-  <div class="header-banner">
-    <div class="header-banner-content">
-      <div class="phase-badge">Resultaten 🎉</div>
-      <h1>Yes! <span>Dit zijn ze.</span></h1>
-      <p>Jouw allerwaardevolste kernwaarden.</p>
-    </div>
-  </div>
-
   <div class="main results-screen">
+    <div class="phase-badge">Resultaten 🎉</div>
+    <h1 class="intro-title">Yes! <span>Dit zijn ze.</span></h1>
+    <p class="intro-text" style="margin-bottom:18px;">Jouw allerwaardevolste kernwaarden.</p>
     <p style="font-size:1rem; color:#444; line-height:1.7; margin-bottom:28px;">
-      Wees er maar <strong>trots op</strong> — want deze combinatie van waarden is écht uniek! 🎉
+      Wees er maar <strong>trots op</strong> — want deze combinatie van waarden is écht uniek! 🎉<br><br>
+      Per waarde lees je een omschrijving waar je je misschien deels of helemaal in herkent. Zet dit, met de knop hieronder in jouw <strong>Labboek</strong> en pas de omschrijving van jouw waarden zo aan, zodat het helemaal passend is bij jouw unieke waarden.
     </p>
 
     <div id="resultsContainer"></div>
 
-    <p class="copy-instruction">
-      Kopieer met de knop hieronder jouw kernwaarden en plak ze in jouw persoonlijke <strong>Labboek</strong>. De uitleg kun je daar helemaal aanpassen, zodat het helemaal passend is bij jouw unieke waarde.<br><br>
-      De rest van de opdracht doe je samen met Daan in jullie volgende ontmoeting.
-    </p>
-
-    <button class="btn-copy" id="btnCopy">📋 Kopieer mijn kernwaarden</button>
+    <button class="btn-copy" id="btnCopy">📖 Zet in mijn Labboek</button>
+    <p class="copy-instruction" id="labboekStatus" style="display:none;"></p>
+    <div class="storage-warning">
+      ⚠️ Let op: jouw resultaten worden opgeslagen in deze browser op dit apparaat. Als je de browsergeschiedenis wist, een andere browser gebruikt of dit apparaat wisselt, kunnen de resultaten niet meer zichtbaar zijn. Zet ze daarom in je Labboek!
+    </div>
   </div>
 </div>
+
+</div><!-- /.app -->
 
 <div class="popup-overlay active" id="popupWelcome">
   <div class="popup-box">
@@ -671,7 +578,7 @@
     <p>De vorige reflectieopdrachten hebben je waarschijnlijk al eerste inzicht in jouw waarden gegeven.</p>
     <p>Misschien zie je meteen al een paar waarden die jouw naam schreeuwen. Bij andere twijfel je misschien… en dat is helemaal oké. Neem de tijd, lees de lijst rustig door en voel wat klopt.</p>
     <p>Zit er nou een waarde in jouw gedachte dat écht bij jou hoort, maar niet in de lijst staat? Geen stress. Helemaal onderaan kun je er zelf nog één toevoegen.</p>
-    <p>Het is ok als de omschrijving van de waarde niet helemaal past bij hoe jij naar de waarde kijkt — dat is helemaal ok. Je kunt het straks, in je labboek, helemaal beschrijven zoals jij dat wilt.</p>
+    <p>Het is ok als de omschrijving van de waarde niet helemaal past bij hoe jij naar de waarde kijkt. Je kunt het straks, in je labboek, helemaal beschrijven zoals jij dat wilt.</p>
     <button class="popup-btn" onclick="closePopup('popupWelcome')">Aan de slag! →</button>
   </div>
 </div>
@@ -1059,7 +966,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('submit1').addEventListener('click', submitPhase1);
   document.getElementById('submit2').addEventListener('click', submitPhase2);
   document.getElementById('submit3').addEventListener('click', submitPhase3);
-  document.getElementById('btnCopy').addEventListener('click', copyResults);
+  document.getElementById('btnCopy').addEventListener('click', zetInLabboek);
   document.getElementById('btnRestart').addEventListener('click', () => openPopup('popupRestart'));
   document.getElementById('btnInfo').addEventListener('click', () => openPopup('popupInfoList'));
 
@@ -1313,6 +1220,92 @@ function renderResults() {
   });
 }
 
+function resultaatTekst() {
+  let text = '';
+  state.selected[3].forEach((name, i) => {
+    let w;
+    if (name === '__custom__') {
+      w = { naam: state.customValue, kort: 'Mijn eigen waarde.', lang: 'Hier beschrijf ik wat deze waarde voor mij betekent.' };
+    } else {
+      w = WAARDEN.find(x => x.naam === name);
+    }
+    if (!w) return;
+    text += `${i+1}. ${w.naam}\n${w.kort}\n\n${w.lang}\n\n`;
+  });
+  return text.trim();
+}
+
+// ===== OPSLAAN IN HET LABBOEK =====
+// Werkt net als bij Dain: de tool krijgt vanuit het Labboek het sessie-token mee (?st=...).
+const SUPABASE_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+const KERNWAARDEN_VRAAG_ID = '237f569d-328a-41c8-a435-0b07e0ca97d9'; // "Mijn kernwaarden — vanuit de kernwaardentool"
+const SESSIE_TOKEN = new URLSearchParams(window.location.search).get('st') || null;
+
+function dbHeaders(extra) {
+  return Object.assign({
+    'apikey': SUPABASE_ANON_KEY,
+    'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+    'x-sessie-token': SESSIE_TOKEN || ''
+  }, extra || {});
+}
+
+function toonLabboekStatus(tekst, kleur) {
+  const el = document.getElementById('labboekStatus');
+  el.style.display = 'block';
+  el.style.color = kleur || 'var(--text-muted)';
+  el.innerHTML = tekst;
+}
+
+async function zetInLabboek() {
+  const btn = document.getElementById('btnCopy');
+  const tekst = resultaatTekst();
+
+  if (!SESSIE_TOKEN) {
+    copyResults();
+    toonLabboekStatus('Ik kon je Labboek vanaf hier niet bereiken, dus ik heb je kernwaarden <strong>gekopieerd</strong>. Plak ze bij <em>Mijn kernwaarden — vanuit de kernwaardentool</em> in je Labboek.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Bezig met opslaan...';
+  try {
+    const dRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_deelnemers?select=id&order=aangemaakt_op.desc&limit=1', { headers: dbHeaders() });
+    const dRows = await dRes.json();
+    if (!Array.isArray(dRows) || !dRows[0]) throw new Error('Geen deelnemer gevonden');
+    const deelnemerId = dRows[0].id;
+
+    const headers = dbHeaders({ 'Content-Type': 'application/json' });
+    const bRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?select=id&deelnemer_id=eq.' + deelnemerId + '&vraag_id=eq.' + KERNWAARDEN_VRAAG_ID, { headers });
+    const bestaand = await bRes.json();
+
+    let res;
+    if (Array.isArray(bestaand) && bestaand[0]) {
+      res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?id=eq.' + bestaand[0].id, {
+        method: 'PATCH', headers,
+        body: JSON.stringify({ antwoord: tekst, bijgewerkt_op: new Date().toISOString() })
+      });
+    } else {
+      res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden', {
+        method: 'POST', headers,
+        body: JSON.stringify({ deelnemer_id: deelnemerId, vraag_id: KERNWAARDEN_VRAAG_ID, antwoord: tekst })
+      });
+    }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    btn.textContent = '✓ Staat in je Labboek!';
+    btn.classList.add('copied');
+    toonLabboekStatus('✅ Je kernwaarden staan nu in je Labboek bij <em>Mijn kernwaarden — vanuit de kernwaardentool</em>. Daar kun je de omschrijvingen helemaal naar jezelf toe schrijven.', 'var(--accent2)');
+  } catch (e) {
+    console.error('Opslaan in Labboek mislukt:', e);
+    btn.textContent = '📖 Zet in mijn Labboek';
+    copyResults();
+    toonLabboekStatus('⚠️ Opslaan in je Labboek lukte nu niet, dus ik heb je kernwaarden <strong>gekopieerd</strong>. Plak ze bij <em>Mijn kernwaarden — vanuit de kernwaardentool</em>, of probeer het zo nog eens.', '#b23b3b');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function copyResults() {
   const sel = state.selected[3];
   let text = 'MIJN KERNWAARDEN\n\n';
@@ -1336,7 +1329,7 @@ function copyResults() {
     btn.textContent = '✓ Gekopieerd!';
     btn.classList.add('copied');
     setTimeout(() => {
-      btn.textContent = '📋 Kopieer mijn kernwaarden';
+      btn.textContent = '📖 Zet in mijn Labboek';
       btn.classList.remove('copied');
     }, 3000);
   }
@@ -1394,9 +1387,9 @@ function updateCounter() {
   const phase = state.phase;
   const count = state.done ? 4 : (state.selected[phase] || []).length;
   const limit = state.done ? 4 : LIMITS[phase];
-  const badge = document.getElementById('stickyCounter');
-  badge.textContent = `${count} / ${limit}`;
-  badge.className = 'counter-badge' + (count > limit ? ' warning' : '');
+  document.getElementById('stickyCounter').textContent = `${count} / ${limit} gekozen`;
+  document.getElementById('progFill').style.width = Math.min(100, Math.round(count / limit * 100)) + '%';
+  document.getElementById('progressWrap').classList.toggle('full', count >= limit);
 }
 
 function showScreen(id) {
@@ -1406,12 +1399,17 @@ function showScreen(id) {
   } else {
     document.getElementById(`screen${id}`).classList.add('active');
   }
+  const subs = { 1: 'Fase 1 van 3 · De eerste selectie', 2: 'Fase 2 van 3 · Selecteer de parels', 3: 'Fase 3 van 3 · Vind de kern' };
+  document.getElementById('headerSub').textContent = subs[id] || 'Jouw kernwaarden';
+  document.getElementById('progressWrap').style.display = id === 'results' ? 'none' : '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
 function openPopup(id) {
-  document.getElementById(id).classList.add('active');
+  const ov = document.getElementById(id);
+  ov.classList.add('active');
+  if (window.uplabPlacePopup) window.uplabPlacePopup(ov);
   if (window.__uplabReportHeight) window.__uplabReportHeight();
 }
 
@@ -1462,6 +1460,44 @@ function buildInfoList() {
   const container = document.getElementById('infoWordList');
   container.innerHTML = INFO_WORDS.map(w => `<div>${w}</div>`).join('');
 }
+
+// ===== POPUP OP DE PLEK VAN DE GEBRUIKER (voor embeds in Wix e.d.) =====
+// In een iframe dat net zo hoog is als de tool betekent 'position:fixed' gewoon
+// 'bovenaan de tool'. Daarom onthouden we waar de gebruiker het laatst klikte/tikte
+// en zetten we de popup daar neer.
+(function () {
+  var inFrame = false;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  var lastY = null;
+  function onti(e) {
+    var t = e.touches && e.touches[0] ? e.touches[0] : e;
+    if (typeof t.pageY === 'number') lastY = t.pageY;
+  }
+  document.addEventListener('pointerdown', onti, true);
+  document.addEventListener('touchstart', onti, { capture: true, passive: true });
+  document.addEventListener('dragend', onti, true);
+  document.addEventListener('drop', onti, true);
+
+  window.uplabPlacePopup = function (overlay) {
+    if (!inFrame || !overlay) return;
+    var box = overlay.querySelector('.popup-box');
+    var docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.bottom = 'auto';
+    overlay.style.height = docH + 'px';
+    overlay.style.overflow = 'visible';
+    var y = lastY === null ? 40 : lastY - 160;
+    var boxH = box ? box.offsetHeight : 400;
+    y = Math.max(20, Math.min(y, docH - boxH - 20));
+    overlay.style.paddingTop = y + 'px';
+    if (box && box.scrollIntoView) {
+      try { box.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {}
+    }
+  };
+})();
 
 // ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
 (function () {
