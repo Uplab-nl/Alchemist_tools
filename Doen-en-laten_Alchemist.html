@@ -15,6 +15,7 @@
   --card-bg: #fafafa;
   --border: #e0e0e0;
   --muted: #666;
+  --cream: #f0f1ec;
   --col-a: #3E6913;
   --col-b: #D98E33;
   --col-c: #5B5FC7;
@@ -24,29 +25,52 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);min-height:100vh}
 
+/* ─── APP-KADER (Dain-stijl: crème, ronde hoeken) ─── */
+.app{background:var(--cream);width:100%;min-height:100vh}
+@media(min-width:860px){
+  .app{max-width:1200px;margin:0 auto 24px;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.12);min-height:0;overflow:clip}
+}
+
+/* ─── STICKY HEADER (Dain-stijl) ─── */
 .sticky-header{
   position:sticky;top:0;z-index:200;
-  background:var(--brand);padding:10px 20px;
+  background:var(--brand);padding:12px 52px 12px 16px;
   display:flex;align-items:center;justify-content:space-between;
-  box-shadow:0 2px 12px rgba(0,0,0,.35);flex-wrap:wrap;gap:8px;
+  flex-wrap:wrap;gap:10px 18px;
 }
-.header-title{font-family:'Doppio One',sans-serif;color:#fff;font-size:.95rem;line-height:1.2}
-.header-title span{color:var(--green)}
-.header-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-right:40px}
-.phase-chip{background:rgba(255,255,255,.15);color:#fff;font-family:'Doppio One',sans-serif;font-size:.75rem;padding:4px 12px;border-radius:14px;white-space:nowrap}
-.btn-icon{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.78rem;transition:background .2s;white-space:nowrap}
+.header-left{display:flex;align-items:center;gap:12px}
+.tool-emoji{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;
+}
+.header-title{font-family:'Doppio One',sans-serif;color:var(--green);font-size:16px;line-height:1.25}
+.header-sub{font-family:'Roboto',sans-serif;font-size:11.2px;color:#c9c9c9;font-weight:400;display:block}
+.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-icon{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;
+  border-radius:8px;padding:7px 12px;cursor:pointer;font-family:'Roboto',sans-serif;font-size:12.8px;
+  transition:background .2s;white-space:nowrap;min-width:104px;text-align:center;
+}
 .btn-icon:hover{background:rgba(255,255,255,.22)}
 
-.banner{background:var(--brand);position:relative;overflow:hidden;padding:30px 30px 52px}
-.banner::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:44px;background:#fff;clip-path:polygon(0 100%,100% 0,100% 100%)}
-.banner::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#3a3838 0%,transparent 55%);opacity:.5}
+/* ─── SCHUINE BANNER (Dain-stijl) ─── */
+.banner{background:var(--brand);position:relative;overflow:hidden;height:30px;margin-top:-1px}
+.banner::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:30px;background:var(--cream);clip-path:polygon(0 100%,100% 0,100% 100%)}
 .banner-content{position:relative;z-index:2;max-width:780px}
-.banner h1{font-family:'Doppio One',sans-serif;color:#fff;font-size:clamp(1.3rem,3.5vw,1.9rem);line-height:1.2;margin-bottom:6px}
+.banner h1{font-family:'Doppio One',sans-serif;color:#fff;font-size:clamp(18.4px,4vw,24px);line-height:1.3;margin-bottom:4px}
 .banner h1 span{color:var(--green)}
-.banner p{color:rgba(255,255,255,.75);font-size:.88rem;font-weight:300}
 .phase-badge{display:inline-block;background:var(--green);color:#fff;font-size:.72rem;font-family:'Doppio One',sans-serif;padding:3px 11px;border-radius:11px;margin-bottom:10px;letter-spacing:.4px}
 
-.main{max-width:1200px;margin:0 auto;padding:20px 16px 60px}
+/* voortgang in de bovenbalk */
+.sticky-header .progress-wrap{flex-basis:100%;margin:2px 0 0}
+.sticky-header .progress-track{background:rgba(255,255,255,.15)}
+.sticky-header .progress-label{color:#d9d9d9;text-align:left;margin-top:4px}
+
+/* uitleg in het lichte deel */
+.intro-text{font-family:'Doppio One',sans-serif;font-size:1.02rem;line-height:1.4;color:var(--brand);margin:0 0 10px}
+
+.main{max-width:1200px;margin:0 auto;padding:14px 16px 60px}
 
 .btn-submit{
   background:var(--green);color:#fff;border:none;border-radius:10px;
@@ -60,7 +84,7 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .progress-fill{height:100%;background:var(--green);border-radius:6px;transition:width .3s}
 .progress-label{font-family:'Doppio One',sans-serif;font-size:.75rem;color:var(--green-dark);margin-top:5px;text-align:center}
 
-.info-box{background:var(--bg);border-left:4px solid var(--green);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:.86rem;color:#444;line-height:1.6;cursor:pointer;position:relative}
+.info-box{background:var(--white);border-left:4px solid var(--green);border-radius:9px;padding:14px 18px;margin-bottom:16px;font-size:.86rem;color:#444;line-height:1.6;cursor:pointer;position:relative}
 .info-box::after{content:'ⓘ meer info';position:absolute;bottom:7px;right:12px;font-size:.72rem;color:var(--green)}
 
 .work-area{
@@ -75,7 +99,7 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 
 .stack-col{
   position:sticky;
-  top:56px;
+  top:116px;
   z-index:100;
   flex-shrink:0;
   width:160px;
@@ -99,11 +123,11 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 .stack-card.dragging{opacity:.3}
 .stack-empty{
   font-family:'Doppio One',sans-serif;font-size:.82rem;color:var(--green-dark);
-  background:var(--bg);border:2px dashed var(--border);border-radius:10px;
+  background:var(--white);border:2px dashed var(--border);border-radius:10px;
   padding:18px 10px;text-align:center;width:150px;height:100px;
   display:flex;align-items:center;justify-content:center;line-height:1.4
 }
-.stack-counter{font-family:'Doppio One',sans-serif;font-size:.72rem;color:var(--green-dark);background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:3px 10px;text-align:center}
+.stack-counter{font-family:'Doppio One',sans-serif;font-size:.72rem;color:var(--green-dark);background:var(--white);border:1px solid var(--border);border-radius:10px;padding:3px 10px;text-align:center}
 
 .grid-col{flex:1;min-width:0;overflow-x:auto;padding:4px 0}
 
@@ -227,7 +251,7 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 #dragTip.show{display:block}
 
 .done-banner{
-  background:var(--bg);border-left:4px solid var(--green);border-radius:10px;
+  background:var(--white);border-left:4px solid var(--green);border-radius:10px;
   padding:16px 20px;margin-top:18px;font-size:.88rem;color:#444;line-height:1.6;
 }
 .btn-copy{
@@ -237,6 +261,7 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 }
 .btn-copy:hover{background:#3a3636}
 .btn-copy.copied{background:var(--green)}
+.btn-copy:disabled{opacity:.6;cursor:wait}
 
 .popup-overlay{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
@@ -261,7 +286,7 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 
 @media(max-width:600px){
   .work-area{gap:10px}
-  .stack-col{width:130px;top:52px}
+  .stack-col{width:130px;top:150px}
   .card-stack{width:120px}
   .stack-empty{width:120px}
   .doen-grid{min-width:260px}
@@ -269,35 +294,34 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
   .grid-col-header{font-size:.68rem;padding:7px 4px}
   .mini-card{font-size:.6rem;padding:4px 5px}
 }
+.storage-warning{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:12px 16px;margin-top:16px;font-size:.8rem;color:#795548;line-height:1.5;text-align:center}
 </style>
 </head>
 <body>
 
+<div class="app">
+
 <div class="sticky-header">
-  <div class="header-title">Uplab · Alchemist<br><span>Doen en laten</span></div>
-  <div class="header-right">
-    <span class="phase-chip" id="phaseChip">Fase 1 van 3</span>
+  <div class="header-left">
+    <div class="tool-emoji">🗺️</div>
+    <div class="header-title">Doen en laten<span class="header-sub" id="phaseChip">Fase 1 van 3</span></div>
+  </div>
+  <div class="header-actions">
     <button class="btn-icon" id="btnInfo">ⓘ Info</button>
     <button class="btn-icon" id="btnRestart">↺ Opnieuw</button>
   </div>
-</div>
-
-<div class="banner">
-  <div class="banner-content">
-    <div class="phase-badge" id="bannerBadge">Fase 1 — Wat doe ik graag?</div>
-    <h1>Doen en laten<br><span id="bannerSub">Jouw drijfverenkaart 🗺️</span></h1>
-    <p id="bannerDesc">Sleep elke activiteit naar het vak dat het beste past bij hoe graag je het doet.</p>
-  </div>
-</div>
-
-<div class="main">
-  <div class="info-box" id="infoBox">
-    Je gaat beginnen aan een drijfverenonderzoek. Pak het bovenste kaartje van de stapel — als je het oppakt zie je de uitleg — en sleep het naar de rij die het beste weergeeft hoe graag je deze activiteit doet.
-  </div>
-
   <div class="progress-wrap" id="progressWrap">
     <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0"></div></div>
     <div class="progress-label" id="progLabel">0 / 64</div>
+  </div>
+</div>
+<div class="banner" aria-hidden="true"></div>
+
+<div class="main">
+  <div class="phase-badge" id="bannerBadge">Fase 1 — Wat doe ik graag?</div>
+  <p class="intro-text" id="bannerDesc">Sleep elke activiteit naar het vak dat het beste past bij hoe graag je het doet.</p>
+  <div class="info-box" id="infoBox" style="display:none">
+    Je gaat beginnen aan een drijfverenonderzoek. Pak het bovenste kaartje van de stapel — als je het oppakt zie je de uitleg — en sleep het naar de rij die het beste weergeeft hoe graag je deze activiteit doet.
   </div>
 
   <div class="work-area">
@@ -321,10 +345,14 @@ body{font-family:'Roboto',sans-serif;background:var(--white);color:var(--brand);
 
   <div class="done-banner" id="doneBanner" style="display:none">
     Mooi werk 🎉 Bekijk de gekleurde vlakken — hover op een gevuld vlak voor de betekenis.
-    Kopieer je overzicht hieronder en plak het in je <strong>Labboek</strong>.
-    <button class="btn-copy" id="btnCopy">📋 Kopieer mijn overzicht</button>
+    Zet je overzicht met de knop hieronder in je <strong>Labboek</strong>, dan kun je daar je inzichten verder uitwerken.
+    <button class="btn-copy" id="btnCopy">📖 Zet in mijn Labboek</button>
+    <p id="labboekStatus" style="display:none;text-align:center;font-size:.85rem;margin-top:10px;line-height:1.5"></p>
+    <div class="storage-warning">⚠️ Let op: jouw resultaten worden opgeslagen in deze browser op dit apparaat. Als je de browsergeschiedenis wist, een andere browser gebruikt of dit apparaat wisselt, kunnen de resultaten niet meer zichtbaar zijn. Zet ze daarom in je Labboek!</div>
   </div>
 </div>
+
+</div><!-- /.app -->
 
 <div id="dragTip"></div>
 <div id="blockTip"></div>
@@ -806,8 +834,8 @@ function positionOverlays(){
 }
 function hideOverlays(){document.querySelectorAll('.blk-overlay').forEach(o=>o.classList.remove('show'));}
 
-function copyResults(){
-  let text='MIJN DOEN EN LATEN — OVERZICHT\n\n';
+function resultaatTekst(){
+  let text='';
   BLOCKS.forEach(b=>{
     const items=Object.entries(S.pl)
       .filter(([,p])=>{
@@ -819,8 +847,13 @@ function copyResults(){
     text+=items.length?items.map(n=>`- ${n}`).join('\n'):'- (geen activiteiten)';
     text+='\n\n';
   });
+  return text.trim();
+}
+
+function copyResults(){
+  const text='MIJN DOEN EN LATEN — OVERZICHT\n\n'+resultaatTekst();
   const btn=document.getElementById('btnCopy');
-  const ok=()=>{btn.textContent='✓ Gekopieerd!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 Kopieer mijn overzicht';btn.classList.remove('copied');},3000);};
+  const ok=()=>{btn.textContent='✓ Gekopieerd!';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📖 Zet in mijn Labboek';btn.classList.remove('copied');},3000);};
   if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(ok).catch(fb);}else fb();
   function fb(){
     const ta=document.createElement('textarea');
@@ -831,7 +864,56 @@ function copyResults(){
   }
 }
 
-function openP(id){document.getElementById(id).classList.add('on'); if (window.__uplabReportHeight) window.__uplabReportHeight();}
+// ===== OPSLAAN IN HET LABBOEK =====
+// Werkt net als bij Dain: de tool krijgt vanuit het Labboek het sessie-token mee (?st=...).
+const SUPABASE_URL='https://iqrlerplitfvgdnqnyzd.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+const DOENLATEN_VRAAG_ID='e1db1d72-f774-41d3-a9fe-e9a29b381923'; // "Doen & laten — mijn resultaten en de inzichten die ik meeneem uit de Doen & Laten-opdracht."
+const VRAAG_LABEL='Doen &amp; laten — mijn resultaten en de inzichten die ik meeneem';
+const SESSIE_TOKEN=new URLSearchParams(window.location.search).get('st')||null;
+
+function dbHeaders(extra){
+  return Object.assign({'apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'x-sessie-token':SESSIE_TOKEN||''},extra||{});
+}
+function toonLabboekStatus(tekst,kleur){
+  const el=document.getElementById('labboekStatus');
+  el.style.display='block'; el.style.color=kleur||'var(--muted)'; el.innerHTML=tekst;
+}
+async function zetInLabboek(){
+  const btn=document.getElementById('btnCopy');
+  const tekst=resultaatTekst();
+  if(!SESSIE_TOKEN){
+    copyResults();
+    toonLabboekStatus('Ik kon je Labboek vanaf hier niet bereiken, dus ik heb je overzicht <strong>gekopieerd</strong>. Plak het bij <em>'+VRAAG_LABEL+'</em> in je Labboek.');
+    return;
+  }
+  btn.disabled=true; btn.textContent='⏳ Bezig met opslaan...';
+  try{
+    const dRes=await fetch(SUPABASE_URL+'/rest/v1/labboek_deelnemers?select=id&order=aangemaakt_op.desc&limit=1',{headers:dbHeaders()});
+    const dRows=await dRes.json();
+    if(!Array.isArray(dRows)||!dRows[0]) throw new Error('Geen deelnemer gevonden');
+    const deelnemerId=dRows[0].id;
+    const headers=dbHeaders({'Content-Type':'application/json'});
+    const bRes=await fetch(SUPABASE_URL+'/rest/v1/labboek_antwoorden?select=id&deelnemer_id=eq.'+deelnemerId+'&vraag_id=eq.'+DOENLATEN_VRAAG_ID,{headers});
+    const bestaand=await bRes.json();
+    let res;
+    if(Array.isArray(bestaand)&&bestaand[0]){
+      res=await fetch(SUPABASE_URL+'/rest/v1/labboek_antwoorden?id=eq.'+bestaand[0].id,{method:'PATCH',headers,body:JSON.stringify({antwoord:tekst,bijgewerkt_op:new Date().toISOString()})});
+    }else{
+      res=await fetch(SUPABASE_URL+'/rest/v1/labboek_antwoorden',{method:'POST',headers,body:JSON.stringify({deelnemer_id:deelnemerId,vraag_id:DOENLATEN_VRAAG_ID,antwoord:tekst})});
+    }
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    btn.textContent='✓ Staat in je Labboek!'; btn.classList.add('copied');
+    toonLabboekStatus('✅ Je overzicht staat nu in je Labboek bij <em>'+VRAAG_LABEL+'</em>. Daar kun je je inzichten verder uitwerken.','var(--green-dark)');
+  }catch(e){
+    console.error('Opslaan in Labboek mislukt:',e);
+    btn.textContent='📖 Zet in mijn Labboek';
+    copyResults();
+    toonLabboekStatus('⚠️ Opslaan in je Labboek lukte nu niet, dus ik heb je overzicht <strong>gekopieerd</strong>. Plak het bij <em>'+VRAAG_LABEL+'</em>, of probeer het zo nog eens.','#b23b3b');
+  }finally{ btn.disabled=false; }
+}
+
+function openP(id){const ov=document.getElementById(id); ov.classList.add('on'); if (window.uplabPlacePopup) window.uplabPlacePopup(ov); if (window.__uplabReportHeight) window.__uplabReportHeight();}
 function closeP(id){document.getElementById(id).classList.remove('on'); if (window.__uplabReportHeight) window.__uplabReportHeight();}
 document.addEventListener('click',e=>{
   document.querySelectorAll('.popup-overlay.on').forEach(o=>{
@@ -856,7 +938,7 @@ function init(){
   document.getElementById('btnInfo').addEventListener('click',()=>openP('popInfo'));
   document.getElementById('btnRestart').addEventListener('click',()=>openP('popRestart'));
   document.getElementById('infoBox').addEventListener('click',()=>openP('popInfo'));
-  document.getElementById('btnCopy').addEventListener('click',copyResults);
+  document.getElementById('btnCopy').addEventListener('click',zetInLabboek);
 
   window.addEventListener('resize',()=>{if(S.phase===3)requestAnimationFrame(positionOverlays);});
 
@@ -869,6 +951,44 @@ function init(){
 }
 
 init();
+
+// ===== POPUP OP DE PLEK VAN DE GEBRUIKER (voor embeds in Wix e.d.) =====
+// In een iframe dat net zo hoog is als de tool betekent 'position:fixed' gewoon
+// 'bovenaan de tool'. Daarom onthouden we waar de gebruiker het laatst klikte/tikte
+// en zetten we de popup daar neer.
+(function () {
+  var inFrame = false;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  var lastY = null;
+  function onti(e) {
+    var t = e.touches && e.touches[0] ? e.touches[0] : e;
+    if (typeof t.pageY === 'number') lastY = t.pageY;
+  }
+  document.addEventListener('pointerdown', onti, true);
+  document.addEventListener('touchstart', onti, { capture: true, passive: true });
+  document.addEventListener('dragend', onti, true);
+  document.addEventListener('drop', onti, true);
+
+  window.uplabPlacePopup = function (overlay) {
+    if (!inFrame || !overlay) return;
+    var box = overlay.querySelector('.popup-box');
+    var docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.bottom = 'auto';
+    overlay.style.height = docH + 'px';
+    overlay.style.overflow = 'visible';
+    var y = lastY === null ? 40 : lastY - 160;
+    var boxH = box ? box.offsetHeight : 400;
+    y = Math.max(20, Math.min(y, docH - boxH - 20));
+    overlay.style.paddingTop = y + 'px';
+    if (box && box.scrollIntoView) {
+      try { box.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {}
+    }
+  };
+})();
 
 // ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
 (function () {
