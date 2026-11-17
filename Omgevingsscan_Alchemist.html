@@ -18,52 +18,93 @@
     --slider-left: #7B5EA7;
     --slider-right: #E07B2A;
     --slider-mid: #c0a8d8;
+    --cream: #f0f1ec;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Roboto', sans-serif; background: var(--white); color: var(--brand-primary); min-height: 100vh; overflow-x: hidden; }
 
-  /* STICKY HEADER */
-  .sticky-header { position: sticky; top: 0; z-index: 200; background: var(--brand-primary); padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .header-title { font-family: 'Doppio One', sans-serif; color: var(--white); font-size: 0.95rem; line-height: 1.2; }
-  .header-title span { color: var(--accent1); }
-  .header-right { display: flex; align-items: center; gap: 10px; }
-  .progress-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: white; font-family: 'Doppio One', sans-serif; font-size: 0.78rem; padding: 5px 12px; border-radius: 16px; white-space: nowrap; }
-  .progress-pill.active { background: var(--accent1); border-color: var(--accent1); }
-  .btn-icon { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); color: white; border-radius: 8px; padding: 6px 12px; cursor: pointer; font-family: 'Roboto', sans-serif; font-size: 0.78rem; transition: background 0.2s; }
-  .btn-icon:hover { background: rgba(255,255,255,0.2); }
+  /* APP-KADER (Dain-stijl: crème, ronde hoeken) */
+  .app { background: var(--cream); width: 100%; min-height: 100vh; }
+  @media (min-width: 900px) {
+    .app { max-width: 1000px; margin: 0 auto 24px; border-radius: 14px; box-shadow: 0 4px 24px rgba(0,0,0,0.12); min-height: 0; overflow: clip; }
+  }
 
-  /* DIAGONAL BANNER */
-  .header-banner { background: var(--brand-primary); position: relative; overflow: hidden; padding: 36px 30px 64px; }
-  .header-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: linear-gradient(135deg, #3a3838 0%, transparent 55%); opacity: 0.5; }
-  .header-banner::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 50px; background: var(--white); clip-path: polygon(0 100%, 100% 0, 100% 100%); }
-  .header-banner-content { position: relative; z-index: 2; max-width: 800px; }
-  .phase-badge { display: inline-block; background: var(--accent1); color: white; font-size: 0.72rem; font-family: 'Doppio One', sans-serif; padding: 4px 12px; border-radius: 12px; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
-  .header-banner h1 { font-family: 'Doppio One', sans-serif; color: var(--white); font-size: clamp(1.4rem, 4vw, 2rem); line-height: 1.2; margin-bottom: 8px; }
-  .header-banner h1 span { color: var(--accent1); }
-  .header-banner p { color: rgba(255,255,255,0.72); font-size: 0.88rem; font-weight: 300; line-height: 1.6; max-width: 580px; }
+  /* STICKY HEADER (Dain-stijl) */
+  .sticky-header {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--brand-primary);
+    padding: 12px 52px 12px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px 18px;
+  }
+  .header-left { display: flex; align-items: center; gap: 12px; }
+  .tool-emoji {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center; font-size: 20px; line-height: 1;
+  }
+  .header-title { font-family: 'Doppio One', sans-serif; color: var(--accent1); font-size: 16px; line-height: 1.25; }
+  .header-sub { font-family: 'Roboto', sans-serif; font-size: 11.2px; color: #c9c9c9; font-weight: 400; display: block; }
+  .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .btn-icon {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: white;
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-family: 'Roboto', sans-serif;
+    font-size: 12.8px; transition: background 0.2s; white-space: nowrap; min-width: 104px; text-align: center;
+  }
+  .btn-icon:hover { background: rgba(255,255,255,0.22); }
+
+  /* voortgang in de bovenbalk */
+  .progress-wrap { flex-basis: 100%; margin: 2px 0 0; }
+  .progress-track { width: 100%; height: 7px; background: rgba(255,255,255,0.15); border-radius: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; width: 0; background: var(--accent1); border-radius: 6px; transition: width 0.4s ease; }
+  .progress-label { font-family: 'Doppio One', sans-serif; font-size: 12px; color: #d9d9d9; margin-top: 4px; }
+
+  /* SCHUINE RAND (één geheel met de bovenbalk) */
+  .header-banner { background: var(--brand-primary); position: relative; overflow: hidden; height: 30px; margin-top: -1px; }
+  .header-banner::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 30px;
+    background: var(--cream); clip-path: polygon(0 100%, 100% 0, 100% 100%);
+  }
+
+  /* fase-label + intro in het lichte deel */
+  .intro-wrap { max-width: 860px; margin: 0 auto; padding: 14px 20px 0; }
+  .phase-badge {
+    display: inline-block; background: var(--accent1); color: white; font-size: 0.75rem;
+    font-family: 'Doppio One', sans-serif; padding: 4px 12px; border-radius: 12px; margin-bottom: 10px; letter-spacing: 0.5px;
+  }
+  .intro-title { font-family: 'Doppio One', sans-serif; font-size: clamp(1.25rem, 3.5vw, 1.6rem); line-height: 1.25; color: var(--brand-primary); margin-bottom: 4px; }
+  .intro-title span { color: var(--accent1); }
+  .intro-text { font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 18px; }
+
+  .storage-warning {
+    background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px;
+    padding: 12px 16px; margin-top: 20px; font-size: 0.8rem; color: #795548; line-height: 1.5; text-align: center;
+  }
+  .labboek-status { font-size: 0.85rem; line-height: 1.6; margin: 12px auto 0; max-width: 620px; }
+  .btn-copy:disabled { opacity: .6; cursor: wait; }
 
   /* LAYER STEPPER */
-  .layer-stepper { display: flex; background: var(--light-bg); border-bottom: 2px solid var(--border-light); overflow-x: auto; scrollbar-width: none; }
+  .layer-stepper { display: flex; background: var(--white); border: 2px solid var(--border-light); border-radius: 12px; overflow-x: auto; scrollbar-width: none; max-width: 820px; margin: 0 auto; }
+  .stepper-wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
   .layer-stepper::-webkit-scrollbar { display: none; }
   .layer-step { flex: 1; min-width: 110px; padding: 12px 14px; display: flex; flex-direction: column; align-items: center; gap: 3px; border-right: 1px solid var(--border-light); transition: background 0.2s; }
   .layer-step:last-child { border-right: none; }
   .layer-step .step-icon { font-size: 1.2rem; line-height: 1; }
   .layer-step .step-name { font-family: 'Doppio One', sans-serif; font-size: 0.68rem; color: var(--text-muted); text-align: center; text-transform: uppercase; letter-spacing: 0.4px; }
   .layer-step .step-status { font-size: 0.62rem; color: var(--text-muted); }
-  .layer-step.active { background: white; border-bottom: 3px solid var(--accent1); margin-bottom: -2px; }
+  .layer-step.active { background: #f0f7eb; box-shadow: inset 0 -3px 0 var(--accent1); }
   .layer-step.active .step-name { color: var(--brand-primary); }
   .layer-step.done .step-name { color: var(--accent1); }
   .layer-step.done .step-status { color: var(--accent1); }
   .layer-step.done { cursor: pointer; }
-  .layer-step.done:hover { background: white; box-shadow: inset 0 -3px 0 var(--accent1); }
+  .layer-step.done:hover { background: #f7faf5; box-shadow: inset 0 -3px 0 var(--accent1); }
   .layer-step.active { cursor: default; }
 
   /* MAIN */
-  .main { max-width: 860px; margin: 0 auto; padding: 30px 20px 80px; }
+  .main { max-width: 860px; margin: 0 auto; padding: 24px 20px 60px; }
 
   /* SECTION INTRO */
-  .section-intro { background: var(--light-bg); border-left: 4px solid var(--accent1); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 32px; }
+  .section-intro { background: var(--white); border-left: 4px solid var(--accent1); border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 32px; }
   .section-intro h2 { font-family: 'Doppio One', sans-serif; font-size: 1.1rem; color: var(--brand-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
   .section-intro h2 .layer-emoji { font-size: 1.3rem; }
   .section-intro p { font-size: 0.87rem; color: var(--text-muted); line-height: 1.65; }
@@ -97,7 +138,7 @@
   .kaarten-intro { background: #f0eaf8; border: 1px solid #c9b8e8; border-radius: 10px; padding: 14px 18px; font-size: 0.83rem; color: var(--accent2); margin-bottom: 18px; line-height: 1.55; }
   .kaarten-intro strong { color: var(--brand-primary); }
   .kaarten-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(175px, 1fr)); gap: 11px; margin-bottom: 10px; }
-  .kaart { background: var(--card-bg); border: 2px solid var(--border-light); border-radius: 12px; padding: 15px 13px; cursor: pointer; transition: all 0.16s; display: flex; flex-direction: column; gap: 5px; user-select: none; }
+  .kaart { background: var(--white); border: 2px solid var(--border-light); border-radius: 12px; padding: 15px 13px; cursor: pointer; transition: all 0.16s; display: flex; flex-direction: column; gap: 5px; user-select: none; }
   .kaart:hover { border-color: var(--accent1); background: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(84,158,57,0.12); }
   .kaart.selected { border-color: var(--accent1); background: #f0eaf8; }
   .kaart-icon { font-size: 1.35rem; line-height: 1; }
@@ -144,7 +185,7 @@
   /* POPUP */
   .popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 500; align-items: center; justify-content: center; padding: 20px; }
   .popup-overlay.open { display: flex; }
-  .popup-box { background: white; border-radius: 16px; padding: 30px 26px; max-width: 460px; width: 100%; position: relative; text-align: center; }
+  .popup-box { background: white; border-radius: 16px; padding: 30px 26px; max-width: 460px; width: 100%; position: relative; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
   .popup-emoji { font-size: 2.4rem; margin-bottom: 10px; }
   .popup-box h2 { font-family: 'Doppio One', sans-serif; font-size: 1.15rem; color: var(--brand-primary); margin-bottom: 9px; }
   .popup-box p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 18px; }
@@ -162,7 +203,6 @@
 
   /* RESPONSIVE */
   @media (max-width: 600px) {
-    .header-banner { padding: 26px 16px 54px; }
     .main { padding: 18px 12px 60px; }
     .kaarten-grid { grid-template-columns: 1fr 1fr; }
     .energy-label { min-width: 48px; font-size: 0.63rem; }
@@ -211,38 +251,44 @@
 </head>
 <body>
 
+<div class="app">
+
 <!-- STICKY HEADER -->
 <header class="sticky-header">
   <div class="header-left">
-    <div class="header-title">Alchemist — <span>Omgevingsscan</span></div>
+    <div class="tool-emoji">🔬</div>
+    <div class="header-title">Omgevingsscan<span class="header-sub" id="headerProgress">Laag 1 van 4 · Fysieke laag</span></div>
   </div>
-  <div class="header-right">
-    <div class="progress-pill" id="headerProgress">Laag 1 van 4</div>
+  <div class="header-actions">
+    <button class="btn-icon" onclick="openPopup('popupWelkom')">ⓘ Info</button>
     <button class="btn-icon" onclick="showRestartPopup()">↺ Opnieuw</button>
   </div>
-</header>
-
-<!-- BANNER -->
-<div class="header-banner">
-  <div class="header-banner-content">
-    <div class="phase-badge">Module M — Match de omstandigheden</div>
-    <h1>De <span>omgevingsscan</span></h1>
-    <p>Jouw omgeving is geen neutrale achtergrond — het is de bodem waarop jouw talenten en waarden tot bloei komen, of juist wegkwijnen. Onderzoek hier vier lagen van je werkomgeving: hoe het was, én wat je echt nodig hebt.</p>
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+    <div class="progress-label" id="progLabel">0 / 28 omschrijvingen beantwoord</div>
   </div>
+</header>
+<div class="header-banner" aria-hidden="true"></div>
+
+<!-- INTRO (licht deel) -->
+<div class="intro-wrap" id="introWrap">
+  <h1 class="intro-title">De <span>omgevingsscan</span></h1>
+  <p class="intro-text">Jouw omgeving is geen neutrale achtergrond — het is de bodem waarop jouw talenten en waarden tot bloei komen, of juist wegkwijnen. Onderzoek hier vier lagen van je werkomgeving: hoe het was, én wat je echt nodig hebt.</p>
 </div>
 
 <!-- LAYER STEPPER -->
+<div class="stepper-wrap" id="stepperWrap">
 <nav class="layer-stepper">
   <div class="layer-step active" id="step-0" onclick="navigeerNaarLaag(0)"><span class="step-icon">🏢</span><span class="step-name">Fysieke laag</span><span class="step-status" id="status-0">Bezig</span></div>
   <div class="layer-step" id="step-1" onclick="navigeerNaarLaag(1)"><span class="step-icon">🤝</span><span class="step-name">Sociale laag</span><span class="step-status" id="status-1">Wacht</span></div>
   <div class="layer-step" id="step-2" onclick="navigeerNaarLaag(2)"><span class="step-icon">🌍</span><span class="step-name">Culturele laag</span><span class="step-status" id="status-2">Wacht</span></div>
   <div class="layer-step" id="step-3" onclick="navigeerNaarLaag(3)"><span class="step-icon">🧠</span><span class="step-name">Mentale laag</span><span class="step-status" id="status-3">Wacht</span></div>
 </nav>
+</div>
 
 <!-- SCREEN 0: FYSIEK -->
 <div class="screen active" id="screen-0"><div class="main">
   <div class="section-intro"><h2><span class="layer-emoji">🏢</span> Fysieke laag — plek en omgeving</h2><p>Denk terug aan alle werksituaties die je hebt meegemaakt: stages, bijbanen, projecten, teams. Elk onderdeel hieronder toont twee uitersten. Zet de schuif naar de kant die het beste bij jou past. Het midden betekent: allebei prima, geen sterke voorkeur.</p></div>
-  <div class="scan-progress-bar"><div class="scan-progress-fill" id="prog-0" style="width:0%"></div></div>
   <div class="subsection-header"><span class="sub-tag">Deel 1 van 2</span><h3>Jouw voorkeur — zet de schuif naar de kant die bij jou past</h3></div>
   <div id="stellingen-0"></div>
   <div class="subsection-header"><span class="sub-tag">Deel 2 van 2</span><h3>Ideale omgeving — wat heb je nodig?</h3></div>
@@ -254,7 +300,6 @@
 <!-- SCREEN 1: SOCIAAL -->
 <div class="screen" id="screen-1"><div class="main">
   <div class="section-intro"><h2><span class="layer-emoji">🤝</span> Sociale laag — de mensen om je heen</h2><p>Elke werkomgeving heeft een eigen sociale dynamiek. Er is geen goede of foute kant — alleen jouw voorkeur. Zet de schuif naar de kant die het beste bij jou past. Het midden betekent: allebei prima, geen sterke voorkeur.</p></div>
-  <div class="scan-progress-bar"><div class="scan-progress-fill" id="prog-1" style="width:0%"></div></div>
   <div class="subsection-header"><span class="sub-tag">Deel 1 van 2</span><h3>Jouw voorkeur — zet de schuif naar de kant die bij jou past</h3></div>
   <div id="stellingen-1"></div>
   <div class="subsection-header"><span class="sub-tag">Deel 2 van 2</span><h3>Ideale omgeving — wat heb je nodig?</h3></div>
@@ -266,7 +311,6 @@
 <!-- SCREEN 2: CULTUREEL -->
 <div class="screen" id="screen-2"><div class="main">
   <div class="section-intro"><h2><span class="layer-emoji">🌍</span> Culturele laag — sfeer, waarden en spelregels</h2><p>Organisatieculturen verschillen sterk — en geen enkele is per definitie beter. Zet de schuif bij elk onderdeel naar de kant die bij jou past. Beide kanten zijn legitiem. Het midden betekent: geen sterke voorkeur.</p></div>
-  <div class="scan-progress-bar"><div class="scan-progress-fill" id="prog-2" style="width:0%"></div></div>
   <div class="subsection-header"><span class="sub-tag">Deel 1 van 2</span><h3>Jouw voorkeur — zet de schuif naar de kant die bij jou past</h3></div>
   <div id="stellingen-2"></div>
   <div class="subsection-header"><span class="sub-tag">Deel 2 van 2</span><h3>Ideale omgeving — wat heb je nodig?</h3></div>
@@ -278,7 +322,6 @@
 <!-- SCREEN 3: MENTAAL -->
 <div class="screen" id="screen-3"><div class="main">
   <div class="section-intro"><h2><span class="layer-emoji">🧠</span> Mentale laag — structuur, ritme en mindset</h2><p>Hoe wil jij je dag inrichten? Wat past bij hoe jij het beste functioneert? Zet de schuif naar de kant die het meeste bij jou past. Er is geen goede of foute voorkeur — alleen de jouwe.</p></div>
-  <div class="scan-progress-bar"><div class="scan-progress-fill" id="prog-3" style="width:0%"></div></div>
   <div class="subsection-header"><span class="sub-tag">Deel 1 van 2</span><h3>Jouw voorkeur — zet de schuif naar de kant die bij jou past</h3></div>
   <div id="stellingen-3"></div>
   <div class="subsection-header"><span class="sub-tag">Deel 2 van 2</span><h3>Ideale omgeving — wat heb je nodig?</h3></div>
@@ -289,7 +332,9 @@
 
 <!-- SCREEN: RESULTATEN -->
 <div class="screen" id="screen-results"><div class="main">
-  <div class="section-intro"><h2>🔬 Jouw omgevingsprofiel</h2><p>Je hebt alle vier de lagen onderzocht. Hieronder zie je per laag jouw voorkeuren, gevolgd door een persoonlijke analyse.</p></div>
+  <div class="phase-badge">Resultaten 🎉</div>
+  <h1 class="intro-title">Jouw <span>omgevingsprofiel</span></h1>
+  <p class="intro-text">Je hebt alle vier de lagen onderzocht. Hieronder zie je per laag jouw voorkeuren, gevolgd door een persoonlijke analyse.</p>
   <div id="resultLagen"></div>
   <div class="ai-analyse-block" id="aiAnalyseBlock">
     <div class="ai-analyse-header">
@@ -309,18 +354,23 @@
     <button class="ai-retry-btn" id="aiRetryBtn" onclick="laadAnalyse()" style="display:none;">&#x21BA; Opnieuw genereren</button>
   </div>
   <div class="copy-btn-wrap">
-    <button class="btn-copy" id="btnCopy" onclick="kopieerResultaten()">&#x1F4CB; Kopieer mijn omgevingsprofiel</button>
-    <p style="font-size:0.73rem;color:var(--text-muted);margin-top:9px;">Kopieer deze analyse en plak het in de daarvoor bestemde plek in jouw Labboek. Daar kun je de tekst aanpassen zodat het zoveel mogelijk bij je past en Dain ook dit mee kan nemen in de analyse.</p>
+    <p style="font-size:0.9rem;color:#444;line-height:1.6;margin:0 auto 14px;max-width:620px;">Zet deze analyse met de knop hieronder in je <strong>Labboek</strong>. Daar kun je de tekst aanpassen zodat hij zoveel mogelijk bij je past, en kan Dain dit ook meenemen in de analyse.</p>
+    <button class="btn-copy" id="btnCopy" onclick="zetInLabboek()">📖 Zet in mijn Labboek</button>
+    <p class="labboek-status" id="labboekStatus" style="display:none;"></p>
   </div>
-  <button class="btn-restart" onclick="showRestartPopup()">&#x21BA; Opnieuw beginnen</button>
+  <div class="storage-warning">
+    ⚠️ Let op: jouw resultaten worden opgeslagen in deze browser op dit apparaat. Als je de browsergeschiedenis wist, een andere browser gebruikt of dit apparaat wisselt, kunnen de resultaten niet meer zichtbaar zijn. Zet ze daarom in je Labboek!
+  </div>
 </div></div>
+
+</div><!-- /.app -->
 
 <!-- POPUPS -->
 <div class="popup-overlay" id="popupWelkom">
   <div class="popup-box">
     <div class="popup-emoji">⚗️</div>
     <h2>Klaar voor de scan?</h2>
-    <p>Je onderzoekt vier lagen van jouw werkomgeving. Reken op 15–20 minuten. Denk terug aan alle werksituaties die je hebt meegemaakt — stages, teams, bijbanen, projecten. Je voortgang wordt automatisch opgeslagen.</p>
+    <p>Je onderzoekt vier lagen van jouw werkomgeving. Reken op 15–20 minuten. Denk terug aan alle werksituaties die je hebt meegemaakt — stages, teams, bijbanen, projecten.</p>
     <button class="popup-btn" onclick="closePopup('popupWelkom')">Aan de slag →</button>
   </div>
 </div>
@@ -563,10 +613,10 @@ function toggleKaart(li, naam, el) {
 }
 
 function updateProgressBar(li) {
-  const tot = LAGEN[li].stellingen.length;
-  const bea = Object.keys(state.sliders[li]).length;
-  const bar = document.getElementById('prog-' + li);
-  if (bar) bar.style.width = Math.round((bea/tot)*100) + '%';
+  let tot = 0, bea = 0;
+  LAGEN.forEach((laag, i) => { tot += laag.stellingen.length; bea += Object.keys(state.sliders[i]).length; });
+  document.getElementById('progFill').style.width = Math.round((bea/tot)*100) + '%';
+  document.getElementById('progLabel').textContent = bea + ' / ' + tot + ' omschrijvingen beantwoord';
 }
 
 function volgendeScherm(huidig) {
@@ -614,8 +664,13 @@ function toonScherm(n) {
 
 function updateHeaderProgress() {
   const p = document.getElementById('headerProgress');
-  if (state.huidigScherm < 4) { p.textContent = 'Laag ' + (state.huidigScherm+1) + ' van 4'; p.classList.remove('active'); }
-  else { p.textContent = 'Profiel klaar ✓'; p.classList.add('active'); }
+  const klaar = state.huidigScherm >= 4;
+  if (!klaar) { p.textContent = 'Laag ' + (state.huidigScherm+1) + ' van 4 · ' + LAGEN[state.huidigScherm].naam; }
+  else { p.textContent = 'Jouw omgevingsprofiel'; }
+  document.getElementById('progressWrap').style.display = klaar ? 'none' : '';
+  document.getElementById('introWrap').style.display = klaar ? 'none' : '';
+  document.getElementById('stepperWrap').style.display = klaar ? 'none' : '';
+  updateProgressBar(0);
 }
 
 function toonResultaten() {
@@ -768,9 +823,96 @@ function kopieerResultaten() {
   }
 
   const btn = document.getElementById('btnCopy');
-  const ok = () => { btn.textContent='✓ Gekopieerd!'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='📋 Kopieer mijn analyse';btn.classList.remove('copied');},3000); };
+  const ok = () => { btn.textContent='✓ Gekopieerd!'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='📖 Zet in mijn Labboek';btn.classList.remove('copied');},3000); };
   if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(ok).catch(()=>fallback(t,ok)); } else { fallback(t,ok); }
 }
+// ===== OPSLAAN IN HET LABBOEK =====
+// Werkt net als bij Dain: de tool krijgt vanuit het Labboek het sessie-token mee (?st=...).
+const LB_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+const LB_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+const OMGEVING_VRAAG_ID = '37668a63-5fec-45ba-b14a-d41238048700'; // "Mijn omgevingsanalyse — in deze omstandigheden kom ik het beste tot mijn recht. ..."
+const VRAAG_LABEL = 'Mijn omgevingsanalyse — in deze omstandigheden kom ik het beste tot mijn recht';
+const SESSIE_TOKEN = new URLSearchParams(window.location.search).get('st') || null;
+
+function labboekTekst() {
+  let t = '';
+  if (analyseRawTekst) t += analyseRawTekst.replace(/\*\*/g, '').trim() + '\n\n';
+  const nodig = LAGEN.map((laag, li) => state.kaarten[li].length ? laag.emoji + ' ' + laag.naam + ': ' + state.kaarten[li].join(', ') : '').filter(Boolean);
+  if (nodig.length) t += 'Wat ik nodig heb:\n' + nodig.join('\n');
+  if (!analyseRawTekst) t = bouwAnalyseTekst();
+  return t.trim();
+}
+
+function dbHeaders(extra) {
+  return Object.assign({
+    'apikey': LB_ANON_KEY,
+    'Authorization': 'Bearer ' + LB_ANON_KEY,
+    'x-sessie-token': SESSIE_TOKEN || ''
+  }, extra || {});
+}
+
+function toonLabboekStatus(tekst, kleur) {
+  const el = document.getElementById('labboekStatus');
+  el.style.display = 'block';
+  el.style.color = kleur || 'var(--text-muted)';
+  el.innerHTML = tekst;
+}
+
+function kopieerLabboekTekst(t) {
+  const btn = document.getElementById('btnCopy');
+  const ok = () => { btn.textContent='✓ Gekopieerd!'; btn.classList.add('copied'); setTimeout(()=>{btn.textContent='📖 Zet in mijn Labboek';btn.classList.remove('copied');},3000); };
+  if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(ok).catch(()=>fallback(t,ok)); } else { fallback(t,ok); }
+}
+
+async function zetInLabboek() {
+  const btn = document.getElementById('btnCopy');
+  const tekst = labboekTekst();
+
+  if (!SESSIE_TOKEN) {
+    kopieerLabboekTekst(tekst);
+    toonLabboekStatus('Ik kon je Labboek vanaf hier niet bereiken, dus ik heb je analyse <strong>gekopieerd</strong>. Plak hem bij <em>' + VRAAG_LABEL + '</em> in je Labboek.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Bezig met opslaan...';
+  try {
+    const dRes = await fetch(LB_URL + '/rest/v1/labboek_deelnemers?select=id&order=aangemaakt_op.desc&limit=1', { headers: dbHeaders() });
+    const dRows = await dRes.json();
+    if (!Array.isArray(dRows) || !dRows[0]) throw new Error('Geen deelnemer gevonden');
+    const deelnemerId = dRows[0].id;
+
+    const headers = dbHeaders({ 'Content-Type': 'application/json' });
+    const bRes = await fetch(LB_URL + '/rest/v1/labboek_antwoorden?select=id&deelnemer_id=eq.' + deelnemerId + '&vraag_id=eq.' + OMGEVING_VRAAG_ID, { headers });
+    const bestaand = await bRes.json();
+
+    let res;
+    if (Array.isArray(bestaand) && bestaand[0]) {
+      res = await fetch(LB_URL + '/rest/v1/labboek_antwoorden?id=eq.' + bestaand[0].id, {
+        method: 'PATCH', headers,
+        body: JSON.stringify({ antwoord: tekst, bijgewerkt_op: new Date().toISOString() })
+      });
+    } else {
+      res = await fetch(LB_URL + '/rest/v1/labboek_antwoorden', {
+        method: 'POST', headers,
+        body: JSON.stringify({ deelnemer_id: deelnemerId, vraag_id: OMGEVING_VRAAG_ID, antwoord: tekst })
+      });
+    }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    btn.textContent = '✓ Staat in je Labboek!';
+    btn.classList.add('copied');
+    toonLabboekStatus('✅ Je omgevingsanalyse staat nu in je Labboek bij <em>' + VRAAG_LABEL + '</em>. Daar kun je hem aanvullen met je eigen woorden.', 'var(--accent2)');
+  } catch (e) {
+    console.error('Opslaan in Labboek mislukt:', e);
+    btn.textContent = '📖 Zet in mijn Labboek';
+    kopieerLabboekTekst(tekst);
+    toonLabboekStatus('⚠️ Opslaan in je Labboek lukte nu niet, dus ik heb je analyse <strong>gekopieerd</strong>. Plak hem bij <em>' + VRAAG_LABEL + '</em>, of probeer het zo nog eens.', '#b23b3b');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
 function fallback(t, ok) {
   const ta = document.createElement('textarea'); ta.value=t; ta.style.cssText='position:fixed;top:0;left:0;opacity:0;'; document.body.appendChild(ta); ta.focus(); ta.select();
   try { if(document.execCommand('copy')) ok(); } catch(e) {} document.body.removeChild(ta);
@@ -803,7 +945,7 @@ function navigeerNaarLaag(n) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function openPopup(id) { document.getElementById(id).classList.add('open'); if (window.__uplabReportHeight) window.__uplabReportHeight(); }
+function openPopup(id) { const ov = document.getElementById(id); ov.classList.add('open'); if (window.uplabPlacePopup) window.uplabPlacePopup(ov); if (window.__uplabReportHeight) window.__uplabReportHeight(); }
 function closePopup(id) { document.getElementById(id).classList.remove('open'); if (window.__uplabReportHeight) window.__uplabReportHeight(); }
 function showRestartPopup() { openPopup('popupRestart'); }
 function doRestart() {
@@ -812,6 +954,7 @@ function doRestart() {
   closePopup('popupRestart');
   for (let i=0;i<4;i++) { document.getElementById('step-'+i).className='layer-step'+(i===0?' active':''); document.getElementById('status-'+i).textContent=i===0?'Bezig':'Wacht'; }
   renderAllelagen(); toonScherm(0); updateHeaderProgress();
+  const st = document.getElementById('labboekStatus'); if (st) st.style.display = 'none';
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -841,6 +984,45 @@ function init() {
 }
 
 init();
+
+// ===== POPUP OP DE PLEK VAN DE GEBRUIKER (voor embeds in Wix e.d.) =====
+// In een iframe dat net zo hoog is als de tool betekent 'position:fixed' gewoon
+// 'bovenaan de tool'. Daarom onthouden we waar de gebruiker het laatst klikte/tikte
+// en zetten we de popup daar neer.
+(function () {
+  var inFrame = false;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  var lastY = null;
+  function onti(e) {
+    var t = e.touches && e.touches[0] ? e.touches[0] : e;
+    if (typeof t.pageY === 'number') lastY = t.pageY;
+  }
+  document.addEventListener('pointerdown', onti, true);
+  document.addEventListener('touchstart', onti, { capture: true, passive: true });
+  document.addEventListener('dragend', onti, true);
+  document.addEventListener('drop', onti, true);
+
+  window.uplabPlacePopup = function (overlay) {
+    if (!inFrame || !overlay) return;
+    var box = overlay.querySelector('.popup-box');
+    var docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.bottom = 'auto';
+    overlay.style.height = docH + 'px';
+    overlay.style.overflow = 'visible';
+    overlay.style.alignItems = 'flex-start';
+    var y = lastY === null ? 40 : lastY - 160;
+    var boxH = box ? box.offsetHeight : 400;
+    y = Math.max(20, Math.min(y, docH - boxH - 20));
+    overlay.style.paddingTop = y + 'px';
+    if (box && box.scrollIntoView) {
+      try { box.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {}
+    }
+  };
+})();
 
 // ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
 (function () {
