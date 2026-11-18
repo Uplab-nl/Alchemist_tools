@@ -1097,7 +1097,27 @@ function resultaatTekst() {
 const SUPABASE_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
 const TALENTEN_VRAAG_ID = 'bc8232d0-0d4e-44ef-b305-f0dd13f7ff0f'; // "Mijn talenten — vanuit de talententool"
-const SESSIE_TOKEN = new URLSearchParams(window.location.search).get('st') || null;
+let SESSIE_TOKEN = null, SESSIE_DEELNEMER = null;
+// Sessie zoeken: eerst ?st=... in de link, anders de inlog van het Labboek op dezelfde pagina
+// (het Labboek-blok in Wix bewaart die als 'uplab_labboek_embed_v1').
+function vernieuwSessie() {
+  SESSIE_TOKEN = null; SESSIE_DEELNEMER = null;
+  try { SESSIE_TOKEN = new URLSearchParams(window.location.search).get('st') || null; } catch (e) {}
+  if (!SESSIE_TOKEN) {
+    try {
+      const o = JSON.parse(localStorage.getItem('uplab_labboek_embed_v1') || 'null');
+      if (o && o.token) { SESSIE_TOKEN = o.token; SESSIE_DEELNEMER = o.deelnemer_id || null; }
+    } catch (e) {}
+  }
+}
+vernieuwSessie();
+// Laat het Labboek-blok op dezelfde pagina meteen weten dat er een nieuw antwoord is
+// (zonder de pagina te verversen). Werkt via localStorage + BroadcastChannel.
+function meldLabboekUpdate(vraagId, antwoord) {
+  const msg = { type: 'antwoord-bijgewerkt', vraag_id: vraagId, antwoord: antwoord, t: Date.now() };
+  try { localStorage.setItem('uplab_labboek_update', JSON.stringify(msg)); } catch (e) {}
+  try { const bc = new BroadcastChannel('uplab_labboek'); bc.postMessage(msg); bc.close(); } catch (e) {}
+}
 
 function dbHeaders(extra) {
   return Object.assign({
@@ -1115,6 +1135,7 @@ function toonLabboekStatus(tekst, kleur) {
 }
 
 async function zetInLabboek() {
+  vernieuwSessie();
   const btn = document.getElementById('btnCopy');
   const tekst = resultaatTekst();
 
@@ -1128,10 +1149,13 @@ async function zetInLabboek() {
   btn.disabled = true;
   btn.textContent = '⏳ Bezig met opslaan...';
   try {
-    const dRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_deelnemers?select=id&order=aangemaakt_op.desc&limit=1', { headers: dbHeaders() });
-    const dRows = await dRes.json();
-    if (!Array.isArray(dRows) || !dRows[0]) throw new Error('Geen deelnemer gevonden');
-    const deelnemerId = dRows[0].id;
+    let deelnemerId = SESSIE_DEELNEMER;
+    if (!deelnemerId) {
+      const dRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_deelnemers?select=id&order=aangemaakt_op.desc&limit=1', { headers: dbHeaders() });
+      const dRows = await dRes.json();
+      if (!Array.isArray(dRows) || !dRows[0]) throw new Error('Geen deelnemer gevonden');
+      deelnemerId = dRows[0].id;
+    }
 
     const headers = dbHeaders({ 'Content-Type': 'application/json' });
     const bRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?select=id&deelnemer_id=eq.' + deelnemerId + '&vraag_id=eq.' + TALENTEN_VRAAG_ID, { headers });
@@ -1150,6 +1174,8 @@ async function zetInLabboek() {
       });
     }
     if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    meldLabboekUpdate(TALENTEN_VRAAG_ID, tekst);
 
     btn.textContent = '✓ Staat in je Labboek!';
     btn.classList.add('copied');
