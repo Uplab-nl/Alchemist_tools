@@ -32,6 +32,7 @@
   --green-dark:#3E6913;
   --white:#ffffff;
   --grey:#c9c9c9;
+  --cream:#f0f1ec;
 }
 
 *{box-sizing:border-box;}
@@ -54,82 +55,61 @@ h1,h2,h3,.font-head{
   padding:0 24px 80px;
 }
 
-/* sticky header */
-.dw-header{
-  position:sticky; top:0; z-index:50;
-  background:var(--dark);
-  color:var(--white);
-  padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:3px solid var(--green);
-}
-.dw-header .brand{
-  font-family:'Doppio One',sans-serif;
-  font-size:1.05rem;
-  letter-spacing:.02em;
-}
-.dw-header .brand span{color:var(--green);}
-.dw-header-right{
-  display:flex; align-items:center; gap:10px;
-}
-.dw-progress-label{
-  font-size:.78rem;
-  color:var(--grey);
-  font-weight:500;
-}
-.btn-icon{
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.25);
-  color:white;
-  border-radius:8px;
-  padding:7px 12px;
-  cursor:pointer;
-  font-family:'Roboto',sans-serif;
-  font-size:.8rem;
-  transition:all .2s;
-  white-space:nowrap;
-}
-.btn-icon:hover{
-  background:rgba(255,255,255,0.22);
+/* APP-KADER (Dain-stijl: crème, ronde hoeken) */
+.app{background:var(--cream);width:100%;min-height:100vh;}
+@media (min-width:860px){
+  .app{max-width:1000px;margin:0 auto 24px;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.12);min-height:0;overflow:clip;}
 }
 
-/* diagonal intro banner */
-.dw-banner{
-  position:relative;
+/* STICKY HEADER (Dain-stijl) */
+.sticky-header{
+  position:sticky;top:0;z-index:50;
   background:var(--dark);
-  color:var(--white);
-  padding:64px 0 60px;
-  overflow:hidden;
+  padding:12px 52px 12px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px 18px;
 }
+.header-left{display:flex;align-items:center;gap:12px;}
+.tool-emoji{
+  width:38px;height:38px;border-radius:50%;flex-shrink:0;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;
+}
+.header-title{font-family:'Doppio One',sans-serif;color:var(--green);font-size:16px;line-height:1.25;}
+.header-sub{font-family:'Roboto',sans-serif;font-size:11.2px;color:var(--grey);font-weight:400;display:block;}
+.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn-icon{
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:white;
+  border-radius:8px;padding:7px 12px;cursor:pointer;font-family:'Roboto',sans-serif;
+  font-size:12.8px;transition:background .2s;white-space:nowrap;min-width:104px;text-align:center;
+}
+.btn-icon:hover{background:rgba(255,255,255,0.22);}
+
+/* voortgang in de bovenbalk */
+.hdr-progress{flex-basis:100%;margin:2px 0 0;}
+.hdr-progress .progress-track{height:7px;background:rgba(255,255,255,.15);border-radius:6px;overflow:hidden;margin:0;}
+.hdr-progress .progress-fill{height:100%;background:var(--green);border-radius:6px;}
+.hdr-progress .progress-text{font-family:'Doppio One',sans-serif;font-size:12px;color:#d9d9d9;margin-top:4px;text-align:left;}
+
+/* SCHUINE RAND (één geheel met de bovenbalk) */
+.dw-banner{background:var(--dark);position:relative;overflow:hidden;height:30px;margin-top:-1px;}
 .dw-banner::after{
-  content:"";
-  position:absolute;
-  left:0; right:0; bottom:-1px;
-  height:44px;
-  background:var(--white);
-  clip-path:polygon(0 100%, 100% 0, 100% 100%);
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:30px;
+  background:var(--cream);clip-path:polygon(0 100%, 100% 0, 100% 100%);
 }
-.dw-banner .inner{max-width:760px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
-.dw-banner .accent{
-  width:56px;height:5px;background:var(--green);
-  margin-bottom:20px; border-radius:3px;
+
+/* fase-label + intro in het lichte deel */
+.phase-badge{
+  display:inline-block;background:var(--green);color:#fff;font-size:.75rem;
+  font-family:'Doppio One',sans-serif;padding:4px 12px;border-radius:12px;margin-bottom:10px;letter-spacing:.5px;
 }
-.dw-banner h1{
-  font-size:2.1rem;
-  line-height:1.15;
-  margin-bottom:18px;
-}
-.dw-banner p{
-  font-size:1.02rem;
-  line-height:1.6;
-  color:var(--grey);
-  max-width:560px;
-}
+.intro-title{font-family:'Doppio One',sans-serif;font-size:clamp(1.25rem,3.5vw,1.6rem);line-height:1.25;color:var(--dark);margin-bottom:4px;}
+.intro-title span{color:var(--green);}
+.intro-text{font-size:.95rem;color:#444;line-height:1.6;margin:0 0 16px;}
 
 .card-panel{
   position:relative;
-  background:var(--white);
-  padding-top:4px;
+  padding-top:14px;
 }
 
 .btn{
@@ -246,9 +226,12 @@ h1,h2,h3,.font-head{
 
 /* results */
 .res-item{
-  display:flex; align-items:center; gap:16px;
-  padding:16px 0; border-bottom:1px solid #eee;
+  display:flex; align-items:flex-start; gap:16px;
+  background:var(--white); border:2px solid #e0e0e0; border-left:5px solid var(--green);
+  border-radius:10px; padding:20px 22px; margin:12px 0;
 }
+.res-item.res-item-low{border-left-color:#bbb; padding:14px 22px; align-items:center;}
+.res-item.res-item-low .res-body h3{margin-bottom:6px;}
 .res-rank{
   font-family:'Doppio One',sans-serif;
   font-size:1.4rem;
@@ -265,7 +248,7 @@ h1,h2,h3,.font-head{
   margin:14px 0 6px;
 }
 .res-vraag{
-  background:#f5f7f4;
+  background:var(--cream);
   border-left:3px solid var(--green);
   padding:10px 12px;
   margin-top:10px;
@@ -306,9 +289,11 @@ h1,h2,h3,.font-head{
 }
 .res-all-wrap{
   display:none;
-  margin-top:8px;
-  padding-top:8px;
-  border-top:2px solid #eee;
+  margin-top:12px;
+  padding:8px 12px;
+  background:var(--white);
+  border:2px solid #e0e0e0;
+  border-radius:10px;
 }
 .res-all-wrap.show{display:block;}
 .res-all-item{
@@ -467,6 +452,13 @@ h1,h2,h3,.font-head{
 }
 .toast.show{opacity:1;}
 
+.labboek-status{font-size:.88rem;line-height:1.6;margin:12px 0 0;}
+.btn:disabled{opacity:.6;cursor:wait;}
+.storage-warning{
+  background:#fff8e1;border:1px solid #ffe082;border-radius:8px;
+  padding:12px 16px;margin-top:20px;font-size:.8rem;color:#795548;line-height:1.5;text-align:center;
+}
+
 .copy-fallback{
   position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:200;
   display:none; align-items:center; justify-content:center; padding:20px;
@@ -483,22 +475,29 @@ h1,h2,h3,.font-head{
 </head>
 <body>
 
-<div class="dw-header">
-  <div class="brand">Uplab <span>Alchemist</span></div>
-  <div class="dw-header-right">
-    <span class="dw-progress-label" id="headerProgress"></span>
+<div class="app">
+
+<div class="sticky-header">
+  <div class="header-left">
+    <div class="tool-emoji">⚡</div>
+    <div class="header-title">Drijfveren<span class="header-sub" id="headerProgress">Ontdek je kerndrijfveren</span></div>
+  </div>
+  <div class="header-actions">
     <button class="btn-icon" id="btnInfo">ⓘ Info</button>
+    <button class="btn-icon" id="btnRestartDuel">↺ Opnieuw</button>
+  </div>
+  <div class="hdr-progress" id="hdrProgress">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText"></div>
   </div>
 </div>
+<div class="dw-banner" aria-hidden="true"></div>
 
 <!-- DUEL -->
 <section class="screen" id="screen-duel">
-  <div class="wrap" style="padding-top:32px;">
-    <div class="duel-topbar">
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <button class="btn-restart-link" id="btnRestartDuel">Opnieuw beginnen</button>
-    </div>
-    <div class="progress-text" id="progressText"></div>
+  <div class="wrap" style="padding-top:14px;">
+    <div class="phase-badge">Drijfverenonderzoek</div>
+    <h1 class="intro-title">Wat zet mij in beweging? <span>Kies wat bij je past ⚡</span></h1>
     <div class="duel-wrap">
       <p class="duel-intro">Welke uitspraak past beter bij jou?</p>
       <div class="emphasis-toggle" id="emphasisToggle">
@@ -516,14 +515,12 @@ h1,h2,h3,.font-head{
 
 <!-- RESULTS -->
 <section class="screen" id="screen-results">
-  <div class="dw-banner">
-    <div class="inner">
-      <div class="accent"></div>
-      <h1>Jouw kerndrijfveren</h1>
-      <p>Dit is wat jou in beweging zet — op basis van al jouw keuzes in het onderzoek.</p>
-    </div>
-  </div>
   <div class="wrap card-panel">
+    <div class="phase-badge">Resultaten 🎉</div>
+    <h1 class="intro-title">Jouw <span>kerndrijfveren</span></h1>
+    <p class="intro-text">Dit is wat jou in beweging zet — op basis van al jouw keuzes in het onderzoek.</p>
+    <p class="intro-text">Per drijfveer lees je een omschrijving waar je je misschien deels of helemaal in herkent. Zet dit, met de knop hieronder in jouw <strong>Labboek</strong> en pas de omschrijving van jouw drijfveren zo aan, zodat het helemaal passend is bij jou.</p>
+
     <h2 class="res-heading">Jouw top 5</h2>
     <div id="resultsList"></div>
 
@@ -531,15 +528,20 @@ h1,h2,h3,.font-head{
     <p class="res-subtext">Niet fout, niet erg — gewoon niet waar jouw energie vandaan komt.</p>
     <div id="resultsLowList"></div>
 
-    <button class="btn ghost" id="btnToggleAll">Bekijk alle 21 drijfveren</button>
+    <button class="btn ghost" id="btnToggleAll" style="margin-top:16px;">Bekijk alle 21 drijfveren</button>
     <div id="resultsAllList" class="res-all-wrap"></div>
 
-    <div class="res-actions">
-      <button class="btn" id="btnCopy">Plak in Labboek</button>
-      <button class="btn ghost" id="btnRestart">Opnieuw doen</button>
+    <div class="res-actions" style="justify-content:center;">
+      <button class="btn" id="btnCopy">📖 Zet in mijn Labboek</button>
+    </div>
+    <p class="labboek-status" id="labboekStatus" style="display:none;text-align:center;"></p>
+    <div class="storage-warning">
+      ⚠️ Let op: jouw resultaten worden opgeslagen in deze browser op dit apparaat. Als je de browsergeschiedenis wist, een andere browser gebruikt of dit apparaat wisselt, kunnen de resultaten niet meer zichtbaar zijn. Zet ze daarom in je Labboek!
     </div>
   </div>
 </section>
+
+</div><!-- /.app -->
 
 <div class="toast" id="toast"></div>
 <div class="copy-fallback" id="copyFallback">
@@ -793,6 +795,7 @@ h1,h2,h3,.font-head{
   function showScreen(name){
     document.querySelectorAll(".screen").forEach(function(s){ s.classList.remove("active"); });
     document.getElementById("screen-" + name).classList.add("active");
+    try{ window.scrollTo(0, 0); }catch(e){}
     if (window.__uplabReportHeight) window.__uplabReportHeight();
   }
 
@@ -820,8 +823,9 @@ h1,h2,h3,.font-head{
 
     var pct = Math.round((state.index / total) * 100);
     document.getElementById("progressFill").style.width = pct + "%";
-    document.getElementById("progressText").textContent = (state.index) + " van " + total;
-    document.getElementById("headerProgress").textContent = "Duel " + (state.index + 1) + " / " + total;
+    document.getElementById("progressText").textContent = state.index + " / " + total + " keuzes gemaakt";
+    document.getElementById("headerProgress").textContent = "Duel " + (state.index + 1) + " van " + total;
+    document.getElementById("hdrProgress").style.display = "";
   }
 
   function saveProgress(){
@@ -933,7 +937,8 @@ h1,h2,h3,.font-head{
 
     renderResults(top5, lowest3, results);
     showScreen("results");
-    document.getElementById("headerProgress").textContent = "Resultaat";
+    document.getElementById("headerProgress").textContent = "Jouw kerndrijfveren";
+    document.getElementById("hdrProgress").style.display = "none";
   }
 
   function renderResults(top5, lowest3, all){
@@ -1112,6 +1117,7 @@ h1,h2,h3,.font-head{
     });
 
     document.getElementById("overlay").classList.add("active");
+    if (window.uplabPlacePopup) window.uplabPlacePopup(document.getElementById("overlay"));
     if (window.__uplabReportHeight) window.__uplabReportHeight();
   }
 
@@ -1138,7 +1144,6 @@ h1,h2,h3,.font-head{
     var text = buildCopyText();
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(function(){
-        showToast("Gekopieerd — plak 'm in je Labboek");
       }).catch(function(){ execFallback(text); });
     }else{
       execFallback(text);
@@ -1155,9 +1160,7 @@ h1,h2,h3,.font-head{
     var ok = false;
     try{ ok = document.execCommand("copy"); }catch(e){}
     document.body.removeChild(ta);
-    if(ok){
-      showToast("Gekopieerd — plak 'm in je Labboek");
-    }else{
+    if(!ok){
       openManualCopy(text);
     }
   }
@@ -1180,6 +1183,8 @@ h1,h2,h3,.font-head{
     saveProgress();
     var allWrap = document.getElementById("resultsAllList");
     allWrap.classList.remove("show");
+    var cb = document.getElementById("btnCopy"); if(cb) cb.textContent = "📖 Zet in mijn Labboek";
+    var st = document.getElementById("labboekStatus"); if(st) st.style.display = "none";
     var toggleBtn = document.getElementById("btnToggleAll");
     if(toggleBtn) toggleBtn.textContent = "Bekijk alle 21 drijfveren";
     hidePopover();
@@ -1190,13 +1195,109 @@ h1,h2,h3,.font-head{
   }
 
   function confirmAndRestart(){
-    if(window.confirm("Weet je zeker dat je opnieuw wilt beginnen? Je huidige voortgang gaat dan verloren.")){
-      clearProgress();
-      startFreshSession();
+    showPopup("Opnieuw beginnen?", "Weet je zeker dat je opnieuw wilt beginnen? Je huidige voortgang en resultaten worden hiermee verwijderd.", [
+      { label: "Ja, opnieuw beginnen", primary: true, onClick: function(){ closePopup(); clearProgress(); try{ localStorage.removeItem(STORAGE_KEY); }catch(e){} startFreshSession(); } },
+      { label: "Annuleren", primary: false, onClick: closePopup }
+    ]);
+  }
+
+  // ===== OPSLAAN IN HET LABBOEK =====
+  // Werkt net als bij Dain: de tool krijgt vanuit het Labboek het sessie-token mee (?st=...).
+  var SUPABASE_URL = 'https://iqrlerplitfvgdnqnyzd.supabase.co';
+  var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlxcmxlcnBsaXRmdmdkbnFueXpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEyMzMwOTMsImV4cCI6MjA5NjgwOTA5M30.25Uzl2xpOZFqGYm3QSJpihkGz0y-rLczX5Iq49gIeoU';
+  var DRIJFVEREN_VRAAG_ID = '7f2a9c14-6b3d-4e2a-9a71-3d5c8e0b4f22'; // "Mijn drijfveren — vanuit de drijfverentool"
+  let SESSIE_TOKEN = null, SESSIE_DEELNEMER = null;
+// Sessie zoeken: eerst ?st=... in de link, anders de inlog van het Labboek op dezelfde pagina
+// (het Labboek-blok in Wix bewaart die als 'uplab_labboek_embed_v1').
+function vernieuwSessie() {
+  SESSIE_TOKEN = null; SESSIE_DEELNEMER = null;
+  try { SESSIE_TOKEN = new URLSearchParams(window.location.search).get('st') || null; } catch (e) {}
+  if (!SESSIE_TOKEN) {
+    try {
+      const o = JSON.parse(localStorage.getItem('uplab_labboek_embed_v1') || 'null');
+      if (o && o.token) { SESSIE_TOKEN = o.token; SESSIE_DEELNEMER = o.deelnemer_id || null; }
+    } catch (e) {}
+  }
+}
+vernieuwSessie();
+// Laat het Labboek-blok op dezelfde pagina meteen weten dat er een nieuw antwoord is
+// (zonder de pagina te verversen). Werkt via localStorage + BroadcastChannel.
+function meldLabboekUpdate(vraagId, antwoord) {
+  const msg = { type: 'antwoord-bijgewerkt', vraag_id: vraagId, antwoord: antwoord, t: Date.now() };
+  try { localStorage.setItem('uplab_labboek_update', JSON.stringify(msg)); } catch (e) {}
+  try { const bc = new BroadcastChannel('uplab_labboek'); bc.postMessage(msg); bc.close(); } catch (e) {}
+}
+
+  function dbHeaders(extra){
+    return Object.assign({
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'x-sessie-token': SESSIE_TOKEN || ''
+    }, extra || {});
+  }
+
+  function toonLabboekStatus(tekst, kleur){
+    var el = document.getElementById('labboekStatus');
+    el.style.display = 'block';
+    el.style.color = kleur || '#666';
+    el.innerHTML = tekst;
+  }
+
+  async function zetInLabboek(){
+  vernieuwSessie();
+    var btn = document.getElementById('btnCopy');
+    var tekst = buildCopyText();
+
+    if(!SESSIE_TOKEN){
+      copyToClipboard();
+      toonLabboekStatus('Ik kon je Labboek vanaf hier niet bereiken, dus ik heb je drijfveren <strong>gekopieerd</strong>. Plak ze bij <em>Mijn drijfveren — vanuit de drijfverentool</em> in je Labboek.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Bezig met opslaan...';
+    try{
+      let deelnemerId = SESSIE_DEELNEMER;
+    if (!deelnemerId) {
+      const dRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_deelnemers?select=id&order=aangemaakt_op.desc&limit=1', { headers: dbHeaders() });
+      const dRows = await dRes.json();
+      if (!Array.isArray(dRows) || !dRows[0]) throw new Error('Geen deelnemer gevonden');
+      deelnemerId = dRows[0].id;
+    }
+
+      var headers = dbHeaders({ 'Content-Type': 'application/json' });
+      var bRes = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?select=id&deelnemer_id=eq.' + deelnemerId + '&vraag_id=eq.' + DRIJFVEREN_VRAAG_ID, { headers: headers });
+      var bestaand = await bRes.json();
+
+      var res;
+      if(Array.isArray(bestaand) && bestaand[0]){
+        res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden?id=eq.' + bestaand[0].id, {
+          method: 'PATCH', headers: headers,
+          body: JSON.stringify({ antwoord: tekst, bijgewerkt_op: new Date().toISOString() })
+        });
+      }else{
+        res = await fetch(SUPABASE_URL + '/rest/v1/labboek_antwoorden', {
+          method: 'POST', headers: headers,
+          body: JSON.stringify({ deelnemer_id: deelnemerId, vraag_id: DRIJFVEREN_VRAAG_ID, antwoord: tekst })
+        });
+      }
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+
+      meldLabboekUpdate(DRIJFVEREN_VRAAG_ID, tekst);
+
+      btn.textContent = '✓ Staat in je Labboek!';
+      toonLabboekStatus('✅ Je drijfveren staan nu in je Labboek bij <em>Mijn drijfveren — vanuit de drijfverentool</em>. Daar kun je de omschrijvingen helemaal naar jezelf toe schrijven.', 'var(--green-dark)');
+    }catch(e){
+      console.error('Opslaan in Labboek mislukt:', e);
+      btn.textContent = '📖 Zet in mijn Labboek';
+      copyToClipboard();
+      toonLabboekStatus('⚠️ Opslaan in je Labboek lukte nu niet, dus ik heb je drijfveren <strong>gekopieerd</strong>. Plak ze bij <em>Mijn drijfveren — vanuit de drijfverentool</em>, of probeer het zo nog eens.', '#b23b3b');
+    }finally{
+      btn.disabled = false;
     }
   }
 
-  document.getElementById("btnCopy").addEventListener("click", copyToClipboard);
+  document.getElementById("btnCopy").addEventListener("click", zetInLabboek);
   document.getElementById("btnInfo").addEventListener("click", showIntroPopup);
   document.getElementById("btnToggleAll").addEventListener("click", function(){
     var wrap = document.getElementById("resultsAllList");
@@ -1205,7 +1306,6 @@ h1,h2,h3,.font-head{
     if(!showing){ hidePopover(); activePopoverDriverId = null; }
     if (window.__uplabReportHeight) window.__uplabReportHeight();
   });
-  document.getElementById("btnRestart").addEventListener("click", startFreshSession);
   document.getElementById("btnRestartDuel").addEventListener("click", confirmAndRestart);
 
   // bij opstarten: automatisch verdergaan bij een onafgeronde sessie, anders meteen een nieuwe starten
@@ -1229,6 +1329,44 @@ h1,h2,h3,.font-head{
     document.getElementById("copyFallback").classList.remove("show");
   });
 
+})();
+
+// ===== POPUP OP DE PLEK VAN DE GEBRUIKER (voor embeds in Wix e.d.) =====
+// In een iframe dat net zo hoog is als de tool betekent 'position:fixed' gewoon
+// 'bovenaan de tool'. Daarom onthouden we waar de gebruiker het laatst klikte/tikte
+// en zetten we de popup daar neer.
+(function () {
+  var inFrame = false;
+  try { inFrame = window.self !== window.top; } catch (e) { inFrame = true; }
+  var lastY = null;
+  function onti(e) {
+    var t = e.touches && e.touches[0] ? e.touches[0] : e;
+    if (typeof t.pageY === 'number') lastY = t.pageY;
+  }
+  document.addEventListener('pointerdown', onti, true);
+  document.addEventListener('touchstart', onti, { capture: true, passive: true });
+  document.addEventListener('dragend', onti, true);
+  document.addEventListener('drop', onti, true);
+
+  window.uplabPlacePopup = function (overlay) {
+    if (!inFrame || !overlay) return;
+    var box = overlay.querySelector('.popup-box');
+    var docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    overlay.style.position = 'absolute';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.right = '0';
+    overlay.style.bottom = 'auto';
+    overlay.style.height = docH + 'px';
+    overlay.style.overflow = 'visible';
+    var y = lastY === null ? 40 : lastY - 160;
+    var boxH = box ? box.offsetHeight : 400;
+    y = Math.max(20, Math.min(y, docH - boxH - 20));
+    overlay.style.paddingTop = y + 'px';
+    if (box && box.scrollIntoView) {
+      try { box.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); } catch (e) {}
+    }
+  };
 })();
 
 // ===== UPLAB EMBED SHIM — meldt actief de hoogte aan de pagina die ons in een iframe/popup toont =====
