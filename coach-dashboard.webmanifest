@@ -1,0 +1,17 @@
+{
+  "name": "Alchemist Coach Dashboard",
+  "short_name": "Coach Dashboard",
+  "description": "Uplab coach-dashboard: Labboeken van deelnemers, feedback en toegangscodes.",
+  "id": "./Alchemist_coach_dashboard.html",
+  "start_url": "./Alchemist_coach_dashboard.html",
+  "scope": "./Alchemist_coach_dashboard.html",
+  "display": "standalone",
+  "background_color": "#292727",
+  "theme_color": "#292727",
+  "lang": "nl",
+  "icons": [
+    { "src": "coach-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "coach-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "coach-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
