@@ -1,6 +1,6 @@
 // Service worker voor het Alchemist Coach Dashboard.
 // Alleen de app-schil wordt bewaard; data van Supabase gaat nooit via de cache.
-const CACHE = 'coach-dashboard-v2';
+const CACHE = 'coach-dashboard-v3';
 const SCHIL = ['./Alchemist_coach_dashboard.html', './coach-icon-192.png', './coach-icon-512.png'];
 
 self.addEventListener('install', e => {

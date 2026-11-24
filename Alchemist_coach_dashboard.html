@@ -250,6 +250,46 @@ body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--br
 .dain-analyse { background:linear-gradient(135deg,#292727,#3a3636); border-radius:14px; padding:18px 20px; margin-bottom:22px; max-width:760px; }
 .dain-analyse p { color:rgba(255,255,255,.85); font-size:.86rem; line-height:1.6; margin-top:6px; }
 .dain-tip { color:rgba(255,255,255,.7)!important; }
+.tabs { overflow-x:auto; }
+.tab-badge { background:#dc2626; color:white; font-family:'Roboto',sans-serif; font-size:.65rem; font-weight:700; padding:1px 7px; border-radius:10px; margin-left:4px; }
+.leeg-blok { padding:24px; text-align:center; color:var(--muted); font-size:.86rem; }
+.km-kaart { background:white; border:1px solid var(--border); border-left:3px solid var(--g1); border-radius:0 12px 12px 0; padding:16px 20px; margin-bottom:12px; }
+.km-kaart.afgehandeld { opacity:.55; border-left-color:var(--border); }
+.km-kop { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.km-naam { font-weight:600; font-size:.95rem; }
+.km-datum { font-size:.72rem; color:var(--muted); margin-top:2px; }
+.km-contact { display:flex; flex-wrap:wrap; gap:16px; margin-top:10px; font-size:.84rem; }
+.km-contact a { color:var(--g2); text-decoration:none; }
+.km-contact a:hover { text-decoration:underline; }
+.km-bericht { margin-top:10px; background:var(--bg); border-radius:8px; padding:10px 14px; font-size:.86rem; line-height:1.6; white-space:pre-wrap; }
+.blog-form { background:white; border:1px solid var(--border); border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:14px; }
+.bf-rij label { display:block; font-size:.8rem; font-weight:500; margin-bottom:5px; }
+.bf-rij input, .bf-rij textarea { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:10px 13px; font-family:'Roboto',sans-serif; font-size:.88rem; color:var(--brand); resize:vertical; }
+.bf-rij input:focus, .bf-rij textarea:focus { outline:none; border-color:var(--g1); }
+.bf-twee { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:640px) { .bf-twee { grid-template-columns:1fr; } }
+.img-zone { border:2px dashed var(--border); border-radius:8px; padding:20px; text-align:center; cursor:pointer; font-size:.84rem; color:var(--muted); }
+.img-zone:hover { border-color:var(--g1); }
+.img-zone.heeft-img { padding:0; border-style:solid; overflow:hidden; }
+.img-zone img { width:100%; max-height:200px; object-fit:cover; display:block; }
+.blog-rij { display:flex; align-items:center; gap:14px; padding:12px 16px; border-bottom:1px solid var(--border); }
+.blog-rij:last-child { border-bottom:none; }
+.blog-rij img, .blog-geen-img { width:52px; height:52px; border-radius:8px; object-fit:cover; flex-shrink:0; }
+.blog-geen-img { background:var(--bg); display:flex; align-items:center; justify-content:center; }
+.blog-info { flex:1; min-width:0; }
+.blog-titel { font-weight:600; font-size:.9rem; }
+.blog-meta { font-size:.74rem; color:var(--muted); margin-top:2px; }
+.btn-del-blog:hover { border-color:#dc2626!important; color:#dc2626!important; }
+.tekst-wrap { max-width:860px; }
+.tekst-veld { background:white; border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:12px; }
+.tekst-veld label { display:block; font-size:.7rem; color:var(--g1); font-family:'Doppio One',sans-serif; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+.tekst-input { width:100%; border:1.5px solid var(--border); border-radius:8px; padding:9px 12px; font-family:'Roboto',sans-serif; font-size:.86rem; color:var(--brand); resize:vertical; min-height:70px; }
+.tekst-input.kort { min-height:40px; }
+.tekst-input.code { min-height:180px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.78rem; }
+.tekst-input:focus { outline:none; border-color:var(--g1); }
+.tekst-acties { display:flex; justify-content:flex-end; align-items:center; gap:10px; margin-top:8px; }
+.tekst-status { font-size:.75rem; color:var(--muted); }
+.tekst-let-op { font-family:'Roboto',sans-serif; font-size:.68rem; color:#b45309; background:#fef3c7; padding:2px 8px; border-radius:10px; }
 </style>
 </head>
 <body>
@@ -333,6 +373,9 @@ body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--br
   <div class="tab active" id="tabWerkboeken" onclick="switchTab('werkboeken')">📋 Werkboeken</div>
   <div class="tab" id="tabCodes" onclick="switchTab('codes')">🔑 Toegangscodes</div>
   <div class="tab" id="tabDain" onclick="switchTab('dain')">🤖 Dain-gesprekken</div>
+  <div class="tab" id="tabKennismakingen" onclick="switchTab('kennismakingen')">📬 Kennismakingen</div>
+  <div class="tab" id="tabBlogs" onclick="switchTab('blogs')">✍️ Blogs</div>
+  <div class="tab" id="tabTeksten" onclick="switchTab('teksten')">📝 E-learning teksten</div>
 </div>
 
 <!-- WERKBOEKEN -->
@@ -365,6 +408,53 @@ body { font-family: 'Roboto', sans-serif; background: var(--bg); color: var(--br
   </div>
   <div class="main-area" id="dainDetail">
     <div class="main-empty"><div class="icon">🤖</div><p>Kies een gesprek om het terug te lezen</p></div>
+  </div>
+</div>
+
+<!-- KENNISMAKINGEN -->
+<div class="layout-panel" id="panelKennismakingen">
+  <div class="panel active"><div class="codes-wrap">
+    <h2>Kennismakingsaanvragen</h2>
+    <p>Aanvragen via het formulier op de website. Zet een aanvraag op afgehandeld zodra je contact hebt gehad.</p>
+    <div id="kmLijst"><div class="leeg-blok">Laden...</div></div>
+  </div></div>
+</div>
+
+<!-- BLOGS -->
+<div class="layout-panel" id="panelBlogs">
+  <div class="panel active"><div class="codes-wrap">
+    <h2>Blogs</h2>
+    <p>Plaats een nieuwe blog of verwijder een bestaande.</p>
+    <div class="blog-form">
+      <div class="bf-rij"><label>Titel</label><input id="bTitel" oninput="if(!slugHandmatig) document.getElementById('bSlug').value = maakSlug(this.value)"></div>
+      <div class="bf-twee">
+        <div class="bf-rij"><label>Slug (voor de link)</label><input id="bSlug" placeholder="mijn-nieuwe-blog" oninput="slugHandmatig = !!this.value"></div>
+        <div class="bf-rij"><label>Tags (komma-gescheiden)</label><input id="bTags" placeholder="Talenten, Werkgeluk"></div>
+      </div>
+      <div class="bf-rij"><label>Korte samenvatting</label><textarea id="bExcerpt" rows="2"></textarea></div>
+      <div class="bf-rij"><label>Volledige tekst</label><textarea id="bContent" rows="8"></textarea></div>
+      <div class="bf-rij"><label>Afbeelding</label>
+        <div class="img-zone" id="blogImgZone" onclick="document.getElementById('bImg').click()"><span>Klik om een afbeelding te kiezen</span></div>
+        <input type="file" id="bImg" accept="image/*" style="display:none" onchange="kiesBlogAfbeelding(this)">
+      </div>
+      <div><button class="btn-genereer" id="btnBlog" onclick="plaatsBlog()">Blog plaatsen</button></div>
+    </div>
+    <h2 style="margin-top:32px">Alle blogs</h2>
+    <div id="blogLijst" class="codes-tabel"><div class="leeg-blok">Laden...</div></div>
+  </div></div>
+</div>
+
+<!-- E-LEARNING TEKSTEN -->
+<div class="layout-panel" id="panelTeksten">
+  <div class="sidebar">
+    <div class="sidebar-head">
+      <h3>E-learning modules</h3>
+      <input class="search" id="tekstZoek" placeholder="Zoek in titels en teksten..." oninput="renderTekstLijst()">
+    </div>
+    <div class="deelnemer-list" id="tekstLijst"><div class="empty-state">Laden...</div></div>
+  </div>
+  <div class="main-area" id="tekstDetail">
+    <div class="main-empty"><div class="icon">📝</div><p>Kies een module om de teksten te bewerken</p></div>
   </div>
 </div>
 
@@ -712,6 +802,7 @@ async function init() {
     renderCodes();
     if (selectedId) renderDetail();
     if (!dainSessies) laadDain();
+    laadKennismakingen();
   } catch(e) { alert('Laad-fout: ' + e.message); }
   finally { setLoading(false); }
 }
@@ -729,12 +820,15 @@ function updateStats() {
 
 // ── TABS ──
 function switchTab(tab) {
-  ['werkboeken','codes','dain'].forEach(t => {
+  ['werkboeken','codes','dain','kennismakingen','blogs','teksten'].forEach(t => {
     const T = t.charAt(0).toUpperCase() + t.slice(1);
     document.getElementById('tab' + T).classList.toggle('active', t === tab);
     document.getElementById('panel' + T).classList.toggle('active', t === tab);
   });
   if (tab === 'dain' && !dainSessies) laadDain();
+  if (tab === 'kennismakingen') laadKennismakingen();
+  if (tab === 'blogs') laadBlogs();
+  if (tab === 'teksten' && !contentData) laadTeksten();
 }
 
 // ── DEELNEMERS ──
@@ -1223,6 +1317,175 @@ async function verwijderDainSessie(sid) {
     renderDainLijst();
     showToast('Dain-gesprek verwijderd ✓');
   } catch(e) { showToast('Verwijderen mislukt: ' + e.message); }
+}
+
+// ── KENNISMAKINGEN ──
+let kmData = [];
+async function laadKennismakingen() {
+  const el = document.getElementById('kmLijst');
+  try {
+    kmData = await sb('kennismaking_aanvragen?select=*&order=aangemaakt_op.desc');
+    const open = kmData.filter(k => !k.afgehandeld).length;
+    document.getElementById('tabKennismakingen').innerHTML = `📬 Kennismakingen${open ? ` <span class="tab-badge">${open}</span>` : ''}`;
+    if (!kmData.length) { el.innerHTML = '<div class="leeg-blok">Nog geen kennismakingsaanvragen.</div>'; return; }
+    el.innerHTML = kmData.map(k => `
+      <div class="km-kaart${k.afgehandeld ? ' afgehandeld' : ''}">
+        <div class="km-kop">
+          <div><div class="km-naam">${esc(k.naam)}</div><div class="km-datum">${datumTijd(k.aangemaakt_op)}</div></div>
+          <button class="btn-toggle" onclick="kmZet('${k.id}', ${!k.afgehandeld})">${k.afgehandeld ? '↩ Terug naar open' : '✓ Afgehandeld'}</button>
+        </div>
+        <div class="km-contact">
+          <a href="mailto:${esc(k.email)}">✉️ ${esc(k.email)}</a>
+          ${k.telefoon ? `<a href="tel:${esc(k.telefoon.replace(/\s/g, ''))}">📞 ${esc(k.telefoon)}</a>` : ''}
+          ${k.voorkeur_moment ? `<span>🕐 ${esc(k.voorkeur_moment)}</span>` : ''}
+        </div>
+        ${k.bericht ? `<div class="km-bericht">${esc(k.bericht)}</div>` : ''}
+      </div>`).join('');
+  } catch(e) { el.innerHTML = `<div class="leeg-blok">Laden mislukt: ${esc(e.message)}</div>`; }
+}
+async function kmZet(id, afgehandeld) {
+  try { await sb(`kennismaking_aanvragen?id=eq.${id}`, { method:'PATCH', body: JSON.stringify({ afgehandeld }) }); laadKennismakingen(); }
+  catch(e) { showToast('Fout: ' + e.message); }
+}
+
+// ── BLOGS ──
+let blogAfbeelding = null, slugHandmatig = false;
+function maakSlug(t) { return (t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 80); }
+
+async function laadBlogs() {
+  const el = document.getElementById('blogLijst');
+  try {
+    const blogs = await sb('blogs?select=id,slug,title,image_url,published_at,likes_count&order=published_at.desc');
+    if (!blogs.length) { el.innerHTML = '<div class="leeg-blok">Nog geen blogs.</div>'; return; }
+    el.innerHTML = blogs.map(b => `
+      <div class="blog-rij">
+        ${b.image_url && /^https?:/.test(b.image_url) ? `<img src="${esc(b.image_url)}" alt="">` : '<div class="blog-geen-img">✍️</div>'}
+        <div class="blog-info"><div class="blog-titel">${esc(b.title)}</div><div class="blog-meta">/${esc(b.slug)} · ${formatTijd(b.published_at, true)} · ❤️ ${b.likes_count || 0}</div></div>
+        <button class="btn-toggle btn-del-blog" onclick="verwijderBlog('${b.id}', '${esc(b.title).replace(/'/g, '&#39;')}')">Verwijderen</button>
+      </div>`).join('');
+  } catch(e) { el.innerHTML = `<div class="leeg-blok">Laden mislukt: ${esc(e.message)}</div>`; }
+}
+
+async function kiesBlogAfbeelding(input) {
+  const file = input.files[0]; if (!file) return;
+  const zone = document.getElementById('blogImgZone');
+  zone.innerHTML = '<span>Uploaden...</span>';
+  try {
+    const pad = Date.now() + '-' + file.name.replace(/[^a-zA-Z0-9.\-]/g, '_');
+    const doe = () => fetch(`${SB_URL}/storage/v1/object/blog-images/${encodeURIComponent(pad)}`, {
+      method: 'POST', headers: { 'apikey': SB_ANON, 'Authorization': `Bearer ${accessToken}`, 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'false' }, body: file
+    });
+    let r = await doe();
+    if (r.status === 401 || r.status === 400 && /jwt|exp/i.test(await r.clone().text())) { await vernieuwSessie(); r = await doe(); }
+    if (!r.ok) { const d = await r.json().catch(() => ({})); throw new Error(d.message || d.error || `HTTP ${r.status}`); }
+    blogAfbeelding = `${SB_URL}/storage/v1/object/public/blog-images/${encodeURIComponent(pad)}`;
+    zone.classList.add('heeft-img');
+    zone.innerHTML = `<img src="${blogAfbeelding}" alt="">`;
+  } catch(e) {
+    zone.innerHTML = '<span>Klik om een afbeelding te kiezen</span>';
+    showToast('Uploaden mislukt: ' + e.message);
+  } finally { input.value = ''; }
+}
+
+async function plaatsBlog() {
+  const v = id => document.getElementById(id).value.trim();
+  const titel = v('bTitel'), slug = maakSlug(v('bSlug') || v('bTitel')), excerpt = v('bExcerpt');
+  if (!titel || !slug || !excerpt) { showToast('Vul minimaal titel, slug en samenvatting in'); return; }
+  const btn = document.getElementById('btnBlog'); btn.disabled = true; btn.textContent = 'Bezig...';
+  try {
+    await sb('blogs', { method:'POST', body: JSON.stringify({ title: titel, slug, tags: v('bTags'), excerpt, content: v('bContent'), image_url: blogAfbeelding || 'images/blog-1.png' }) });
+    ['bTitel','bSlug','bTags','bExcerpt','bContent'].forEach(id => document.getElementById(id).value = '');
+    blogAfbeelding = null; slugHandmatig = false;
+    const zone = document.getElementById('blogImgZone'); zone.classList.remove('heeft-img'); zone.innerHTML = '<span>Klik om een afbeelding te kiezen</span>';
+    showToast('Blog geplaatst ✓');
+    laadBlogs();
+  } catch(e) { showToast('Plaatsen mislukt: ' + (/duplicate|unique/i.test(e.message) ? 'deze slug bestaat al' : e.message)); }
+  finally { btn.disabled = false; btn.textContent = 'Blog plaatsen'; }
+}
+
+async function verwijderBlog(id, titel) {
+  if (!confirm(`De blog "${titel}" definitief verwijderen?`)) return;
+  try { await sb(`blogs?id=eq.${id}`, { method:'DELETE' }); showToast('Blog verwijderd'); laadBlogs(); }
+  catch(e) { showToast('Fout: ' + e.message); }
+}
+
+// ── E-LEARNING TEKSTEN ──
+let contentData = null, contentModules = [], contentActief = null;
+async function laadTeksten() {
+  const el = document.getElementById('tekstLijst');
+  el.innerHTML = '<div class="empty-state">Laden...</div>';
+  try {
+    contentData = await sb('elearning_content?select=*&order=module_index.asc,chapter_index.asc.nullsfirst');
+    const m = {};
+    contentData.forEach(r => {
+      const mod = m[r.module_index] ||= { idx: r.module_index, titel: '', hoofdstukken: new Set() };
+      if (r.chapter_index === null && r.veld === 'titel') mod.titel = r.waarde || '';
+      if (r.chapter_index !== null) mod.hoofdstukken.add(r.chapter_index);
+    });
+    contentModules = Object.values(m).sort((a, b) => a.idx - b.idx);
+    renderTekstLijst();
+  } catch(e) { el.innerHTML = `<div class="empty-state">Laden mislukt: ${esc(e.message)}</div>`; }
+}
+function renderTekstLijst() {
+  const q = (document.getElementById('tekstZoek').value || '').toLowerCase();
+  const lijst = contentModules.filter(m => !q || m.titel.toLowerCase().includes(q) ||
+    contentData.some(r => r.module_index === m.idx && (r.waarde || '').toLowerCase().includes(q)));
+  const el = document.getElementById('tekstLijst');
+  if (!lijst.length) { el.innerHTML = '<div class="empty-state">Niets gevonden.</div>'; return; }
+  el.innerHTML = lijst.map(m => `
+    <div class="deelnemer-item${m.idx === contentActief ? ' active' : ''}" data-mod="${m.idx}">
+      <div class="d-naam">${esc(m.titel || 'Module ' + m.idx)}</div>
+      <div class="d-datum">${m.hoofdstukken.size} hoofdstukken</div>
+    </div>`).join('');
+  el.querySelectorAll('[data-mod]').forEach(it => it.addEventListener('click', () => { contentActief = +it.dataset.mod; renderTekstLijst(); renderTekstDetail(); }));
+}
+function contentRij(mod, ch, veld) { return contentData.find(r => r.module_index === mod && r.chapter_index === ch && r.veld === veld); }
+function tekstVeld(label, mod, ch, veld, soort) {
+  const r = contentRij(mod, ch, veld);
+  return `<div class="tekst-veld">
+    <label>${label}</label>
+    <textarea class="tekst-input ${soort || ''}" data-mod="${mod}" data-ch="${ch === null ? '' : ch}" data-veld="${veld}">${esc(r?.waarde || '')}</textarea>
+    <div class="tekst-acties"><span class="tekst-status"></span><button class="btn-comment" onclick="bewaarTekst(this)">Opslaan</button></div>
+  </div>`;
+}
+function renderTekstDetail() {
+  const m = contentModules.find(x => x.idx === contentActief);
+  const area = document.getElementById('tekstDetail');
+  if (!m) return;
+  const hs = [...m.hoofdstukken].sort((a, b) => a - b);
+  area.innerHTML = `
+    <div class="detail-header"><div class="detail-naam">${esc(m.titel || 'Module ' + m.idx)}</div>
+      <div class="detail-meta"><span class="detail-stat">Wijzigingen staan na opslaan direct live in de e-learning (na verversen).</span></div></div>
+    <div class="content-area"><div class="tekst-wrap">
+      <div class="h2-titel">Modulekaart</div>
+      ${tekstVeld('Titel', m.idx, null, 'titel', 'kort')}
+      ${tekstVeld('Subtitel', m.idx, null, 'subtitel', 'kort')}
+      ${tekstVeld('Teaser', m.idx, null, 'teaser')}
+      ${hs.map(h => `
+        <div class="h2-titel" style="margin-top:28px">${esc(contentRij(m.idx, h, 'titel')?.waarde || 'Hoofdstuk ' + h)}${contentRij(m.idx, h, 'inhoud')?.waarde ? '' : ' <span class="tekst-let-op">nog niet gemigreerd</span>'}</div>
+        ${tekstVeld('Hoofdstuktitel', m.idx, h, 'titel', 'kort')}
+        ${tekstVeld('Inhoud (HTML)', m.idx, h, 'inhoud', 'code')}`).join('')}
+    </div></div>`;
+  area.querySelectorAll('.tekst-input').forEach(t => t.addEventListener('input', () => { t.parentElement.querySelector('.tekst-status').textContent = 'Niet opgeslagen'; }));
+}
+async function bewaarTekst(btn) {
+  const veldEl = btn.closest('.tekst-veld'), ta = veldEl.querySelector('textarea'), status = veldEl.querySelector('.tekst-status');
+  const mod = +ta.dataset.mod, ch = ta.dataset.ch === '' ? null : +ta.dataset.ch, veld = ta.dataset.veld, waarde = ta.value;
+  btn.disabled = true; btn.textContent = '...';
+  try {
+    const bestaand = contentRij(mod, ch, veld);
+    if (bestaand) {
+      // Bijwerken op id (een upsert matcht niet op rijen waar chapter_index leeg is)
+      await sb(`elearning_content?id=eq.${bestaand.id}`, { method:'PATCH', body: JSON.stringify({ waarde, bijgewerkt_op: new Date().toISOString() }) });
+      bestaand.waarde = waarde;
+    } else {
+      const [nieuw] = await sb('elearning_content', { method:'POST', body: JSON.stringify({ module_index: mod, chapter_index: ch, veld, waarde }) });
+      contentData.push(nieuw);
+    }
+    status.textContent = '✓ Opgeslagen';
+    if (veld === 'titel' && ch === null) { const m = contentModules.find(x => x.idx === mod); if (m) { m.titel = waarde; renderTekstLijst(); } }
+  } catch(e) { status.textContent = ''; showToast('Opslaan mislukt: ' + e.message); }
+  finally { btn.disabled = false; btn.textContent = 'Opslaan'; }
 }
 
 // ── CODES ──
